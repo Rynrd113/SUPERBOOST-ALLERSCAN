@@ -52,6 +52,15 @@
 - ✅ **Deteksi Multi-Alergen**: 23+ jenis alergen yang didukung
 - ✅ **UI/UX Modern**: Responsive design dengan TailwindCSS
 
+### 📊 **Status Proyek Terkini**
+- ✅ **Frontend**: Versi stabil dengan komponen sederhana dan reliable
+- ✅ **Backend**: API fully functional dengan database MySQL
+- ✅ **Documentation**: Terorganisir dalam folder `docs/` 
+- ✅ **File Structure**: Clean organization untuk maintainability
+- ⚠️ **Development**: Kembali ke versi core functionality untuk stabilitas
+
+> 💡 **Catatan**: Proyek ini telah melalui beberapa fase optimisasi dan saat ini menggunakan implementasi yang stabil dan mudah dipelihara. Dokumentasi lengkap tersedia di folder `docs/`.
+
 ---
 
 ## ✨ Fitur Utama
@@ -422,25 +431,20 @@ docker build -t allerscan-frontend ./frontend
 SUPERBOOST-ALLERSCAN/
 ├── 📁 backend/                 # FastAPI Backend
 │   ├── 📁 app/
-│   │   ├── 📁 api/            # API endpoints
-│   │   │   └── 📁 v1/         # API version 1
+│   │   ├── 📁 api/v1/         # API endpoints
 │   │   ├── 📁 core/           # Core configurations
 │   │   ├── 📁 database/       # Database configurations
 │   │   ├── 📁 models/         # ML models & database models
 │   │   ├── 📁 schemas/        # Pydantic schemas
 │   │   ├── 📁 services/       # Business logic services
 │   │   └── main.py           # FastAPI application
-│   ├── 📁 logs/              # Application logs
-│   ├── .env.example          # Environment template
 │   ├── requirements.txt      # Python dependencies
-│   ├── run_dev.py           # Development server
-│   └── setup_mysql.py       # Database setup
+│   └── run_dev.py           # Development server
 │
 ├── 📁 frontend/               # React Frontend
 │   ├── 📁 public/            # Static assets
 │   ├── 📁 src/
 │   │   ├── 📁 components/    # React components
-│   │   │   └── 📁 UI/       # Reusable UI components
 │   │   ├── 📁 hooks/        # Custom React hooks
 │   │   ├── 📁 services/     # API services
 │   │   ├── 📁 styles/       # CSS styles
@@ -451,20 +455,36 @@ SUPERBOOST-ALLERSCAN/
 │   ├── tailwind.config.js   # TailwindCSS config
 │   └── vite.config.js       # Vite configuration
 │
-├── 📁 data/                  # Dataset & training data
+├── 📁 data/                  # Dataset storage
 │   └── 📁 raw/              # Raw datasets
 │
 ├── 📁 notebooks/             # Jupyter notebooks
 │   └── deteksi_alergen.ipynb # ML model development
 │
-├── 📁 scripts/               # Utility scripts
-│   ├── test_*.py            # Testing scripts
-│   └── insert_*.py          # Data insertion scripts
+├── 📁 scripts/               # Development & utility scripts
+│   ├── 📁 debug/            # Debug scripts
+│   ├── 📁 tests/            # Test scripts
+│   └── 📁 logs/             # Script logs
 │
-├── 📁 logs/                  # Application logs
-├── README.md                # This file
-└── LICENSE                  # MIT License
+├── 📁 docs/                  # Project documentation
+│   ├── 📁 optimization/     # Optimization reports
+│   ├── 📁 analysis/         # Analysis reports
+│   └── PROJECT_STRUCTURE.md # Detailed structure guide
+│
+├── 📁 testing/               # Testing artifacts
+│   └── 📁 exports/          # Test export files
+│
+├── 📁 logs/                  # Centralized logging
+│   ├── 📁 backend/          # Backend logs
+│   ├── 📁 frontend/         # Frontend logs
+│   └── 📁 scripts/          # Script logs
+│
+├── README.md                # Project overview
+├── .gitignore              # Git ignore rules
+└── LICENSE                 # MIT License
 ```
+
+> 📋 **Struktur Terbaru**: Proyek telah diorganisir ulang untuk pemisahan yang lebih baik antara development, production, dan documentation files. Lihat [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) untuk detail lengkap.
 
 ---
 
@@ -583,6 +603,25 @@ curl -X POST "http://localhost:8001/api/v1/predict" \
 ### 📚 Interactive Documentation
 Akses dokumentasi API interaktif di: http://localhost:8001/docs
 
+### 📖 Additional Documentation
+
+Dokumentasi lengkap proyek tersedia di folder `docs/`:
+
+- **📊 Analysis Reports** (`docs/analysis/`)
+  - Architecture Clean - Konsep arsitektur yang benar
+  - Database Consolidation - Laporan konsolidasi database  
+  - Documentation Cleanup - Laporan pembersihan dokumentasi
+  - Final Status Working - Status fungsionalitas terkini
+  - Frontend Errors Fixed - Laporan perbaikan frontend
+
+- **🚀 Optimization Reports** (`docs/optimization/`)
+  - Optimization Progress Fase 1-4 - Laporan optimisasi bertahap
+  - Optimization Complete Fase 5-7 - Laporan optimisasi final
+
+- **🏗️ Project Structure** (`docs/PROJECT_STRUCTURE.md`)
+  - Panduan struktur proyek yang telah diorganisir
+  - Benefits dan improvements yang telah dilakukan
+
 ---
 
 ## 🧪 Testing
@@ -621,11 +660,23 @@ npm run test:e2e
 # Backend health check
 curl http://localhost:8001/api/v1/predict/health
 
-# Database connectivity
-python backend/verify_mysql.py
+# Database connectivity  
+python scripts/verify_mysql.py
 
 # Model validation
 python scripts/test_confidence_fix.py
+
+# Check database values
+python scripts/check_db_values.py
+```
+
+### 📋 Available Test Scripts
+```bash
+# Script testing (located in scripts/)
+python scripts/test_supported_allergens.py
+python scripts/test_form_submission.py
+python scripts/test_ingredient_parsing.py
+python scripts/insert_samples_via_api.py
 ```
 
 ---
@@ -634,31 +685,49 @@ python scripts/test_confidence_fix.py
 
 ### 📊 Metrics & Logging
 
-**Application Logs:**
-- Location: `logs/allergen_api.log`
-- Format: Structured JSON logging
+**Centralized Logging Structure:**
+- **Backend logs**: `logs/backend/allergen_api.log`
+- **Frontend logs**: `logs/frontend/` (development)
+- **Script logs**: `logs/scripts/` (utility scripts)
+
+**Log Formats:**
+- Backend: Structured JSON logging
 - Levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 **Performance Monitoring:**
 ```bash
-# Response time monitoring
-tail -f logs/allergen_api.log | grep "processing_time"
+# Response time monitoring  
+tail -f logs/backend/allergen_api.log | grep "processing_time"
 
 # Error rate monitoring
-grep -c "ERROR" logs/allergen_api.log
+grep -c "ERROR" logs/backend/allergen_api.log
+
+# Real-time log monitoring
+tail -f logs/backend/allergen_api.log
 ```
 
 ### 🔔 Health Monitoring
 ```bash
-# System health script
-./scripts/health_check.sh
-
 # Database performance
 python scripts/check_db_values.py
 
-# Model accuracy validation
-python scripts/test_confidence_dosen.py
+# Latest predictions check
+python scripts/check_latest_predictions.py
+
+# Database structure validation
+python scripts/check_table_structure.py
+
+# Model confidence testing  
+python scripts/test_confidence_fix.py
+
+# Form submission testing
+python scripts/test_form_submission.py
 ```
+
+### 📁 Monitoring Files Location
+- **Scripts**: All monitoring scripts moved to `scripts/` folder
+- **Logs**: Centralized in `logs/` with sub-categories
+- **Testing**: Test artifacts in `testing/` folder
 
 ---
 
@@ -785,6 +854,16 @@ SOFTWARE.
 
 Terima kasih kepada semua kontributor, penguji beta, dan komunitas open source  
 yang telah mendukung pengembangan **SuperBoost AllerScan**.
+
+### 📋 **Project Evolution**
+
+Proyek ini telah melalui beberapa fase pengembangan dan optimisasi:
+- **✅ Core Development**: Implementasi dasar dengan akurasi 93.7%
+- **✅ Optimization Phases**: 7 fase optimisasi untuk performa dan UX  
+- **✅ Restoration & Cleanup**: Stabilisasi ke versi core yang reliable
+- **✅ Documentation Reorganization**: Struktur dokumentasi yang terorganisir
+
+> 📂 **Dokumentasi Lengkap**: Semua riwayat pengembangan dan optimisasi tersedia di folder `docs/`
 
 **© 2025 SuperBoost AllerScan • Machine Learning Research Project**
 
