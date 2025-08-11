@@ -1,0 +1,2 @@
+2025-08-11 10:16:00 | INFO     | app.database.allergen_database:_initialize_connection:79 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-11 10:16:00 | INFO     | app.database.allergen_database:_create_tables:135 | ✅ Database tables created/verified successfully

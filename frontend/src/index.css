@@ -1,0 +1,212 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ✨ ALLERSCAN MODERN DESIGN SYSTEM */
+
+/* Root Variables - AllerScan Brand */
+:root {
+  --allerscan-primary: #0EA5E9;      /* Primary Blue from Logo */
+  --allerscan-secondary: #0284C7;    /* Secondary Blue */
+  --allerscan-accent: #F59E0B;       /* Professional Amber */
+  --allerscan-light: #E0F2FE;        /* Light Blue Background */
+  
+  /* Semantic Colors */
+  --success-color: #10B981;          /* Professional Green */
+  --warning-color: #F59E0B;          /* Professional Amber */
+  --error-color: #EF4444;            /* Professional Red */
+  --info-color: #0EA5E9;             /* AllerScan Blue */
+  
+  /* Modern Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Base Styles - Modern & Clean */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  background-color: #FAFBFC;         /* Subtle background */
+}
+
+/* Custom Scrollbar - AllerScan Theme */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--allerscan-primary) #f3f4f6;
+  scroll-behavior: smooth;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--allerscan-primary);
+  border-radius: 6px;
+  border: 2px solid #f8fafc;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--allerscan-secondary);
+}
+
+/* Professional Animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animation Classes */
+.notification-enter {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Professional Chart Styles */
+.pie-slice {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.pie-slice:hover {
+  filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  transform: scale(1.02);
+}
+
+/* Modern Table Styles */
+.table-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Professional Card Styles */
+.card-modern {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-modern:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+/* Gradient Backgrounds */
+.bg-allerscan-gradient {
+  background: linear-gradient(135deg, var(--allerscan-primary) 0%, var(--allerscan-secondary) 100%);
+}
+
+.bg-allerscan-gradient-soft {
+  background: linear-gradient(135deg, var(--allerscan-light) 0%, #f0f9ff 100%);
+}
+
+/* Text Effects */
+.text-gradient-allerscan {
+  background: linear-gradient(135deg, var(--allerscan-primary), var(--allerscan-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Focus States - Consistent & Accessible */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-allerscan-500 focus:ring-offset-2;
+}
+
+/* Loading States */
+.pulse-allerscan {
+  animation: pulse-allerscan 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-allerscan {
+  0%, 100% {
+    opacity: 1;
+    background-color: var(--allerscan-light);
+  }
+  50% {
+    opacity: .8;
+    background-color: #bae6fd;
+  }
+}
+
+/* Force Applied Styles - Ensure Brand Colors Load */
+.bg-allerscan-500 { background-color: var(--allerscan-primary) !important; }
+.bg-allerscan-600 { background-color: var(--allerscan-secondary) !important; }
+.text-allerscan-500 { color: var(--allerscan-primary) !important; }
+.text-allerscan-600 { color: var(--allerscan-secondary) !important; }
+.border-allerscan-500 { border-color: var(--allerscan-primary) !important; }
+
+/* Professional Status Colors */
+.bg-success-50 { background-color: #ECFDF5 !important; }
+.bg-warning-50 { background-color: #FFFBEB !important; }
+.bg-error-50 { background-color: #FEF2F2 !important; }
+.text-success-500 { color: var(--success-color) !important; }
+.text-warning-500 { color: var(--warning-color) !important; }
+.text-error-500 { color: var(--error-color) !important; }
+
+/* Modern Button Enhancements */
+.btn-allerscan {
+  @apply bg-allerscan-500 hover:bg-allerscan-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-allerscan hover:shadow-allerscan-lg transform hover:-translate-y-0.5;
+}
+
+.btn-allerscan-outline {
+  @apply border-2 border-allerscan-500 text-allerscan-500 hover:bg-allerscan-500 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-200;
+}
