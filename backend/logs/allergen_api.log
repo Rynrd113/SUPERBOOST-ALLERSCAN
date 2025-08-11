@@ -14374,3 +14374,36 @@
 2025-08-11 21:19:37 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
 2025-08-11 21:19:54 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
 2025-08-11 21:19:54 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-11 21:19:59 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-11 21:19:59 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-11 21:19:59 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-11 21:19:59 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-11 21:19:59 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-11 21:19:59 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-11 21:19:59 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-11 21:19:59 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-11 21:19:59 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-11 21:19:59 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-11 22:17:49 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-11 22:17:52 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-11 22:17:52 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-11 22:17:52 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-11 22:17:52 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-11 22:17:52 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-11 22:18:08 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-11 22:18:08 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-11 22:18:13 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-11 22:18:13 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-11 22:18:13 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-11 22:18:13 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-11 22:18:13 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-11 22:18:13 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-11 22:18:13 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-11 22:18:13 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-11 22:18:13 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-11 22:18:13 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795

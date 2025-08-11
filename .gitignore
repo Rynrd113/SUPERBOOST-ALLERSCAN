@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+backend/venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# Database
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing outputs
+testing/
+*.xlsx
+*.html
+!data/raw/*.xlsx
+
+# Development files
+fix_*.py
+test_*.py
+check_*.py
+apply_*.sh
