@@ -71,7 +71,7 @@ function App() {
           </div>
         )
       case 'form':
-        return <FormPage onDetectionResult={handleDetectionResult} />
+        return <FormPage onNavigate={handleNavigation} onDetectionResult={handleDetectionResult} />
       default:
         return <Dashboard onNavigate={handleNavigation} />
     }

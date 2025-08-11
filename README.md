@@ -786,7 +786,7 @@ SOFTWARE.
 Terima kasih kepada semua kontributor, penguji beta, dan komunitas open source  
 yang telah mendukung pengembangan **SuperBoost AllerScan**.
 
-**© 2024 SuperBoost AllerScan • Machine Learning Research Project**
+**© 2025 SuperBoost AllerScan • Machine Learning Research Project**
 
 *"Menjadikan konsumsi makanan lebih aman melalui teknologi AI"*
 
