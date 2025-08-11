@@ -1,11 +1,11 @@
 """
-🤖 ML Model Predictor for Allergen Detection - FIXED VERSION
-Menggunakan SVM + AdaBoost sesuai dengan script notebook dosen (deteksi_alergen.ipynb)
-Model sederhana dan fokus untuk aplikasi/website penelitian
+🤖 ML Model Predictor untuk Deteksi Alergen
+Menggunakan SVM + AdaBoost sesuai dengan notebook referensi (deteksi_alergen.ipynb)
+Model yang disesuaikan untuk aplikasi web penelitian
 
-🔧 FIXES:
-1. OOV (Out-of-Vocabulary) detection and confidence adjustment
-2. Better handling of unseen categories in user input
+Perbaikan yang diterapkan:
+1. Deteksi Out-of-Vocabulary (OOV) dan penyesuaian confidence
+2. Penanganan yang lebih baik untuk kategori input yang belum pernah ditemui
 """
 
 import pandas as pd
@@ -264,7 +264,7 @@ class AllergenPredictorFixed:
                 'prediction_label': predicted_label,
                 'confidence_score': float(adjusted_confidence),
                 'cv_accuracy_mean': self.cv_accuracy if self.cv_accuracy else 0.937,
-                'processing_note': 'Model sesuai script notebook deteksi_alergen.ipynb dengan OOV handling',
+                'processing_note': 'Model machine learning dengan penanganan Out-of-Vocabulary',
                 'cross_validation_k': 10,
                 'oov_analysis': {
                     'oov_rate': round(oov_rate, 2),

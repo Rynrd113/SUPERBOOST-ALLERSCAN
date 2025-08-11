@@ -1,11 +1,15 @@
 """
-🤖 ML Model Predictor for Allergen Detection - FIXED VERSION
-Menggunakan SVM + AdaBoost sesuai dengan script notebook dosen (deteksi_alergen.ipynb)
-Model sederhana dan fokus untuk aplikasi/website penelitian
+Model Machine Learning untuk Deteksi Alergen
 
-🔧 FIXES:
-1. OOV (Out-of-Vocabulary) detection and confidence adjustment
-2. Better handling of unseen categories in user input
+Implementasi predictor menggunakan algoritma SVM + AdaBoost untuk deteksi alergen
+dalam produk makanan. Model ini dirancang untuk aplikasi web dengan fokus pada
+akurasi dan performa yang optimal.
+
+Fitur utama:
+- Deteksi Out-of-Vocabulary (OOV) untuk input baru
+- Penyesuaian confidence score secara dinamis  
+- Penanganan kategori input yang belum pernah dilihat
+- Cross-validation untuk evaluasi model
 """
 
 import pandas as pd
@@ -26,17 +30,19 @@ warnings.filterwarnings('ignore')
 
 class AllergenPredictor:
     """
-    ML model predictor untuk deteksi alergen sesuai script dosen - FIXED VERSION
-    Menggunakan SVM + AdaBoost dengan One-Hot Encoding (sesuai notebook deteksi_alergen.ipynb)
+    Model predictor untuk deteksi alergen menggunakan machine learning
     
-    🔧 IMPROVEMENTS:
-    - OOV (Out-of-Vocabulary) detection
-    - Dynamic confidence adjustment
-    - Better handling of unseen input categories
+    Menggunakan kombinasi SVM + AdaBoost dengan One-Hot Encoding untuk
+    mengklasifikasikan produk makanan berdasarkan kandungan alergen.
+    
+    Fitur yang didukung:
+    - Deteksi Out-of-Vocabulary untuk input yang tidak dikenal
+    - Penyesuaian confidence score secara dinamis
+    - Penanganan kategori input yang belum pernah ditemui dalam training
     """
     
     def __init__(self):
-        """Initialize the predictor"""
+        """Inisialisasi predictor dengan pengaturan awal"""
         self.model = None
         self.X_encoded = None
         self.y_encoded = None
@@ -44,7 +50,7 @@ class AllergenPredictor:
         self.cv_accuracy = None
         self.is_loaded = False
         
-        # Store original training categories for OOV detection
+        # Simpan kategori training untuk deteksi OOV
         self.training_categories = {
             'nama_produk_makanan': set(),
             'bahan_utama': set(),
@@ -56,12 +62,15 @@ class AllergenPredictor:
     
     def load_and_train_model(self) -> bool:
         """
-        Load dataset dan train SVM + AdaBoost model sesuai script dosen
+        Memuat dataset dan melatih model SVM + AdaBoost
+        
+        Returns:
+            bool: True jika berhasil, False jika gagal
         """
         try:
-            api_logger.info("Loading dataset dan training SVM + AdaBoost model sesuai script dosen...")
+            api_logger.info("Memuat dataset dan melatih model SVM + AdaBoost...")
             
-            # Load data sesuai script dosen - multiple possible paths
+            # Lokasi-lokasi yang mungkin untuk file dataset
             possible_paths = [
                 Path("data/raw/Dataset Bahan Makanan & Alergen.xlsx"),
                 Path("../data/raw/Dataset Bahan Makanan & Alergen.xlsx"),
@@ -80,21 +89,21 @@ class AllergenPredictor:
                 api_logger.error(f"Dataset tidak ditemukan di lokasi manapun: {[str(p) for p in possible_paths]}")
                 return False
             
-            api_logger.info(f"Loading dataset dari: {dataset_path}")
+            api_logger.info(f"Memuat dataset dari: {dataset_path}")
             
-            # Baca dataset sesuai script dosen dengan error handling
+            # Membaca dataset dengan error handling
             try:
                 df = pd.read_excel(dataset_path)
             except Exception as e:
-                # Try different sheet names
+                # Mencoba dengan nama sheet yang berbeda
                 try:
                     df = pd.read_excel(dataset_path, sheet_name='Dataset')
                 except:
-                    df = pd.read_excel(dataset_path, sheet_name=0)  # First sheet
+                    df = pd.read_excel(dataset_path, sheet_name=0)  # Sheet pertama
             
-            api_logger.info(f"Dataset loaded: shape {df.shape}, columns: {list(df.columns)}")
+            api_logger.info(f"Dataset berhasil dimuat: shape {df.shape}, kolom: {list(df.columns)}")
             
-            # Pemisahan Fitur dan Target sesuai script dosen
+            # Pemisahan fitur dan target
             required_columns = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi']
             missing_columns = [col for col in required_columns if col not in df.columns]
             
@@ -109,44 +118,44 @@ class AllergenPredictor:
             X = df[fitur]
             y = df[target]
             
-            # 🔧 STORE TRAINING CATEGORIES for OOV detection
+            # Menyimpan kategori training untuk deteksi OOV
             for col in fitur:
                 if col in df.columns:
                     self.training_categories[col.lower().replace('/', '_').replace(' ', '_')] = set(df[col].unique())
             
-            api_logger.info(f"Training categories stored for OOV detection: {len(self.training_categories)} categories")
+            api_logger.info(f"Kategori training disimpan untuk deteksi OOV: {len(self.training_categories)} kategori")
             
-            # Transformasi Nominal ke Numerik sesuai script dosen
+            # Transformasi nominal ke numerik
             self.X_encoded = pd.get_dummies(X)
             self.label_encoder = LabelEncoder()
             self.y_encoded = self.label_encoder.fit_transform(y)
             
-            api_logger.info(f"One-hot encoding completed: {self.X_encoded.shape[1]} features")
-            api_logger.info(f"Label encoding completed: {len(self.label_encoder.classes_)} classes: {list(self.label_encoder.classes_)}")
+            api_logger.info(f"One-hot encoding selesai: {self.X_encoded.shape[1]} fitur")
+            api_logger.info(f"Label encoding selesai: {len(self.label_encoder.classes_)} kelas: {list(self.label_encoder.classes_)}")
             
-            # Inisialisasi Model SVM + AdaBoost sesuai script dosen
+            # Inisialisasi model SVM + AdaBoost
             svm_base = SVC(kernel='linear', probability=True, random_state=42)
             self.model = AdaBoostClassifier(estimator=svm_base, n_estimators=50, random_state=42)
             
-            # Evaluasi dengan Cross Validation (K = 10) sesuai script dosen
+            # Evaluasi dengan Cross Validation (K = 10)
             k = 10
             cv = StratifiedKFold(n_splits=k, shuffle=True, random_state=42)
             cv_scores = cross_val_score(self.model, self.X_encoded, self.y_encoded, cv=cv, scoring='accuracy')
             self.cv_accuracy = cv_scores.mean()
             
-            api_logger.info(f"📊 Cross Validation Accuracy (K={k}): {self.cv_accuracy * 100:.2f}%")
-            api_logger.info(f"📊 CV Score Details: min={cv_scores.min():.3f}, max={cv_scores.max():.3f}, std={cv_scores.std():.3f}")
+            api_logger.info(f"📊 Akurasi Cross Validation (K={k}): {self.cv_accuracy * 100:.2f}%")
+            api_logger.info(f"📊 Detail skor CV: min={cv_scores.min():.3f}, max={cv_scores.max():.3f}, std={cv_scores.std():.3f}")
             
-            # Pelatihan Model di Seluruh Data sesuai script dosen
+            # Pelatihan model pada seluruh data
             self.model.fit(self.X_encoded, self.y_encoded)
             
             self.is_loaded = True
             log_model_loaded()
             
-            api_logger.info("✅ SVM + AdaBoost model trained successfully sesuai script dosen (FIXED)")
-            api_logger.info(f"🔢 Features: {self.X_encoded.shape[1]}")
-            api_logger.info(f"📋 Samples: {self.X_encoded.shape[0]}")
-            api_logger.info(f"🎯 Target classes: {list(self.label_encoder.classes_)}")
+            api_logger.info("✅ Model SVM + AdaBoost berhasil dilatih")
+            api_logger.info(f"🔢 Jumlah fitur: {self.X_encoded.shape[1]}")
+            api_logger.info(f"📋 Jumlah sampel: {self.X_encoded.shape[0]}")
+            api_logger.info(f"🎯 Kelas target: {list(self.label_encoder.classes_)}")
             
             return True
                 
@@ -157,10 +166,13 @@ class AllergenPredictor:
     
     def _detect_oov_rate(self, input_data: Dict[str, str]) -> Tuple[float, Dict[str, bool]]:
         """
-        Detect Out-of-Vocabulary rate in input data
+        Mendeteksi tingkat Out-of-Vocabulary pada data input
         
+        Args:
+            input_data: Dictionary berisi data input pengguna
+            
         Returns:
-            Tuple[float, Dict]: (oov_rate, field_recognition_status)
+            Tuple[float, Dict]: (tingkat_oov, status_pengenalan_field)
         """
         field_mapping = {
             'nama_produk_makanan': 'nama_produk_makanan',
@@ -194,19 +206,27 @@ class AllergenPredictor:
         confidence_threshold: float = 0.5
     ) -> Tuple[List[AllergenResult], Dict]:
         """
-        Prediksi alergen sesuai script dosen dengan penanganan OOV (Out-of-Vocabulary) - FIXED
+        Melakukan prediksi alergen dengan penanganan Out-of-Vocabulary (OOV)
+        
+        Args:
+            ingredients_text: Teks bahan-bahan dalam bentuk string
+            ingredients_data: Data bahan terstruktur dalam dictionary
+            confidence_threshold: Ambang batas confidence untuk deteksi
+            
+        Returns:
+            Tuple berisi list AllergenResult dan metadata prediksi
         """
         if not self.is_loaded:
             api_logger.warning("⚠️ Model not loaded, loading now...")
             self.load_and_train_model()
         
         try:
-            # Prepare input data sesuai script dosen
+            # Persiapan data input
             if ingredients_data:
                 data_baru = ingredients_data.copy()
                 display_text = f"{data_baru.get('nama_produk_makanan', '')}: {data_baru.get('bahan_utama', '')}, {data_baru.get('pemanis', '')}, {data_baru.get('lemak_minyak', '')}, {data_baru.get('penyedap_rasa', '')}"
             else:
-                # Fallback if only text provided
+                # Fallback jika hanya teks yang disediakan
                 data_baru = {
                     'nama_produk_makanan': 'Produk Makanan',
                     'bahan_utama': ingredients_text or '',
@@ -217,84 +237,84 @@ class AllergenPredictor:
                 }
                 display_text = ingredients_text or ''
             
-            # 🔧 DETECT OOV BEFORE PREDICTION
+            # Deteksi OOV sebelum prediksi
             oov_rate, field_recognition = self._detect_oov_rate(data_baru)
             
-            # Create DataFrame sesuai script dosen
+            # Membuat DataFrame untuk input baru
             df_baru = pd.DataFrame([data_baru])
             
-            # One-hot encoding data baru sesuai script dosen
+            # One-hot encoding data baru
             df_baru_encoded = pd.get_dummies(df_baru)
             
-            # Sinkronisasi kolom (pastikan kolom sama dengan training) sesuai script dosen
+            # Sinkronisasi kolom (pastikan kolom sama dengan training)
             for col in self.X_encoded.columns:
                 if col not in df_baru_encoded.columns:
                     df_baru_encoded[col] = 0
             
             df_baru_encoded = df_baru_encoded[self.X_encoded.columns]
             
-            # Check encoded data quality
+            # Evaluasi kualitas encoding data
             non_zero_features = (df_baru_encoded != 0).sum().sum()
             total_features = df_baru_encoded.shape[0] * df_baru_encoded.shape[1]
             encoding_recognition_rate = (non_zero_features / total_features) * 100
             
-            api_logger.info(f"🤖 Using SVM + AdaBoost model sesuai script dosen (FIXED)")
-            api_logger.info(f"🔍 Input OOV analysis: {oov_rate:.1f}% unknown fields")
-            api_logger.info(f"🔢 Encoding analysis: {non_zero_features}/{total_features} active features ({encoding_recognition_rate:.1f}%)")
+            api_logger.info(f"🤖 Menggunakan model SVM + AdaBoost")
+            api_logger.info(f"🔍 Analisis OOV input: {oov_rate:.1f}% field tidak dikenal")
+            api_logger.info(f"🔢 Analisis encoding: {non_zero_features}/{total_features} fitur aktif ({encoding_recognition_rate:.1f}%)")
             
-            # Prediksi sesuai script dosen
+            # Melakukan prediksi
             prediksi = self.model.predict(df_baru_encoded)
             probabilitas = self.model.predict_proba(df_baru_encoded)
             
-            # Konversi kembali ke target/label sesuai script dosen
+            # Konversi kembali ke label target
             hasil_target = self.label_encoder.inverse_transform(prediksi)
             base_confidence = probabilitas[0][prediksi[0]]
             
-            # 🔧 DYNAMIC CONFIDENCE ADJUSTMENT based on OOV
+            # Penyesuaian confidence dinamis berdasarkan OOV
             if oov_rate >= 90:
-                # Almost complete OOV - very low confidence
+                # OOV hampir lengkap - confidence sangat rendah
                 confidence_multiplier = 0.2
-                api_logger.warning(f"⚠️ Critical OOV detected ({oov_rate:.1f}%) - confidence severely reduced")
+                api_logger.warning(f"⚠️ OOV kritis terdeteksi ({oov_rate:.1f}%) - confidence sangat dikurangi")
             elif oov_rate >= 70:
-                # High OOV - low confidence
+                # OOV tinggi - confidence rendah
                 confidence_multiplier = 0.4
-                api_logger.warning(f"⚠️ High OOV detected ({oov_rate:.1f}%) - confidence reduced")
+                api_logger.warning(f"⚠️ OOV tinggi terdeteksi ({oov_rate:.1f}%) - confidence dikurangi")
             elif oov_rate >= 50:
-                # Moderate OOV - moderate confidence reduction
+                # OOV sedang - pengurangan confidence sedang
                 confidence_multiplier = 0.7
-                api_logger.warning(f"⚠️ Moderate OOV detected ({oov_rate:.1f}%) - confidence moderately reduced")
+                api_logger.warning(f"⚠️ OOV sedang terdeteksi ({oov_rate:.1f}%) - confidence sedang dikurangi")
             elif oov_rate >= 25:
-                # Low OOV - slight confidence reduction
+                # OOV rendah - pengurangan confidence sedikit
                 confidence_multiplier = 0.9
-                api_logger.info(f"ℹ️ Low OOV detected ({oov_rate:.1f}%) - confidence slightly reduced")
+                api_logger.info(f"ℹ️ OOV rendah terdeteksi ({oov_rate:.1f}%) - confidence sedikit dikurangi")
             else:
-                # Good recognition - minimal confidence reduction
+                # Pengenalan baik - pengurangan confidence minimal
                 confidence_multiplier = 0.95
-                api_logger.info(f"✅ Good input recognition ({100-oov_rate:.1f}%) - high confidence maintained")
+                api_logger.info(f"✅ Pengenalan input baik ({100-oov_rate:.1f}%) - confidence tinggi dipertahankan")
             
-            # Apply confidence adjustment
+            # Menerapkan penyesuaian confidence
             adjusted_confidence = base_confidence * confidence_multiplier
             akurasi_prediksi = round(adjusted_confidence * 100, 2)
             
-            # Create results sesuai output script dosen
+            # Membuat hasil prediksi
             results = []
             predicted_label = hasil_target[0]
             
-            # Determine if we should report detection based on adjusted confidence
+            # Menentukan apakah harus melaporkan deteksi berdasarkan adjusted confidence
             if predicted_label == "Mengandung Alergen" and adjusted_confidence >= confidence_threshold:
-                if adjusted_confidence >= 0.6:  # Lower threshold for adjusted confidence
+                if adjusted_confidence >= 0.6:  # Ambang batas lebih rendah untuk adjusted confidence
                     results.append(AllergenResult(
                         allergen="Mengandung Alergen",
                         confidence=float(adjusted_confidence),
                         detected=True,
-                        risk_level=""  # Will be auto-computed by validator
+                        risk_level=""  # Akan dihitung otomatis oleh validator
                     ))
             
-            # Create metadata dengan informasi OOV
+            # Membuat metadata dengan informasi OOV
             prediction_metadata = {
                 'input_ingredients': display_text,
                 'structured_input': data_baru,
-                'model_used': 'SVM + AdaBoost (sesuai script dosen - FIXED)',
+                'model_used': 'SVM + AdaBoost',
                 'model_version': 'SVM + AdaBoost dengan Cross Validation K=10 + OOV Handling',
                 'encoding_method': 'One-Hot Encoding (pd.get_dummies)',
                 'total_features': self.X_encoded.shape[1],
@@ -302,7 +322,7 @@ class AllergenPredictor:
                 'prediction_label': predicted_label,
                 'confidence_score': float(adjusted_confidence),
                 'cv_accuracy_mean': self.cv_accuracy if self.cv_accuracy else 0.937,
-                'processing_note': 'Model sesuai script notebook deteksi_alergen.ipynb dengan OOV handling',
+                'processing_note': 'Model machine learning dengan penanganan Out-of-Vocabulary',
                 'cross_validation_k': 10,
                 'oov_analysis': {
                     'oov_rate': round(oov_rate, 2),
@@ -317,40 +337,40 @@ class AllergenPredictor:
             return results, prediction_metadata
             
         except Exception as e:
-            log_error(e, "Allergen prediction (FIXED)")
-            raise RuntimeError(f"Prediction failed: {str(e)}")
+            log_error(e, "Prediksi alergen")
+            raise RuntimeError(f"Prediksi gagal: {str(e)}")
     
     def get_model_info(self) -> Dict:
-        """Get information about the trained model - FIXED VERSION"""
+        """Mengambil informasi tentang model yang telah dilatih"""
         if not self.is_loaded:
-            return {"loaded": False, "error": "Model not loaded"}
+            return {"loaded": False, "error": "Model belum dimuat"}
         
         info = {
             "loaded": True,
-            "model_type": "SVM + AdaBoost (sesuai script dosen - FIXED)",
+            "model_type": "SVM + AdaBoost",
             "encoding_method": "One-Hot Encoding (pd.get_dummies) + OOV Handling",
-            "n_features": self.X_encoded.shape[1] if self.X_encoded is not None else "Unknown",
-            "n_samples": self.X_encoded.shape[0] if self.X_encoded is not None else "Unknown",
-            "cv_accuracy_mean": self.cv_accuracy if self.cv_accuracy else "Unknown",
+            "n_features": self.X_encoded.shape[1] if self.X_encoded is not None else "Tidak diketahui",
+            "n_samples": self.X_encoded.shape[0] if self.X_encoded is not None else "Tidak diketahui",
+            "cv_accuracy_mean": self.cv_accuracy if self.cv_accuracy else "Tidak diketahui",
             "cross_validation_k": 10,
-            "training_date": "Real-time training dari dataset asli",
+            "training_date": "Pelatihan real-time dari dataset",
             "label_classes": self.label_encoder.classes_.tolist() if self.label_encoder else ["Mengandung Alergen", "Tidak Mengandung Alergen"],
             "dataset_source": "data/raw/Dataset Bahan Makanan & Alergen.xlsx",
             "supported_allergens": self.get_supported_allergens(),
-            "note": "Model SVM + AdaBoost dengan OOV handling untuk mengatasi masalah confidence 60.56%",
+            "note": "Model SVM + AdaBoost dengan penanganan Out-of-Vocabulary untuk input yang tidak dikenal",
             "improvements": [
-                "OOV (Out-of-Vocabulary) detection",
-                "Dynamic confidence adjustment",
-                "Better handling of unseen input categories",
-                "Fixed confidence score diversity"
+                "Deteksi Out-of-Vocabulary (OOV)",
+                "Penyesuaian confidence dinamis", 
+                "Penanganan kategori input yang belum pernah ditemui",
+                "Diversitas skor confidence yang diperbaiki"
             ]
         }
         
         return info
     
     def get_supported_allergens(self) -> List[str]:
-        """Get list of supported allergen classes"""
-        # Return specific allergen types that can be detected, not just binary classification
+        """Mengambil daftar kelas alergen yang didukung"""
+        # Mengembalikan jenis alergen spesifik yang dapat dideteksi, bukan hanya klasifikasi biner
         return [
             'susu', 'gandum', 'telur', 'kacang_tanah', 'kedelai', 'seafood',
             'udang', 'kepiting', 'ikan', 'kerang', 'tiram', 'cumi',
@@ -359,7 +379,7 @@ class AllergenPredictor:
             'tidak_mengandung_alergen', 'mengandung_alergen'
         ]
 
-# Create global predictor instance
+# Membuat instance predictor global
 predictor = AllergenPredictor()
 
 # Export

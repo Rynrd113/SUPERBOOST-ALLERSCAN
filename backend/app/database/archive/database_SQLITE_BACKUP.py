@@ -110,13 +110,13 @@ class AllergenDatabase:
     
     def load_dataset_from_excel(self, excel_path: str) -> None:
         """
-        Load dataset langsung dari Excel file asli dosen dan buat prediksi untuk semua item
+        Memuat dataset langsung dari file Excel dan membuat prediksi untuk semua item
         
         Args:
-            excel_path: Path ke file Excel dataset asli
+            excel_path: Path ke file Excel dataset
         """
         try:
-            # Load dataset langsung dari Excel sesuai script dosen
+            # Memuat dataset langsung dari Excel
             df = pd.read_excel(excel_path, sheet_name='Dataset')
             print(f"📊 Loading dataset dari Excel dengan {len(df)} items...")
             

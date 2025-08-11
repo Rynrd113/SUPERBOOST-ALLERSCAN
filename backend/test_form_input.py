@@ -87,10 +87,10 @@ def send_prediction_request(product_data):
         return False
 
 def main():
-    """Main test function"""
+    """Fungsi test utama"""
     print("=" * 60)
-    print("🧪 TESTING REAL-TIME DATA UPDATE - Form Submissions")
-    print(f"⏰ Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("🧪 TESTING PEMBARUAN DATA REAL-TIME - Pengiriman Form")
+    print(f"⏰ Dimulai pada: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     success_count = 0
@@ -108,9 +108,9 @@ def main():
             time.sleep(3)
     
     print("\n" + "=" * 60)
-    print(f"✅ Test completed: {success_count}/{len(test_products)} successful")
-    print(f"⏰ Finished at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("📊 Check frontend for real-time updates!")
+    print(f"✅ Test selesai: {success_count}/{len(test_products)} berhasil")
+    print(f"⏰ Selesai pada: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("📊 Periksa frontend untuk pembaruan real-time!")
     print("=" * 60)
 
 if __name__ == "__main__":

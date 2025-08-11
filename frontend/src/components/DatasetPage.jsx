@@ -584,7 +584,7 @@ function DatasetPage({ onNavigate }) {
     has_previous: false
   })
 
-  // 🔧 UPDATED: Calculate statistics from predictions (with clear logging)
+  // Menghitung statistik dari data prediksi (dengan logging yang jelas)
   const calculateStatistics = (predictions) => {
     console.log(`📊 Calculating statistics from ${predictions.length} predictions`)
     
@@ -862,7 +862,7 @@ function DatasetPage({ onNavigate }) {
         }
       })
       
-      // Update stats with breakdowns
+      // Memperbarui statistik dengan breakdown
       setStats(prevStats => ({
         ...prevStats,
         bahan_utama_breakdown,

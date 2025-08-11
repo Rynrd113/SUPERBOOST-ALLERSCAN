@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 Test Confidence Calculation sesuai Script Dosen
+🔍 Test Confidence Calculation Script
 Memverifikasi bahwa perhitungan confidence sesuai dengan notebook deteksi_alergen.ipynb
 """
 
@@ -17,9 +17,9 @@ warnings.filterwarnings('ignore')
 # Add backend path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
 
-def load_model_dosen():
-    """Load model sesuai script dosen"""
-    print("🤖 Loading model sesuai script dosen...")
+def load_model_reference():
+    """Memuat model referensi dari notebook"""
+    print("🤖 Memuat model referensi dari notebook...")
     
     # Load dataset
     file_path = 'data/raw/Dataset Bahan Makanan & Alergen.xlsx'
@@ -28,29 +28,37 @@ def load_model_dosen():
     print(f"📊 Dataset shape: {df.shape}")
     print(f"🎯 Target distribution: {df['Prediksi'].value_counts().to_dict()}")
     
-    # Pilih fitur dan target sesuai script dosen
+    # Memilih fitur dan target sesuai notebook referensi
     fitur = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen']
     target = 'Prediksi'
     
     X = df[fitur]
     y = df[target]
     
-    # Transformasi sesuai script dosen
+        # Transformasi sesuai notebook referensi
     X_encoded = pd.get_dummies(X)
     le = LabelEncoder()
     y_encoded = le.fit_transform(y)
     
-    print(f"🔢 X_encoded shape: {X_encoded.shape}")
-    print(f"🏷️ Label classes: {le.classes_}")
+    print(f"🔢 Features after encoding: {X_encoded.shape[1]}")
+    print(f"📋 Labels: {le.classes_}")
     
-    # Model sesuai script dosen
+    # Model sesuai notebook referensi
     svm_base = SVC(kernel='linear', probability=True, random_state=42)
-    svm_adaboost_model = AdaBoostClassifier(estimator=svm_base, n_estimators=50, random_state=42)
+    model = AdaBoostClassifier(estimator=svm_base, n_estimators=50, random_state=42)
+    model.fit(X_encoded, y_encoded)
     
-    # Train model
-    svm_adaboost_model.fit(X_encoded, y_encoded)
+    print("✅ Model berhasil dilatih")
+    return model, le, X_encoded
+
+def test_confidence_calculation():
+    """Test perhitungan confidence sesuai notebook referensi"""
     
-    return svm_adaboost_model, le, X_encoded
+    print("🧪 TESTING CONFIDENCE CALCULATION SESUAI NOTEBOOK REFERENSI")
+    print("=" * 60)
+    
+    try:
+        model, label_encoder, X_encoded = load_model_reference()
 
 def test_confidence_calculation():
     """Test perhitungan confidence sesuai script dosen"""
@@ -60,7 +68,7 @@ def test_confidence_calculation():
     
     try:
         # Load model
-        model, label_encoder, X_encoded = load_model_dosen()
+        model, label_encoder, X_encoded = load_model_reference()
         
         # Test data: Roti (sesuai dengan kasus user)
         test_cases = [
@@ -153,7 +161,7 @@ def analyze_model_behavior():
     print("=" * 60)
     
     try:
-        model, label_encoder, X_encoded = load_model_dosen()
+        model, label_encoder, X_encoded = load_model_reference()
         
         # Test completely unknown data vs known data
         unknown_data = {

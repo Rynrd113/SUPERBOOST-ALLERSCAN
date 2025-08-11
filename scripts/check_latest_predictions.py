@@ -39,11 +39,11 @@ def check_latest_predictions():
                     print(f"   Risk Level: {row[5]}")
                     print(f"   Created At: {row[6]}")
                     
-                    # Check if this is the fixed case
+                    # Evaluasi hasil prediksi
                     if row[0] == 'Roti' and row[3] == 0 and row[4] > 0.9:
-                        print(f"   ✅ FIXED! No allergens with HIGH confidence!")
+                        print(f"   ✅ BAIK! Tidak ada alergen dengan confidence TINGGI!")
                     elif row[0] == 'Roti' and row[3] == 0 and row[4] < 0.7:
-                        print(f"   ⚠️ Still has the OLD issue - low confidence for no allergens")
+                        print(f"   ⚠️ Masih ada masalah - confidence rendah untuk produk tanpa alergen")
             else:
                 print("❌ No predictions found")
     

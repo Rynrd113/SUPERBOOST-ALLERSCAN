@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-🔧 Fix Historical Confidence Data
-Fix confidence values for historical data that has low confidence for "no allergens detected" cases
+🔧 Perbaikan Data Confidence Historis
+Memperbaiki nilai confidence untuk data historis yang memiliki confidence rendah 
+untuk kasus "tidak ada alergen terdeteksi"
 
-This script will:
-1. Identify records with allergen_count = 0 but confidence < 0.5
-2. Update these to have confidence = 0.95 (95%) which is correct for "no allergens"
-3. Preserve original data for allergen-containing products
+Script ini akan:
+1. Mengidentifikasi record dengan allergen_count = 0 tetapi confidence < 0.5
+2. Memperbarui nilai confidence menjadi 0.95 (95%) yang benar untuk "tidak ada alergen"
+3. Mempertahankan data asli untuk produk yang mengandung alergen
 """
 
 import sys
@@ -45,13 +46,13 @@ def fix_historical_confidence():
                 LIMIT 5
             """)).fetchall()
             
-            print("\n🔍 Examples of records to be fixed:")
+            print("\n🔍 Contoh record yang akan diperbaiki:")
             for i, row in enumerate(examples, 1):
                 print(f"  {i}. {row[0]} - {row[1]*100:.1f}% confidence - {row[3]}")
             
-            # Ask for confirmation
-            print(f"\n❓ Fix {records_to_fix} historical records?")
-            print("   This will set confidence to 95% for products with no allergens detected")
+            # Meminta konfirmasi
+            print(f"\n❓ Perbaiki {records_to_fix} record historis?")
+            print("   Ini akan mengubah confidence menjadi 95% untuk produk tanpa alergen terdeteksi")
             response = input("   Continue? (y/N): ").strip().lower()
             
             if response != 'y':
@@ -70,9 +71,9 @@ def fix_historical_confidence():
             
             conn.commit()
             
-            print(f"✅ Successfully updated {update_result.rowcount} records")
+            print(f"✅ Berhasil memperbarui {update_result.rowcount} record")
             
-            # Verify the fix
+            # Verifikasi perbaikan
             verify_result = conn.execute(text("""
                 SELECT COUNT(*) as count
                 FROM user_predictions 
@@ -91,12 +92,12 @@ def fix_historical_confidence():
                     LIMIT 5
                 """)).fetchall()
                 
-                print("\n📊 Updated records (samples):")
+                print("\n📊 Record yang telah diperbarui (contoh):")
                 for i, row in enumerate(updated_examples, 1):
                     print(f"  {i}. {row[0]} - {row[1]*100:.1f}% confidence - {row[3]}")
                 
             else:
-                print(f"⚠️ Still have {verify_result} records that need fixing")
+                print(f"⚠️ Masih ada {verify_result} record yang perlu diperbaiki")
             
     except Exception as e:
         print(f"❌ Error fixing historical confidence: {e}")

@@ -47,8 +47,8 @@ class ErrorBoundary extends React.Component {
     console.error('Stack:', error.stack)
     console.groupEnd()
 
-    // TODO: Send to error tracking service
-    // Example: Sentry.captureException(error, { extra: errorInfo })
+    // Dapat dintegrasikan dengan service error tracking seperti Sentry
+    // Contoh: Sentry.captureException(error, { extra: errorInfo })
   }
 
   handleRetry = () => {
@@ -259,7 +259,7 @@ export const errorHandler = {
     console.error('Original Error:', error)
     console.groupEnd()
 
-    // TODO: Send to error tracking service
+    // Dapat dintegrasikan dengan service error tracking
   }
 }
 

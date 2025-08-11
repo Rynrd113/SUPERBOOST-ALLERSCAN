@@ -1,12 +1,14 @@
 """
-🔧 Dataset Service Layer - Clean Architecture
+Layer Service untuk Pengelolaan Dataset
 
-Service untuk menangani operasi dataset dengan separation of concerns
-Mengikuti prinsip DRY dan Single Responsibility
+Service untuk menangani operasi dataset dengan pemisahan tanggung jawab yang jelas.
+Menerapkan prinsip DRY (Don't Repeat Yourself) dan Single Responsibility Principle.
 
-@author SuperBoost AllerScan Team  
-@version 2.0.0
-@updated 2025-08-10
+Fitur utama:
+- Manajemen riwayat prediksi dengan pagination
+- Perhitungan statistik dan analytics
+- Export data dalam berbagai format
+- Filtering dan sorting data
 """
 
 from typing import Dict, List, Optional, Any
@@ -19,13 +21,13 @@ from ..database.allergen_database import database_manager
 
 class DatasetService:
     """
-    Service layer untuk operasi dataset
+    Service class untuk operasi pengelolaan dataset dan riwayat prediksi
     
-    Responsibilities:
-    1. Retrieve prediction history dengan pagination
-    2. Calculate statistics dan analytics
-    3. Export data ke berbagai format
-    4. Data filtering dan sorting
+    Tanggung jawab utama:
+    - Mengambil riwayat prediksi dengan pagination
+    - Menghitung statistik dan analytics
+    - Export data ke berbagai format
+    - Filtering dan sorting data
     """
     
     def __init__(self):
@@ -33,41 +35,41 @@ class DatasetService:
     
     async def get_prediction_history(self, page: int = 1, limit: int = 50, include_stats: bool = True) -> Dict[str, Any]:
         """
-        Get paginated prediction history dengan optional statistics
+        Mengambil riwayat prediksi dengan pagination dan statistik opsional
         
         Args:
-            page: Page number (1-based)
-            limit: Items per page
-            include_stats: Include statistics in response
+            page: Nomor halaman (dimulai dari 1)
+            limit: Jumlah item per halaman
+            include_stats: Sertakan statistik dalam response
             
         Returns:
-            Dictionary dengan predictions dan metadata
+            Dictionary berisi prediksi dan metadata
         """
         try:
             offset = (page - 1) * limit
             
-            # Get predictions dengan pagination metadata (UPDATED)
+            # Ambil prediksi dengan metadata pagination
             result = self.db.get_prediction_history(limit=limit, offset=offset)
             
             response = {
                 'success': True,
-                'predictions': result['records'],  # Use records from new response format
-                'pagination': result['pagination'],  # Use pagination from new response format
+                'predictions': result['records'],
+                'pagination': result['pagination'],
                 'meta': {
                     'retrieved_at': datetime.now().isoformat(),
                     'data_source': 'user_form_predictions'
                 }
             }
             
-            # Include statistics jika diminta
+            # Sertakan statistik jika diminta
             if include_stats:
                 response['statistics'] = await self.get_comprehensive_statistics()
             
-            api_logger.info(f"📊 Retrieved {len(result['records'])} predictions for page {page}")
+            api_logger.info(f"Berhasil mengambil {len(result['records'])} prediksi untuk halaman {page}")
             return response
             
         except Exception as e:
-            api_logger.error(f"❌ Error getting prediction history: {e}")
+            api_logger.error(f"Error dalam mengambil riwayat prediksi: {e}")
             return {
                 'success': False,
                 'error': str(e),
@@ -84,15 +86,15 @@ class DatasetService:
     
     async def get_comprehensive_statistics(self) -> Dict[str, Any]:
         """
-        Get comprehensive statistics untuk dashboard
+        Mengambil statistik komprehensif untuk dashboard dan analisis
         
         Returns:
-            Dictionary dengan berbagai statistik
+            Dictionary berisi berbagai metrik statistik
         """
         try:
             base_stats = self.db.get_statistics()
             
-            # Enhanced statistics
+            # Statistik yang diperkaya dengan analisis tambahan
             enhanced_stats = {
                 **base_stats,
                 'data_quality': {
@@ -107,7 +109,7 @@ class DatasetService:
             return enhanced_stats
             
         except Exception as e:
-            api_logger.error(f"❌ Error calculating comprehensive statistics: {e}")
+            api_logger.error(f"Error dalam menghitung statistik komprehensif: {e}")
             return {'error': str(e)}
     
     async def export_to_excel(self, limit: int = 1000) -> BytesIO:
@@ -149,29 +151,29 @@ class DatasetService:
             raise
     
     def _format_dataframe_for_export(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Format DataFrame untuk export sesuai format Dataset Dosen"""
-        # Format sesuai dataset dosen: nama produk pangan, bahan pokok, pemanis, lemak/minyak, bumbu, alergen, hasil deteksi
+        """Memformat DataFrame untuk export sesuai format dataset standar"""
+        # Format kolom: nama produk pangan, bahan pokok, pemanis, lemak/minyak, bumbu, alergen, hasil deteksi
         column_mapping = {
             'product_name': 'Nama Produk Pangan',
             'bahan_utama': 'Bahan Pokok',
             'pemanis': 'Pemanis',
             'lemak_minyak': 'Lemak/Minyak',
             'penyedap_rasa': 'Bumbu',
-            'ingredients_input': 'Alergen',  # Input ingredients sebagai kolom alergen
+            'ingredients_input': 'Alergen',  # Input bahan sebagai kolom alergen
             'predicted_allergens': 'Hasil Deteksi',  # Hasil prediksi
             'confidence_score': 'Tingkat Kepercayaan (%)',
             'created_at': 'Tanggal Prediksi'
         }
         
-        # Apply column mapping
+        # Menerapkan pemetaan kolom
         df = df.rename(columns=column_mapping)
         
-        # Select columns sesuai format dosen + info tambahan penting
-        dosen_columns = ['Nama Produk Pangan', 'Bahan Pokok', 'Pemanis', 'Lemak/Minyak', 'Bumbu', 'Alergen', 'Hasil Deteksi']
+        # Memilih kolom sesuai format standar + informasi tambahan penting
+        standard_columns = ['Nama Produk Pangan', 'Bahan Pokok', 'Pemanis', 'Lemak/Minyak', 'Bumbu', 'Alergen', 'Hasil Deteksi']
         extra_columns = ['Tingkat Kepercayaan (%)', 'Tanggal Prediksi']
         
-        # Filter available columns
-        available_columns = [col for col in dosen_columns + extra_columns if col in df.columns]
+        # Filter kolom yang tersedia
+        available_columns = [col for col in standard_columns + extra_columns if col in df.columns]
         df = df[available_columns]
         
         # Format confidence score as percentage

@@ -13,24 +13,24 @@ const Button = ({
   const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0'
   
   const variants = {
-    // Primary - AllerScan Blue
+    // Utama - Biru AllerScan
     primary: 'bg-allerscan-500 hover:bg-allerscan-600 text-white focus:ring-allerscan-500 shadow-md hover:shadow-lg',
     
-    // Secondary - Neutral Gray
+    // Sekunder - Abu-abu Netral
     secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300 focus:ring-gray-500',
     
-    // Outline - AllerScan Blue Outline
+    // Outline - Garis Biru AllerScan
     outline: 'border-2 border-allerscan-500 text-allerscan-500 hover:bg-allerscan-500 hover:text-white focus:ring-allerscan-500',
     
-    // Ghost - Transparent
+    // Ghost - Transparan
     ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-500',
     
-    // Semantic Colors
+    // Warna Semantik
     success: 'bg-success-500 hover:bg-success-600 text-white focus:ring-success-500 shadow-md hover:shadow-lg',
     warning: 'bg-warning-500 hover:bg-warning-600 text-white focus:ring-warning-500 shadow-md hover:shadow-lg',
     danger: 'bg-error-500 hover:bg-error-600 text-white focus:ring-error-500 shadow-md hover:shadow-lg',
     
-    // Special variants
+    // Varian khusus
     link: 'text-allerscan-500 hover:text-allerscan-600 underline hover:no-underline focus:ring-allerscan-500',
     minimal: 'p-1 hover:bg-gray-100 rounded-md text-gray-500 hover:text-gray-700 focus:ring-gray-500'
   }

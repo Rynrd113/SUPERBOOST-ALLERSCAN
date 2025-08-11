@@ -156,8 +156,8 @@ async def predict_allergens(request: PredictionRequest, client_request: Request)
                 'ingredients': ingredients_text,
                 'allergens': allergen_display,
                 'allergen_count': len(detected_allergens),
-                'confidence': overall_confidence,  # 🔧 FIXED: Use frontend-consistent confidence calculation
-                'risk_level': calculated_risk_level,  # 🔧 FIXED: Use frontend-consistent risk level calculation
+                'confidence': overall_confidence,  # Menggunakan perhitungan confidence yang konsisten dengan frontend
+                'risk_level': calculated_risk_level,  # Menggunakan perhitungan risk level yang konsisten dengan frontend
                 'processing_time_ms': processing_time,
                 'model_version': metadata.get('model_version', 'SVM+AdaBoost'),
                 'user_ip': client_request.client.host if client_request.client else '',
@@ -266,7 +266,7 @@ async def get_dataset_results(limit: int = 100):
     Get dataset with allergen detection results
     """
     try:
-        # 🔧 FIXED: Use the correct database manager for user predictions
+        # Menggunakan database manager yang tepat untuk prediksi pengguna
         results = database_manager.get_prediction_history(limit=limit)
         stats = database_manager.get_statistics()
         

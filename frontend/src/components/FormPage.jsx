@@ -46,7 +46,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
     alergen: ''
   })
   
-  // Dropdown options untuk alergen - sesuai dengan algoritma dosen
+  // Opsi dropdown untuk alergen - sesuai dengan algoritma machine learning
   const allergenOptions = [
     { value: '', label: 'Pilih alergen yang diketahui (opsional)' },
     { value: 'Tidak Ada', label: 'Tidak Ada Alergen' },

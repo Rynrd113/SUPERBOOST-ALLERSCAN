@@ -1,16 +1,15 @@
 """
-🔧 Allergen Detection Service Layer - Clean Architecture
+Layer Service untuk Deteksi Alergen
 
-Implementasi service layer untuk memisahkan business logic dari API routes
-Mengikuti prinsip:
-- Single Responsibility Principle
-- DRY (Don't Repeat Yourself) 
-- Clean Code
-- Testable code structure
+Implementasi service layer untuk memisahkan business logic dari API routes.
+Menerapkan prinsip arsitektur bersih dengan pemisahan tanggung jawab yang jelas.
 
-@author SuperBoost AllerScan Team
-@version 2.0.0 - Clean Architecture
-@updated 2025-08-10
+Fitur utama:
+- Validasi data input pengguna
+- Integrasi dengan machine learning model
+- Pemrosesan dan formatting hasil prediksi  
+- Penyimpanan data ke database
+- Error handling yang komprehensif
 """
 
 from typing import Dict, List, Optional, Any
@@ -25,14 +24,14 @@ from ...schemas.request_schemas import PredictionRequest, PredictionResponse, Al
 
 class AllergenDetectionService:
     """
-    Service layer untuk allergen detection
+    Service class untuk deteksi alergen dalam produk makanan
     
-    Responsibilities:
-    1. Validate input data
-    2. Call ML model untuk prediction
-    3. Process and format results
-    4. Save results to database
-    5. Handle errors gracefully
+    Tanggung jawab utama:
+    - Memvalidasi data input pengguna
+    - Memanggil model machine learning untuk prediksi
+    - Memproses dan memformat hasil prediksi
+    - Menyimpan hasil ke database
+    - Menangani error dengan graceful handling
     """
     
     def __init__(self):
@@ -41,51 +40,51 @@ class AllergenDetectionService:
     
     async def detect_allergens(self, request: PredictionRequest, client_info: Optional[Dict] = None) -> Dict[str, Any]:
         """
-        Main method untuk allergen detection
+        Method utama untuk deteksi alergen dalam produk makanan
         
         Args:
-            request: PredictionRequest object dengan input data
-            client_info: Optional client information (IP, user agent, etc.)
+            request: Object PredictionRequest berisi data input
+            client_info: Informasi client opsional (IP, user agent, dll)
             
         Returns:
-            Dictionary dengan prediction results
+            Dictionary berisi hasil prediksi dan metadata
         """
         start_time = time.time()
         
         try:
-            # Validate model availability
+            # Validasi ketersediaan model
             if not self.predictor.is_loaded:
-                raise ValueError("Model belum dimuat. Silakan coba lagi dalam beberapa saat.")
+                raise ValueError("Model sedang dimuat. Silakan coba lagi dalam beberapa saat.")
             
-            # Prepare model input
+            # Persiapan input untuk model
             model_input = request.to_model_input()
-            api_logger.info(f"🔍 Processing prediction request: {request.nama_produk_makanan}")
+            api_logger.info(f"Memproses permintaan prediksi untuk: {request.nama_produk_makanan}")
             
-            # Call ML model (TIDAK DIUBAH - menggunakan logic dosen)
+            # Panggil model machine learning
             prediction_result = self.predictor.predict(model_input)
             
             processing_time = (time.time() - start_time) * 1000
             
-            # Process results
+            # Proses hasil prediksi
             formatted_result = self._format_prediction_result(
                 prediction_result, 
                 request, 
                 processing_time
             )
             
-            # Save to database
+            # Simpan ke database
             await self._save_prediction_to_database(
                 formatted_result, 
                 request, 
                 client_info
             )
             
-            api_logger.info(f"✅ Prediction completed in {processing_time:.2f}ms")
+            api_logger.info(f"Prediksi selesai dalam {processing_time:.2f}ms")
             return formatted_result
             
         except Exception as e:
-            error_msg = f"Error dalam deteksi alergen: {str(e)}"
-            api_logger.error(f"❌ {error_msg}")
+            error_msg = f"Terjadi kesalahan dalam deteksi alergen: {str(e)}"
+            api_logger.error(f"Error: {error_msg}")
             api_logger.error(f"Traceback: {traceback.format_exc()}")
             
             return {
@@ -99,21 +98,21 @@ class AllergenDetectionService:
     
     def _format_prediction_result(self, raw_result: Dict, request: PredictionRequest, processing_time: float) -> Dict:
         """
-        Format hasil prediksi ML menjadi response yang konsisten
+        Memformat hasil prediksi machine learning menjadi response yang terstruktur
         
         Args:
-            raw_result: Raw hasil dari ML model
-            request: Original request
-            processing_time: Processing time in milliseconds
+            raw_result: Hasil mentah dari model machine learning
+            request: Permintaan asli dari pengguna
+            processing_time: Waktu pemrosesan dalam milliseconds
             
         Returns:
-            Formatted prediction result
+            Hasil prediksi yang sudah diformat dengan metadata lengkap
         """
         try:
-            # Extract allergens dari raw result (format tergantung implementasi dosen)
+            # Ekstrak alergen dari hasil mentah model
             detected_allergens = []
             
-            # Contoh parsing - SESUAIKAN dengan format output model dosen
+            # Parsing hasil prediksi sesuai format output model
             if 'allergens' in raw_result:
                 allergen_data = raw_result['allergens']
                 
@@ -128,12 +127,12 @@ class AllergenDetectionService:
                             )
                         )
             
-            # Calculate overall metrics
+            # Hitung metrik keseluruhan
             total_detected = len(detected_allergens)
             overall_confidence = sum(a.confidence for a in detected_allergens) / max(total_detected, 1)
             overall_risk = self._determine_overall_risk(detected_allergens)
             
-            # Create ingredients string
+            # Buat string ingredients
             ingredients_list = [
                 request.bahan_utama,
                 request.pemanis if request.pemanis != "Tidak Ada" else "",
@@ -154,18 +153,18 @@ class AllergenDetectionService:
                 'overall_risk': overall_risk,
                 'timestamp': datetime.now(),
                 
-                # Additional metadata
+                # Metadata tambahan
                 'product_name': request.nama_produk_makanan,
                 'ingredients': processed_text,
                 'allergen_summary': ', '.join([a.allergen for a in detected_allergens]) if detected_allergens else 'tidak terdeteksi'
             }
             
         except Exception as e:
-            api_logger.error(f"❌ Error formatting prediction result: {e}")
+            api_logger.error(f"Error dalam memformat hasil prediksi: {e}")
             raise
     
     def _determine_risk_level(self, confidence: float) -> str:
-        """Determine risk level based on confidence score"""
+        """Menentukan tingkat risiko berdasarkan skor confidence"""
         if confidence >= 0.8:
             return "high"
         elif confidence >= 0.5:
@@ -174,7 +173,7 @@ class AllergenDetectionService:
             return "low"
     
     def _determine_overall_risk(self, detected_allergens: List[AllergenResult]) -> str:
-        """Determine overall risk level"""
+        """Menentukan tingkat risiko keseluruhan berdasarkan alergen yang terdeteksi"""
         if not detected_allergens:
             return "none"
         
@@ -189,7 +188,7 @@ class AllergenDetectionService:
             return "low"
     
     async def _save_prediction_to_database(self, result: Dict, request: PredictionRequest, client_info: Optional[Dict]):
-        """Save prediction result to database"""
+        """Menyimpan hasil prediksi ke database untuk riwayat dan analisis"""
         try:
             prediction_data = {
                 'productName': request.nama_produk_makanan,
@@ -212,14 +211,14 @@ class AllergenDetectionService:
             result['database_id'] = record_id
             
         except Exception as e:
-            api_logger.error(f"❌ Error saving to database: {e}")
-            # Don't fail the whole request if database save fails
+            api_logger.error(f"Error dalam penyimpanan ke database: {e}")
+            # Tidak menggagalkan seluruh request jika penyimpanan database gagal
     
     async def get_supported_allergens(self) -> List[str]:
-        """Get list of supported allergens from model"""
+        """Mengambil daftar alergen yang didukung oleh model"""
         try:
             if not self.predictor.is_loaded:
-                # Return fallback list
+                # Return daftar fallback standar
                 return [
                     'susu', 'gandum', 'telur', 'kacang_tanah', 'kedelai', 'seafood',
                     'udang', 'kepiting', 'ikan', 'kerang', 'tiram', 'cumi',
@@ -227,15 +226,15 @@ class AllergenDetectionService:
                     'biji_bunga_matahari', 'gluten', 'laktosa', 'msg', 'sulfur'
                 ]
             
-            # Get from model jika tersedia
+            # Ambil dari model jika tersedia
             return self.predictor.get_supported_allergens()
             
         except Exception as e:
-            api_logger.error(f"❌ Error getting supported allergens: {e}")
+            api_logger.error(f"Error dalam mengambil daftar alergen: {e}")
             return []
     
     async def get_model_info(self) -> Dict:
-        """Get model information"""
+        """Mengambil informasi detail tentang model machine learning yang digunakan"""
         try:
             return {
                 'model_type': 'SVM + AdaBoost',
@@ -247,11 +246,11 @@ class AllergenDetectionService:
                 'last_updated': datetime.now().isoformat()
             }
         except Exception as e:
-            api_logger.error(f"❌ Error getting model info: {e}")
+            api_logger.error(f"Error dalam mengambil informasi model: {e}")
             return {'error': str(e)}
 
-# Create singleton instance
+# Buat instance singleton
 allergen_service = AllergenDetectionService()
 
-# Export
+# Export untuk penggunaan di modul lain
 __all__ = ['AllergenDetectionService', 'allergen_service']

@@ -31,7 +31,7 @@ async def lifespan(app: FastAPI):
         # Always load from dataset Excel sesuai script dosen
         from .models.inference.predictor import predictor
         
-        api_logger.info("📚 Training model from dataset Excel sesuai script notebook dosen...")
+        api_logger.info("📚 Melatih model dari dataset Excel sesuai notebook referensi...")
         success = predictor.load_and_train_model()
         
         if success:

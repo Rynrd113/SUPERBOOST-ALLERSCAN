@@ -15,7 +15,6 @@ Architecture Principles:
 
 @author SuperBoost AllerScan Team
 @version 2.0.0 - Clean Architecture
-@updated 2025-08-09
 """
 
 import os
