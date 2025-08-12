@@ -82,11 +82,12 @@ class AllergenDatabaseManager:
             raise
     
     def _create_tables(self) -> None:
-        """Create necessary tables with proper indexing"""
+        """Create necessary tables with proper indexing - using existing migrated tables"""
         with self.engine.connect() as conn:
-            # Table for user form predictions (PRIMARY data source for website)
+            # Use existing dataset_results table (migrated from SQLite)
+            # This is our PRIMARY data source for the website
             conn.execute(text("""
-                CREATE TABLE IF NOT EXISTS user_predictions (
+                CREATE TABLE IF NOT EXISTS dataset_results (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     product_name VARCHAR(255) NOT NULL,
                     bahan_utama TEXT,
@@ -110,6 +111,24 @@ class AllergenDatabaseManager:
                     INDEX idx_allergen_count (allergen_count),
                     INDEX idx_confidence (confidence_score),
                     INDEX idx_risk_level (risk_level)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            """))
+            
+            # Form test results table  
+            conn.execute(text("""
+                CREATE TABLE IF NOT EXISTS form_test_results (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    test_name VARCHAR(255),
+                    ingredients TEXT,
+                    expected_result TEXT,
+                    actual_result TEXT,
+                    confidence DECIMAL(5,4),
+                    status ENUM('passed', 'failed') DEFAULT 'passed',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    
+                    INDEX idx_test_name (test_name),
+                    INDEX idx_status (status),
+                    INDEX idx_created_at (created_at)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             """))
             
@@ -146,7 +165,7 @@ class AllergenDatabaseManager:
         try:
             with self.engine.connect() as conn:
                 result = conn.execute(text("""
-                    INSERT INTO user_predictions 
+                    INSERT INTO dataset_results 
                     (product_name, bahan_utama, pemanis, lemak_minyak, penyedap_rasa,
                      ingredients_input, predicted_allergens, allergen_count,
                      confidence_score, risk_level, processing_time_ms, model_version,
@@ -198,7 +217,7 @@ class AllergenDatabaseManager:
             with self.engine.connect() as conn:
                 # Get total count for pagination
                 total_count = conn.execute(text(
-                    "SELECT COUNT(*) FROM user_predictions"
+                    "SELECT COUNT(*) FROM dataset_results"
                 )).scalar()
                 
                 # Get paginated records
@@ -209,7 +228,7 @@ class AllergenDatabaseManager:
                         ingredients_input, predicted_allergens, allergen_count, 
                         confidence_score, risk_level, processing_time_ms, model_version, 
                         keterangan, created_at
-                    FROM user_predictions 
+                    FROM dataset_results 
                     ORDER BY created_at DESC 
                     LIMIT :limit OFFSET :offset
                 """), {'limit': limit, 'offset': offset})
@@ -270,26 +289,26 @@ class AllergenDatabaseManager:
             with self.engine.connect() as conn:
                 # Basic counts
                 total_predictions = conn.execute(text(
-                    "SELECT COUNT(*) FROM user_predictions"
+                    "SELECT COUNT(*) FROM dataset_results"
                 )).scalar()
                 
                 detected_count = conn.execute(text(
-                    "SELECT COUNT(*) FROM user_predictions WHERE allergen_count > 0"
+                    "SELECT COUNT(*) FROM dataset_results WHERE allergen_count > 0"
                 )).scalar()
                 
                 # Average metrics
                 avg_confidence = conn.execute(text(
-                    "SELECT AVG(confidence_score) FROM user_predictions WHERE confidence_score > 0"
+                    "SELECT AVG(confidence_score) FROM dataset_results WHERE confidence_score > 0"
                 )).scalar() or 0.0
                 
                 avg_processing_time = conn.execute(text(
-                    "SELECT AVG(processing_time_ms) FROM user_predictions"
+                    "SELECT AVG(processing_time_ms) FROM dataset_results"
                 )).scalar() or 0.0
                 
                 # Risk level distribution
                 risk_distribution = conn.execute(text("""
                     SELECT risk_level, COUNT(*) as count
-                    FROM user_predictions 
+                    FROM dataset_results 
                     GROUP BY risk_level
                 """)).fetchall()
                 
@@ -351,7 +370,7 @@ class AllergenDatabaseManager:
                 # Get all allergens from predictions
                 result = conn.execute(text("""
                     SELECT predicted_allergens 
-                    FROM user_predictions 
+                    FROM dataset_results 
                     WHERE predicted_allergens IS NOT NULL 
                     AND predicted_allergens != 'tidak terdeteksi'
                     AND allergen_count > 0
@@ -391,7 +410,7 @@ class AllergenDatabaseManager:
                     id, product_name, ingredients_input, predicted_allergens, 
                     allergen_count, confidence_score, risk_level,
                     processing_time_ms, model_version, created_at
-                FROM user_predictions 
+                FROM dataset_results 
                 WHERE id = :prediction_id
                 """
                 
@@ -433,16 +452,16 @@ class AllergenDatabaseManager:
         """
         try:
             with self.engine.connect() as conn:
-                # Check if record exists first (use user_predictions table)
-                check_query = "SELECT COUNT(*) as count FROM user_predictions WHERE id = :prediction_id"
+                # Check if record exists first (use dataset_results table)
+                check_query = "SELECT COUNT(*) as count FROM dataset_results WHERE id = :prediction_id"
                 count_result = conn.execute(text(check_query), {"prediction_id": prediction_id}).fetchone()
                 
                 if count_result.count == 0:
                     api_logger.warning(f"⚠️ Prediction ID {prediction_id} not found for deletion")
                     return False
                 
-                # Delete the record (use user_predictions table)
-                delete_query = "DELETE FROM user_predictions WHERE id = :prediction_id"
+                # Delete the record (use dataset_results table)
+                delete_query = "DELETE FROM dataset_results WHERE id = :prediction_id"
                 result = conn.execute(text(delete_query), {"prediction_id": prediction_id})
                 conn.commit()
                 
