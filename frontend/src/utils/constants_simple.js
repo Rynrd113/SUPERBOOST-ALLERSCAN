@@ -1,5 +1,7 @@
-// API Configuration
-export const API_BASE_URL = 'http://localhost:8001'
+// API Configuration - use environment variable if available
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 
+                            import.meta.env.VITE_API_URL_DEV || 
+                            'http://localhost:8001'
 
 // Model Information
 export const MODEL_INFO = {

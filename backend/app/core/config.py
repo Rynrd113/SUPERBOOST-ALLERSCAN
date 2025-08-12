@@ -29,6 +29,8 @@ class Settings(BaseSettings):
         "http://localhost:5174",  # Vite dev server (alternative port)
         "http://localhost:5175",  # Vite dev server (alternative port)
         "https://yourdomain.vercel.app",  # Production frontend
+        "https://Rynrd113.github.io",  # GitHub Pages
+        "https://rynrd113.github.io",  # GitHub Pages (lowercase)
     ]
     allow_methods: list = ["GET", "POST", "PUT", "DELETE"]
     allow_headers: list = ["*"]

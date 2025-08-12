@@ -1,0 +1,7 @@
+run = "cd backend && python main.py"
+
+[nix]
+channel = "stable-21_11"
+
+[deployment]
+run = ["sh", "-c", "cd backend && python main.py"]
