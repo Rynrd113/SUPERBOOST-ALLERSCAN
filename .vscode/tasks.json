@@ -1,0 +1,44 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start AllerScan Backend",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"run_dev.py"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start AllerScan Frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start AllerScan Full Stack",
+			"dependsOrder": "parallel",
+			"dependsOn": [
+				"Start AllerScan Backend",
+				"Start AllerScan Frontend"
+			],
+			"group": "build",
+			"isBackground": true
+		}
+	]
+}
