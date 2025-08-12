@@ -100,7 +100,7 @@ class AllergenDatabaseManager:
                     risk_level ENUM('none', 'low', 'medium', 'high') DEFAULT 'none',
                     processing_time_ms DECIMAL(8,2) DEFAULT 0.00,
                     model_version VARCHAR(100) DEFAULT 'SVM+AdaBoost',
-                    keterangan TEXT DEFAULT 'Form input pengguna',
+                    keterangan VARCHAR(500) DEFAULT 'Form input pengguna',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     user_ip VARCHAR(45),
                     user_agent TEXT,
