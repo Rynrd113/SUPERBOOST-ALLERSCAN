@@ -14561,3 +14561,707 @@
 2025-08-12 14:46:01 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
 2025-08-12 14:46:01 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
 2025-08-12 14:49:50 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 15:04:09 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:04:09 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:04:09 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:04:09 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:04:09 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:04:29 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:04:29 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:04:35 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:04:35 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:04:35 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:04:35 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:04:35 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:04:35 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:04:35 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:04:35 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:04:35 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:04:35 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:05:48 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:05:48 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:05:48 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:05:48 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:05:48 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:05:48 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:05:56 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:05:56 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:05:56 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:05:56 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:05:56 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:05:56 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:06:35 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Roti
+2025-08-12 15:06:35 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 15:06:35 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 15:06:35 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 1/623 fitur aktif (0.2%)
+2025-08-12 15:06:35 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 15:06:35 | WARNING  | app.api.v1.routes.predict:predict_allergens:115 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 15:06:35 | INFO     | app.api.v1.routes.predict:predict_allergens:132 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 15:06:35 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 1
+2025-08-12 15:06:35 | INFO     | app.api.v1.routes.predict:predict_allergens:169 | ✅ Prediction saved with clean architecture - Record ID: 1
+2025-08-12 15:06:35 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 35 chars | Allergens found: 0 | Processing time: 0.275s
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:06:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:06:49 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:07:08 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:07:08 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:07:08 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:07:08 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:07:08 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:07:26 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:07:26 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:07:33 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:07:33 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:07:33 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:07:33 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:07:33 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:07:33 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:07:33 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:07:33 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:07:33 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:07:33 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:08:21 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:08:22 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:08:22 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:08:22 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:08:22 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:08:41 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:08:41 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:08:47 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:08:47 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:08:47 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:08:47 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:08:47 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:08:47 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:08:47 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:08:47 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:08:47 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:08:47 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:09:21 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:09:21 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:09:21 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:09:21 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:09:21 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:09:21 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:09:22 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:09:22 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:09:22 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:09:22 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:09:40 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:09:40 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:09:45 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:09:45 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:09:45 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:09:45 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:09:45 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:09:45 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:09:45 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:09:45 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:09:45 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:09:45 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:10:01 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 15:11:16 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:11:16 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:11:16 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:11:16 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:11:16 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:11:16 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:11:17 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:11:17 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:11:17 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:11:17 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:11:35 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:11:35 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:11:42 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:11:42 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:11:42 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:11:42 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:11:42 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:11:42 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:11:42 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:11:42 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:11:42 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:11:42 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:12:18 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:18 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:18 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:12:18 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:18 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:18 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:19 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:19 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:19 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:12:19 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:12:19 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:12:22 | INFO     | app.database.allergen_database:get_prediction_by_id:417 | 📄 Retrieved prediction record ID: 1
+2025-08-12 15:12:23 | INFO     | app.database.allergen_database:delete_prediction:450 | 🗑️ Successfully deleted prediction ID: 1
+2025-08-12 15:12:23 | INFO     | app.api.v1.routes.dataset_clean:delete_prediction:412 | 🗑️ Deleted prediction record ID: 1
+2025-08-12 15:12:23 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:12:23 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:23 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:12:29 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:12:29 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:12:29 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:12:29 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-12 15:12:29 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-12 15:12:58 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Roti
+2025-08-12 15:12:59 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 15:12:59 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 15:12:59 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 2/623 fitur aktif (0.3%)
+2025-08-12 15:12:59 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 15:12:59 | WARNING  | app.api.v1.routes.predict:predict_allergens:115 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 15:12:59 | INFO     | app.api.v1.routes.predict:predict_allergens:132 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 15:12:59 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 2
+2025-08-12 15:12:59 | INFO     | app.api.v1.routes.predict:predict_allergens:169 | ✅ Prediction saved with clean architecture - Record ID: 2
+2025-08-12 15:12:59 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 35 chars | Allergens found: 0 | Processing time: 0.383s
+2025-08-12 15:13:58 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:13:58 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:13:58 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:13:58 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:13:58 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:14:16 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:14:16 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:14:22 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:14:22 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:14:22 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:14:22 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:14:22 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:14:22 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:14:22 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:14:22 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:14:22 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:14:22 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:14:45 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Roti
+2025-08-12 15:14:45 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 15:14:45 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 15:14:45 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 2/623 fitur aktif (0.3%)
+2025-08-12 15:14:46 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 15:14:46 | WARNING  | app.api.v1.routes.predict:predict_allergens:115 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 15:14:46 | INFO     | app.api.v1.routes.predict:predict_allergens:132 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 15:14:46 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 3
+2025-08-12 15:14:46 | INFO     | app.api.v1.routes.predict:predict_allergens:169 | ✅ Prediction saved with clean architecture - Record ID: 3
+2025-08-12 15:14:46 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 35 chars | Allergens found: 0 | Processing time: 0.366s
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:14:51 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:14:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:21:37 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 15:21:42 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:21:42 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:21:42 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:21:42 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:21:42 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:22:01 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:22:01 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:22:07 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:22:07 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:22:07 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:22:07 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:22:07 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:22:07 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:22:07 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:22:07 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:22:07 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:22:07 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:22:46 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 15:22:50 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:22:50 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:22:50 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:22:50 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:22:50 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:22:50 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:22:51 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:22:51 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:22:51 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:22:51 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:23:10 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:23:10 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:23:16 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:23:16 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:23:16 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:23:16 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:23:16 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:23:16 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:23:16 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:23:16 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:23:16 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:23:16 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:23:20 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:23:20 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:23:20 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:23:20 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:23:20 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:23:37 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:23:37 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:23:43 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:23:43 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:23:43 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:23:43 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:23:43 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:23:43 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:23:43 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:23:43 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:23:43 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:23:43 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:57:16 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Roti
+2025-08-12 15:57:17 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 15:57:17 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 15:57:17 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 2/623 fitur aktif (0.3%)
+2025-08-12 15:57:17 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 15:57:17 | ERROR    | app.core.logger:log_error:70 | Error in prediction endpoint: cannot access local variable 'overall_confidence' where it is not associated with a value
+2025-08-12 15:57:44 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 15:58:00 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 15:58:00 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 15:58:00 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 15:58:00 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 15:58:00 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:58:19 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 15:58:19 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 15:58:25 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 15:58:25 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 15:58:25 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 15:58:25 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 15:58:25 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 15:58:25 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 15:58:25 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 15:58:25 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 15:58:25 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 15:58:25 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:58:25 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 2/2 records (page 1/1)
+2025-08-12 15:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 2 records (1-2 of 2)
+2025-08-12 15:58:48 | INFO     | app.database.allergen_database:get_prediction_by_id:417 | 📄 Retrieved prediction record ID: 3
+2025-08-12 15:58:49 | INFO     | app.database.allergen_database:delete_prediction:450 | 🗑️ Successfully deleted prediction ID: 3
+2025-08-12 15:58:49 | INFO     | app.api.v1.routes.dataset_clean:delete_prediction:412 | 🗑️ Deleted prediction record ID: 3
+2025-08-12 15:58:49 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:58:49 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:49 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 15:58:50 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 15:58:50 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:58:50 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 15:58:50 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 1/1 records (page 1/1)
+2025-08-12 15:58:50 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 1 records (1-1 of 1)
+2025-08-12 16:00:44 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Kue
+2025-08-12 16:00:45 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:00:45 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:00:45 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 1/623 fitur aktif (0.2%)
+2025-08-12 16:00:45 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:00:45 | ERROR    | app.core.logger:log_error:70 | Error in prediction endpoint: cannot access local variable 'overall_confidence' where it is not associated with a value
+2025-08-12 16:02:11 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:02:12 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:06:03 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:06:03 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:06:03 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:06:03 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:06:03 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:06:03 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:06:04 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:06:04 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:06:04 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:06:04 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:06:23 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:06:23 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:06:29 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:06:29 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:06:29 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:06:29 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:06:29 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:06:29 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:06:29 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:06:29 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:06:29 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:06:29 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:08:49 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Test Roti Debug
+2025-08-12 16:08:49 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:08:49 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:08:49 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 3/623 fitur aktif (0.5%)
+2025-08-12 16:08:50 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:08:50 | ERROR    | app.core.logger:log_error:70 | Error in prediction endpoint: cannot access local variable 'overall_confidence' where it is not associated with a value
+2025-08-12 16:09:47 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:09:52 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:09:52 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:09:52 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:09:52 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:09:52 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:09:52 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:09:53 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:09:53 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:09:53 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:09:53 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:10:12 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:10:12 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:10:18 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:10:18 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:10:18 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:10:18 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:10:18 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:10:18 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:10:18 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:10:18 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:10:18 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:10:18 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:10:22 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:10:22 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:10:22 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:10:22 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:10:22 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:10:22 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:10:23 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:10:23 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:10:23 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:10:23 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:10:40 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:10:40 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:10:46 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:10:46 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:10:46 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:10:46 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:10:46 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:10:46 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:10:46 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:10:46 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:10:46 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:10:46 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:11:43 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Test Roti Debug
+2025-08-12 16:11:43 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:11:43 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:11:43 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 3/623 fitur aktif (0.5%)
+2025-08-12 16:11:43 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:11:43 | ERROR    | app.core.logger:log_error:70 | Error in prediction endpoint: cannot access local variable 'overall_confidence' where it is not associated with a value
+2025-08-12 16:12:28 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:12:33 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:12:33 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:12:33 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:12:33 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:12:33 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:12:51 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:12:51 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:12:57 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:12:57 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:12:57 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:12:57 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:12:57 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:12:57 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:12:57 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:12:57 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:12:57 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:12:57 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:13:02 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:13:02 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:13:02 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:13:02 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:13:02 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:13:21 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:13:21 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:13:27 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:13:27 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:13:27 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:13:27 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:13:27 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:13:27 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:13:27 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:13:27 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:13:27 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:13:27 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:13:31 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:13:31 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:13:32 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:13:32 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:13:32 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:13:50 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:13:50 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:13:56 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:13:56 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:13:56 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:13:56 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:13:56 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:13:56 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:13:56 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Test Roti Debug
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:13:56 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 3/623 fitur aktif (0.5%)
+2025-08-12 16:13:56 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:13:56 | WARNING  | app.api.v1.routes.predict:predict_allergens:101 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 16:13:56 | INFO     | app.api.v1.routes.predict:predict_allergens:118 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 16:13:56 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 4
+2025-08-12 16:13:56 | INFO     | app.api.v1.routes.predict:predict_allergens:173 | ✅ Prediction saved with clean architecture - Record ID: 4
+2025-08-12 16:13:56 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 71 chars | Allergens found: 0 | Processing time: 0.347s
+2025-08-12 16:14:47 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Roti Konsistensi Test
+2025-08-12 16:14:47 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:14:47 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:14:47 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 3/623 fitur aktif (0.5%)
+2025-08-12 16:14:47 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:14:47 | WARNING  | app.api.v1.routes.predict:predict_allergens:101 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 16:14:47 | INFO     | app.api.v1.routes.predict:predict_allergens:118 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 16:14:47 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 5
+2025-08-12 16:14:47 | INFO     | app.api.v1.routes.predict:predict_allergens:173 | ✅ Prediction saved with clean architecture - Record ID: 5
+2025-08-12 16:14:47 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 71 chars | Allergens found: 0 | Processing time: 0.288s
+2025-08-12 16:15:10 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:15:15 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:15:15 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:15:15 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:15:15 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:15:15 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:15:33 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:15:33 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:15:39 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:15:39 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:15:39 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:15:39 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:15:39 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:15:39 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:15:39 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:15:39 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:15:39 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:15:39 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:18:28 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:18:33 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:18:33 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:18:33 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:18:33 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:18:33 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:18:33 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:18:34 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:18:34 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:18:34 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:18:34 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:18:55 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:18:55 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:19:02 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:19:02 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:19:02 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:19:02 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:19:02 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:19:02 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:19:02 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:19:02 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:19:02 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:19:02 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:19:07 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:19:07 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:19:07 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:19:07 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:19:07 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:19:07 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:19:08 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:19:08 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:19:08 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:19:08 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:19:29 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:19:29 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:19:36 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:19:36 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:19:36 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:19:36 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:19:36 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:19:36 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:19:36 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:19:36 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:19:36 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:19:36 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:22:18 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:22:25 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:22:25 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:22:25 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:22:25 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:22:25 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:22:46 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:22:46 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:22:53 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:22:53 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:22:53 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:22:53 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:22:53 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:22:53 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:22:53 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:22:53 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:22:53 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:22:53 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 3 records (1-3 of 3)
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 3 records (1-3 of 3)
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 3 records (1-3 of 3)
+2025-08-12 16:25:34 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 3/3 records (page 1/1)
+2025-08-12 16:25:34 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 3 records (1-3 of 3)
+2025-08-12 16:25:59 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-12 16:26:05 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-12 16:26:05 | INFO     | app.database.allergen_database:_create_tables:134 | ✅ Database tables created/verified successfully
+2025-08-12 16:26:05 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-12 16:26:05 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ..\data\raw\Dataset Bahan Makanan & Alergen.xlsx
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-12 16:26:05 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:26:25 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-12 16:26:25 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-12 16:26:32 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-12 16:26:32 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-12 16:26:32 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-12 16:26:32 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-12 16:26:32 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-12 16:26:32 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-12 16:26:32 | INFO     | app.api.v1.routes.predict:predict_allergens:68 | Processing SVM + AdaBoost prediction for: Kue
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:predict_allergens:261 | 🤖 Menggunakan model SVM + AdaBoost
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:predict_allergens:262 | 🔍 Analisis OOV input: 100.0% field tidak dikenal
+2025-08-12 16:26:32 | INFO     | app.models.inference.predictor:predict_allergens:263 | 🔢 Analisis encoding: 0/623 fitur aktif (0.0%)
+2025-08-12 16:26:33 | WARNING  | app.models.inference.predictor:predict_allergens:277 | ⚠️ OOV kritis terdeteksi (100.0%) - confidence sangat dikurangi
+2025-08-12 16:26:33 | WARNING  | app.api.v1.routes.predict:predict_allergens:101 | ⚠️ Detected OOV case: 100.0% OOV, base_confidence=0.6056
+2025-08-12 16:26:33 | INFO     | app.api.v1.routes.predict:predict_allergens:118 | ✅ Corrected OOV false positive to 'no allergens'
+2025-08-12 16:26:33 | INFO     | app.database.allergen_database:save_prediction_result:179 | ✅ Prediction saved with ID: 6
+2025-08-12 16:26:33 | INFO     | app.api.v1.routes.predict:predict_allergens:173 | ✅ Prediction saved with clean architecture - Record ID: 6
+2025-08-12 16:26:33 | INFO     | app.core.logger:log_prediction:61 | Prediction completed | Input length: 42 chars | Allergens found: 0 | Processing time: 0.618s
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 4 records (1-4 of 4)
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 4 records (1-4 of 4)
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_statistics:311 | 📊 Statistics calculated successfully
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 4 records (1-4 of 4)
+2025-08-12 16:26:41 | INFO     | app.database.allergen_database:get_prediction_history:260 | 📊 Retrieved 4/4 records (page 1/1)
+2025-08-12 16:26:41 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 4 records (1-4 of 4)

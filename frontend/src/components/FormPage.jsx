@@ -9,24 +9,18 @@ import { predictAllergen } from '../services/api'
 const calculateConfidence = (result) => {
   if (!result) return 0.0
   
-  // First priority: Use detected allergens confidence if available
+  // 🔧 FIX: Always use backend's calculated confidence score first
+  // This ensures consistency between frontend display and database
+  if (result.confidence_score) return result.confidence_score * 100
+  if (result.overall_confidence) return result.overall_confidence * 100
+  
+  // Fallback: Use detected allergens confidence if available
   if (result.detected_allergens && result.detected_allergens.length > 0) {
     const totalConfidence = result.detected_allergens.reduce((sum, allergen) => sum + (allergen.confidence || 0), 0)
     return (totalConfidence / result.detected_allergens.length) * 100
   }
   
-  // Second priority: Use overall_risk data for "no allergens" case  
-  if (result.total_allergens_detected === 0) {
-    // For "no allergens", backend should provide appropriate confidence
-    // Don't hardcode 95% - use actual model confidence or reasonable default
-    return 85.0  // More realistic for "no allergens detected"
-  }
-  
-  // Fallback: Extract from other response fields
-  if (result.confidence_score) return result.confidence_score * 100
-  if (result.overall_confidence) return result.overall_confidence * 100
-  
-  // Last resort default
+  // Last resort default (should rarely be used)
   return 50.0
 }
 

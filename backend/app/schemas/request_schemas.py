@@ -126,6 +126,7 @@ class PredictionResponse(BaseModel):
     
     # Risk assessment
     overall_risk: str = Field(..., description="Overall allergen risk: none, low, medium, high")
+    overall_confidence: float = Field(0.0, description="Overall confidence score (0.0 to 1.0)")
     
     # Metadata
     timestamp: datetime = Field(default_factory=datetime.now, description="Prediction timestamp")

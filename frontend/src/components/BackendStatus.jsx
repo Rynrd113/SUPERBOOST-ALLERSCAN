@@ -40,12 +40,13 @@ const BackendStatus = () => {
   const checkBackendStatus = async () => {
     try {
       const health = await getBackendStatus()
-      if (health.status === 'healthy') {
+      if (health.status === 'operational' || health.status === 'healthy') {
         setStatus('healthy')
       } else {
         setStatus('warning')
       }
     } catch (error) {
+      console.log('Backend connection error (expected during startup):', error.message)
       setStatus('error')
     } finally {
       setLastChecked(new Date())
