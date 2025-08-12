@@ -7,13 +7,14 @@
 - **URL**: https://Rynrd113.github.io/SUPERBOOST-ALLERSCAN
 - **Platform**: GitHub Pages
 - **Build Tool**: Vite
-- **Status**: Live dan siap digunakan
+- **Status**: Live dan terhubung ke backend
 
 ### Backend (Replit)
-- **⏳ READY TO DEPLOY**
-- **Files**: Sudah disiapkan untuk Replit
-- **Entry Point**: `backend/main.py`
-- **Port**: Auto-detected dari environment
+- **✅ DEPLOYED**
+- **URL**: https://37aab941-e377-4033-a1f4-98ddb114ef77-00-2kt3js150jqbp.sisko.replit.dev
+- **Platform**: Replit
+- **Status**: Operational (Model loaded successfully)
+- **API Docs**: https://37aab941-e377-4033-a1f4-98ddb114ef77-00-2kt3js150jqbp.sisko.replit.dev/docs
 
 ---
 
@@ -91,9 +92,9 @@ npm run deploy
 
 | Komponen | URL | Status |
 |----------|-----|--------|
-| **Frontend** | https://Rynrd113.github.io/SUPERBOOST-ALLERSCAN | ✅ Live |
-| **Backend** | `https://your-repl-name.username.repl.co` | ⏳ Pending Replit setup |
-| **API Docs** | `https://your-repl-name.username.repl.co/docs` | ⏳ Pending Replit setup |
+| **Frontend** | https://Rynrd113.github.io/SUPERBOOST-ALLERSCAN | ✅ Live & Connected |
+| **Backend** | https://37aab941-e377-4033-a1f4-98ddb114ef77-00-2kt3js150jqbp.sisko.replit.dev | ✅ Live & Operational |
+| **API Docs** | https://37aab941-e377-4033-a1f4-98ddb114ef77-00-2kt3js150jqbp.sisko.replit.dev/docs | ✅ Available |
 
 ---
 
