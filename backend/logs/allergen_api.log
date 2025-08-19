@@ -15483,3 +15483,71 @@
 2025-08-19 08:09:38 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
 2025-08-19 08:09:38 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
 2025-08-19 08:09:38 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:34:50 | ERROR    | app.database.allergen_database:_initialize_connection:81 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 08:41:40 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:40 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:40 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:40 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:49 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:49 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:49 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:49 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:51 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:51 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-19 08:41:51 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:51 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:51 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-19 08:41:53 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:53 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:53 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:53 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:53 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:53 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:56 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:56 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:56 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-19 08:41:56 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:56 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:56 | INFO     | app.api.v1.routes.dataset_clean:get_prediction_history:177 | 📊 Served dataset page 1 with 0 records (0-0 of 0)
+2025-08-19 08:41:57 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:57 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:57 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:41:57 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:41:57 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:41:57 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:48:06 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:48:06 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:48:06 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:48:06 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:48:06 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:48:06 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:48:55 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:48:55 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:48:55 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 08:48:55 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 08:48:55 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 08:48:55 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:06 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:06 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:06 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:06 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:06 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:06 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:22 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:22 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:22 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:22 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:22 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:22 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:48 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:03:48 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served

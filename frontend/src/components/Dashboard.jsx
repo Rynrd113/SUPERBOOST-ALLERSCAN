@@ -1,8 +1,12 @@
 import { ArrowRight, Database, Search, Shield, Target, TrendingUp, Sparkles, Award } from 'lucide-react'
 import Card from './UI/Card'
 import Button from './UI/Button'
+import StatCard from './UI/StatCard'
+import { useStatistics } from '../hooks/useStatistics'
 
 function Dashboard({ onNavigate }) {
+  const { datasetCount, allergenTypes, accuracy, processingTime, loading } = useStatistics()
+  
   const features = [
     {
       icon: Target,
@@ -24,11 +28,12 @@ function Dashboard({ onNavigate }) {
     }
   ]
 
+  // Statistik dinamis dari database real-time
   const stats = [
-    { label: 'Jenis Alergen', value: '8+', icon: Target },
-    { label: 'Dataset Training', value: '399', icon: Database },
-    { label: 'Akurasi Model', value: '93.7%', icon: Award },
-    { label: 'Processing Time', value: '<500ms', icon: TrendingUp }
+    { label: 'Jenis Alergen', value: `${allergenTypes}+`, icon: Target },
+    { label: 'Dataset Training', value: datasetCount.toString(), icon: Database },
+    { label: 'Akurasi Model', value: accuracy, icon: Award },
+    { label: 'Processing Time', value: processingTime, icon: TrendingUp }
   ]
 
   return (
@@ -98,18 +103,15 @@ function Dashboard({ onNavigate }) {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon
-            return (
-              <Card key={index} className="p-6 text-center bg-white rounded-3xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-                <div className="p-3 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl w-fit mx-auto mb-4">
-                  <Icon className="h-8 w-8 text-blue-600" />
-                </div>
-                <div className="text-3xl font-bold text-slate-900 mb-2">{stat.value}</div>
-                <div className="text-slate-600 font-medium">{stat.label}</div>
-              </Card>
-            )
-          })}
+          {stats.map((stat, index) => (
+            <StatCard
+              key={index}
+              title={stat.label}
+              value={stat.value}
+              icon={stat.icon}
+              loading={loading}
+            />
+          ))}
         </div>
       </div>
 
