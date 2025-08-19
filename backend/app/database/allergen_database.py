@@ -21,6 +21,11 @@ import os
 import json
 from typing import Dict, List, Optional
 from datetime import datetime
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
@@ -42,8 +47,15 @@ class AllergenDatabaseManager:
     
     def __init__(self):
         """Initialize database connection with optimized settings"""
-        self._initialize_connection()
-        self._create_tables()
+        self.engine = None
+        self.db_available = False
+        try:
+            self._initialize_connection()
+            self._create_tables()
+            self.db_available = True
+        except Exception as e:
+            api_logger.warning(f"⚠️ Database tidak tersedia, menggunakan mode fallback: {e}")
+            self.db_available = False
     
     def _initialize_connection(self) -> None:
         """Setup MySQL connection with production-ready configuration"""
@@ -152,16 +164,20 @@ class AllergenDatabaseManager:
             conn.commit()
             api_logger.info("✅ Database tables created/verified successfully")
     
-    def save_prediction_result(self, prediction_data: Dict) -> int:
+    def save_prediction_result(self, prediction_data: dict) -> int:
         """
-        Save user form prediction result to database
+        Save prediction result to database with fallback
         
         Args:
-            prediction_data: Dictionary with prediction results from form submission
+            prediction_data: Dictionary containing prediction results
             
         Returns:
-            ID of saved record
+            ID of saved record (0 if database unavailable)
         """
+        if not self.db_available:
+            api_logger.info("📝 Database tidak tersedia, skip saving prediction")
+            return 0
+            
         try:
             with self.engine.connect() as conn:
                 result = conn.execute(text("""
@@ -194,13 +210,12 @@ class AllergenDatabaseManager:
                 
                 conn.commit()
                 record_id = result.lastrowid
-                
-                api_logger.info(f"✅ Prediction saved with ID: {record_id}")
+                api_logger.info(f"✅ Prediction saved to database with ID: {record_id}")
                 return record_id
                 
         except Exception as e:
             api_logger.error(f"❌ Error saving prediction: {e}")
-            raise
+            return 0
     
     def get_prediction_history(self, limit: int = 100, offset: int = 0) -> Dict:
         """
@@ -213,6 +228,13 @@ class AllergenDatabaseManager:
         Returns:
             Dictionary with records list and pagination metadata
         """
+        if not self.db_available:
+            return {
+                'records': [],
+                'total_count': 0,
+                'message': 'Database tidak tersedia'
+            }
+            
         try:
             with self.engine.connect() as conn:
                 # Get total count for pagination
@@ -281,10 +303,24 @@ class AllergenDatabaseManager:
                 
         except Exception as e:
             api_logger.error(f"❌ Error retrieving prediction history: {e}")
-            raise
+            return {
+                'records': [],
+                'total_count': 0,
+                'message': f'Database error: {e}'
+            }
     
     def get_statistics(self) -> Dict:
         """Get comprehensive statistics for dashboard"""
+        if not self.db_available:
+            return {
+                'total_predictions': 0,
+                'detected_count': 0,
+                'not_detected_count': 0,
+                'detection_rate': 0.0,
+                'average_confidence': 0.0,
+                'message': 'Database tidak tersedia'
+            }
+            
         try:
             with self.engine.connect() as conn:
                 # Basic counts

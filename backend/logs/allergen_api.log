@@ -15557,3 +15557,222 @@
 2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
 2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
 2025-08-19 09:05:09 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 15:10:32 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:10:36 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:10:36 | INFO     | app.database.allergen_database:_create_tables:153 | ✅ Database tables created/verified successfully
+2025-08-19 15:10:36 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:10:36 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:10:36 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:10:36 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:10:36 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:10:36 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:11:40 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:11:43 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:11:43 | INFO     | app.database.allergen_database:_create_tables:153 | ✅ Database tables created/verified successfully
+2025-08-19 15:11:43 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:11:43 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:11:43 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:11:43 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:11:43 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:11:43 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 22:15:40 | ERROR    | app.database.allergen_database:_initialize_connection:81 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:16:39 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 22:16:41 | ERROR    | app.database.allergen_database:_initialize_connection:81 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:16:41 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:16:42 | INFO     | app.database.allergen_database:_create_tables:153 | ✅ Database tables created/verified successfully
+2025-08-19 15:16:42 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:16:42 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:16:42 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:16:42 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:16:42 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:16:42 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 22:17:28 | ERROR    | app.database.allergen_database:_initialize_connection:81 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:18:20 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:18:22 | INFO     | app.database.allergen_database:_initialize_connection:78 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:18:22 | INFO     | app.database.allergen_database:_create_tables:153 | ✅ Database tables created/verified successfully
+2025-08-19 15:18:22 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:18:22 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:18:22 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:18:22 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:18:22 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:18:22 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:20:56 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:20:58 | INFO     | app.database.allergen_database:_initialize_connection:85 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:20:58 | INFO     | app.database.allergen_database:_create_tables:160 | ✅ Database tables created/verified successfully
+2025-08-19 15:20:58 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:20:58 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:20:58 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:20:58 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:20:58 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:20:58 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:21:39 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:21:57 | INFO     | app.database.allergen_database:_initialize_connection:85 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:21:57 | INFO     | app.database.allergen_database:_create_tables:160 | ✅ Database tables created/verified successfully
+2025-08-19 15:21:57 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:21:57 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:21:57 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:21:57 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:21:57 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:21:57 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:22:12 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:22:14 | INFO     | app.database.allergen_database:_initialize_connection:85 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:22:14 | INFO     | app.database.allergen_database:_create_tables:160 | ✅ Database tables created/verified successfully
+2025-08-19 15:22:14 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:22:14 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:22:14 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:22:14 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:22:14 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:22:14 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:22:36 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:22:38 | INFO     | app.database.allergen_database:_initialize_connection:85 | ✅ Database connection established: allerscan-mysql:3306/allerscan_db
+2025-08-19 15:22:38 | INFO     | app.database.allergen_database:_create_tables:160 | ✅ Database tables created/verified successfully
+2025-08-19 15:22:38 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:22:38 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:22:38 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:22:38 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:22:38 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:22:39 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 22:25:54 | ERROR    | app.database.allergen_database:_initialize_connection:88 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 22:25:54 | WARNING  | app.database.allergen_database:__init__:52 | ⚠️ Database tidak tersedia, menggunakan mode fallback: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'10.89.0.2' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 22:25:54 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 22:25:54 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 22:25:54 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 22:25:54 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-19 22:25:54 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-19 22:25:54 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-19 22:25:55 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-19 22:25:55 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:26:11 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-19 22:26:11 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-19 22:26:16 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-19 22:26:16 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-19 22:26:16 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-19 22:26:16 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-19 22:26:16 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:26:16 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-19 22:26:16 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-19 22:26:16 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-19 22:26:16 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-19 22:26:16 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-19 22:26:40 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 22:32:14 | ERROR    | app.database.allergen_database:_initialize_connection:88 | ❌ Database connection failed: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'192.168.1.20' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 22:32:14 | WARNING  | app.database.allergen_database:__init__:52 | ⚠️ Database tidak tersedia, menggunakan mode fallback: (pymysql.err.OperationalError) (1045, "Access denied for user 'root'@'192.168.1.20' (using password: NO)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 22:32:14 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 22:32:14 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-19 22:32:14 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:32:31 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-19 22:32:31 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-19 22:32:36 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-19 22:32:36 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-19 22:32:36 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-19 22:32:36 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-19 22:32:36 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:32:36 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-19 22:32:36 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-19 22:32:36 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-19 22:32:36 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-19 22:32:36 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-19 22:34:24 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:35:05 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:35:08 | ERROR    | app.database.allergen_database:_initialize_connection:93 | ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'allerscan-mysql' ([Errno -2] Name or service not known)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:35:08 | WARNING  | app.database.allergen_database:__init__:57 | ⚠️ Database tidak tersedia, menggunakan mode fallback: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'allerscan-mysql' ([Errno -2] Name or service not known)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:35:08 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:35:08 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:35:08 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:35:08 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:35:08 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:35:08 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 15:36:12 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 15:36:16 | ERROR    | app.database.allergen_database:_initialize_connection:93 | ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'allerscan-mysql' ([Errno -5] No address associated with hostname)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:36:16 | WARNING  | app.database.allergen_database:__init__:57 | ⚠️ Database tidak tersedia, menggunakan mode fallback: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'allerscan-mysql' ([Errno -5] No address associated with hostname)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-08-19 15:36:16 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 15:36:16 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 15:36:16 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 15:36:16 | ERROR    | app.models.inference.predictor:load_and_train_model:89 | Dataset tidak ditemukan di lokasi manapun: ['data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../data/raw/Dataset Bahan Makanan & Alergen.xlsx', '../../data/raw/Dataset Bahan Makanan & Alergen.xlsx', 'notebooks/Dataset Bahan Makanan & Alergen.xlsx', '../notebooks/Dataset Bahan Makanan & Alergen.xlsx']
+2025-08-19 15:36:16 | ERROR    | app.main:lifespan:45 | ❌ Failed to load SVM + AdaBoost model from dataset
+2025-08-19 15:36:16 | ERROR    | app.main:lifespan:46 | ⚠️ API will start but predictions will be unavailable
+2025-08-19 22:38:45 | INFO     | app.database.allergen_database:_initialize_connection:90 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-19 22:38:45 | INFO     | app.database.allergen_database:_create_tables:165 | ✅ Database tables created/verified successfully
+2025-08-19 22:38:45 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 22:38:45 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-19 22:38:45 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:39:03 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-19 22:39:03 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-19 22:39:09 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-19 22:39:09 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-19 22:39:09 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-19 22:39:09 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-19 22:39:09 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:39:09 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-19 22:39:09 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-19 22:39:09 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-19 22:39:09 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-19 22:39:09 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-19 22:39:17 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 22:40:27 | INFO     | app.database.allergen_database:_initialize_connection:90 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-19 22:40:27 | INFO     | app.database.allergen_database:_create_tables:165 | ✅ Database tables created/verified successfully
+2025-08-19 22:40:27 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 22:40:27 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 22:40:27 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 22:40:27 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-19 22:40:28 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-19 22:40:28 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-19 22:40:28 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-19 22:40:28 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:40:45 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-19 22:40:45 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-19 22:40:50 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-19 22:40:50 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-19 22:40:50 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-19 22:40:50 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-19 22:40:50 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:40:50 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-19 22:40:50 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-19 22:40:50 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-19 22:40:50 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-19 22:40:50 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-19 22:40:59 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-08-19 22:41:38 | INFO     | app.database.allergen_database:_initialize_connection:90 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-08-19 22:41:38 | INFO     | app.database.allergen_database:_create_tables:165 | ✅ Database tables created/verified successfully
+2025-08-19 22:41:38 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-08-19 22:41:38 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-08-19 22:41:38 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:41:56 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-08-19 22:41:56 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-08-19 22:42:01 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-08-19 22:42:01 | INFO     | app.models.inference.predictor:load_and_train_model:155 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-08-19 22:42:01 | INFO     | app.models.inference.predictor:load_and_train_model:156 | 🔢 Jumlah fitur: 623
+2025-08-19 22:42:01 | INFO     | app.models.inference.predictor:load_and_train_model:157 | 📋 Jumlah sampel: 399
+2025-08-19 22:42:01 | INFO     | app.models.inference.predictor:load_and_train_model:158 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-08-19 22:42:01 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-08-19 22:42:01 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-08-19 22:42:01 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-08-19 22:42:01 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-08-19 22:42:01 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-08-19 22:42:02 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...

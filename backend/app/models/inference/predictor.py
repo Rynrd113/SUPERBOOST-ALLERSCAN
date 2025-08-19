@@ -339,6 +339,41 @@ class AllergenPredictor:
         except Exception as e:
             log_error(e, "Prediksi alergen")
             raise RuntimeError(f"Prediksi gagal: {str(e)}")
+
+    def predict(self, model_input: Dict[str, str]) -> Dict:
+        """
+        Method wrapper untuk kompatibilitas dengan service layer
+        
+        Args:
+            model_input: Dictionary berisi data input yang telah diformat
+            
+        Returns:
+            Dictionary berisi hasil prediksi dan metadata
+        """
+        try:
+            # Memanggil method predict_allergens yang sebenarnya
+            results, metadata = self.predict_allergens(
+                ingredients_data=model_input,
+                confidence_threshold=0.5  # Default threshold
+            )
+            
+            # Format untuk kompatibilitas dengan service layer
+            return {
+                'allergens': {result.allergen: result.confidence for result in results} if results else {},
+                'metadata': metadata,
+                'success': True
+            }
+            
+        except Exception as e:
+            api_logger.error(f"Error dalam predict wrapper: {e}")
+            return {
+                'allergens': {},
+                'metadata': {
+                    'error': str(e),
+                    'success': False
+                },
+                'success': False
+            }
     
     def get_model_info(self) -> Dict:
         """Mengambil informasi tentang model yang telah dilatih"""

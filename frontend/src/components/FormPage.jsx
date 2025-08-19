@@ -42,7 +42,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
   
   // Opsi dropdown untuk alergen - sesuai dengan algoritma machine learning
   const allergenOptions = [
-    { value: '', label: 'Pilih alergen yang diketahui (opsional)' },
+    { value: '', label: 'Pilih alergen yang akan dideteksi (wajib)' },
     { value: 'Tidak Ada', label: 'Tidak Ada Alergen' },
     { value: 'gandum', label: 'Gandum/Gluten' },
     { value: 'susu', label: 'Susu/Dairy' },
@@ -72,6 +72,13 @@ function FormPage({ onNavigate, onDetectionResult }) {
     e.preventDefault()
     setLoading(true)
     setError('')
+    
+    // Validasi form - alergen wajib dipilih
+    if (!formData.alergen || formData.alergen === '') {
+      setError('Silakan pilih jenis alergen yang akan dideteksi')
+      setLoading(false)
+      return
+    }
     
     try {
       const response = await predictAllergen(formData)
@@ -216,13 +223,14 @@ function FormPage({ onNavigate, onDetectionResult }) {
                   {/* Dropdown Alergen - Full Width */}
                   <div className="space-y-3">
                     <label className="block text-sm font-bold text-slate-700 uppercase tracking-wide">
-                      Alergen yang Diketahui (Opsional)
+                      Alergen yang Diketahui (Wajib Dipilih) <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <select
                         name="alergen"
                         value={formData.alergen}
                         onChange={handleChange}
+                        required
                         className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white appearance-none cursor-pointer"
                       >
                         {allergenOptions.map((option) => (
@@ -238,7 +246,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       </div>
                     </div>
                     <p className="text-sm text-slate-500">
-                      Pilih jika Anda sudah mengetahui kandungan alergen dalam produk ini
+                      Wajib pilih jenis alergen yang mungkin terkandung dalam produk ini untuk deteksi yang akurat
                     </p>
                   </div>
 

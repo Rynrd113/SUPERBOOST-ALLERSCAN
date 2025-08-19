@@ -48,8 +48,9 @@ class PredictionRequest(BaseModel):
     
     alergen: str = Field(
         ...,
+        min_length=1,
         max_length=100,
-        description="Known allergen information",
+        description="Known allergen information (required)",
         example="Telur"
     )
     
