@@ -54,11 +54,11 @@ class Settings(BaseSettings):
     log_file: str = "logs/allergen_api.log"
     
     # Database Configuration
-    mysql_host: str = "localhost"
-    mysql_port: int = 3306
-    mysql_user: str = "root"
-    mysql_password: str = ""
-    mysql_database: str = "allerscan_db"
+    mysql_host: str = os.getenv("MYSQL_HOST", "localhost")
+    mysql_port: int = int(os.getenv("MYSQL_PORT", "3306"))
+    mysql_user: str = os.getenv("MYSQL_USER", "root")
+    mysql_password: str = os.getenv("MYSQL_PASSWORD", "")
+    mysql_database: str = os.getenv("MYSQL_DATABASE", "allerscan_db")
     
     @property
     def database_url(self) -> str:
