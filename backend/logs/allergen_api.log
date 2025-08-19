@@ -15551,3 +15551,9 @@
 2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
 2025-08-19 09:03:48 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
 2025-08-19 09:03:48 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:05:09 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_statistics:330 | 📊 Statistics calculated successfully
+2025-08-19 09:05:09 | INFO     | app.database.allergen_database:get_prediction_history:279 | 📊 Retrieved 0/0 records (page 1/0)
+2025-08-19 09:05:09 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
