@@ -4,8 +4,8 @@ export const API_BASE_URL = ''
 // Model Information
 export const MODEL_INFO = {
   ALGORITHM: 'SVM + AdaBoost',
-  ACCURACY: '93.7%',
-  SUPPORTED_ALLERGENS_COUNT: 23
+  ACCURACY: 'Dynamic', // Changed from static value
+  SUPPORTED_ALLERGENS_COUNT: 'Variable' // No longer fixed count
 }
 
 // UI Constants

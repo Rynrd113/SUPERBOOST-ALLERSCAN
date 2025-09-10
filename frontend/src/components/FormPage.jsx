@@ -4,6 +4,7 @@ import Card from './UI/Card'
 import Button from './UI/Button'
 import { LoadingSpinner } from './UI/Loading'
 import { predictAllergen } from '../services/api'
+import { statisticsService } from '../services/statisticsService'
 
 // Helper function to calculate confidence from API response
 const calculateConfidence = (result) => {
@@ -81,8 +82,25 @@ function FormPage({ onNavigate, onDetectionResult }) {
     }
     
     try {
+      const startTime = Date.now()
       const response = await predictAllergen(formData)
+      const processingTime = Date.now() - startTime
+      
       setResult(response)
+      
+      // Update statistik secara real-time
+      await statisticsService.incrementDatasetCount()
+      
+      // Update processing time jika ada data
+      if (processingTime) {
+        await statisticsService.updateProcessingTime(processingTime)
+      }
+      
+      // Update model accuracy jika ada confidence score
+      if (response?.confidence_score || response?.overall_confidence) {
+        const accuracy = (response.confidence_score || response.overall_confidence) * 100
+        await statisticsService.updateModelAccuracy(accuracy)
+      }
       
       if (onDetectionResult) {
         onDetectionResult(response)
@@ -106,7 +124,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
             className="bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 shadow-sm rounded-2xl"
           >
             <ArrowLeft className="h-5 w-5 mr-3" />
-            Kembali ke Dashboard
+            Kembali ke Home
           </Button>
         </div>
 
@@ -117,13 +135,9 @@ function FormPage({ onNavigate, onDetectionResult }) {
             <h1 className="text-3xl font-bold text-white">Deteksi Alergen Makanan</h1>
           </div>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Masukkan informasi produk makanan untuk menganalisis potensi alergen menggunakan 
+            Masukan kandungan produk pangan untuk mendeteksi alergen menggunakan  
             <span className="font-semibold text-blue-600"> algoritma SVM + AdaBoost</span>
           </p>
-          <div className="mt-4 inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-            <Sparkles className="h-4 w-4 mr-2" />
-            Akurasi 93.7% • Cross-Validation K=10
-          </div>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12">
@@ -133,7 +147,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
               {/* Form Header */}
               <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-8 py-6">
                 <h2 className="text-2xl font-bold text-white mb-2">Form Analisis Produk</h2>
-                <p className="text-slate-300">Lengkapi data produk makanan untuk analisis alergen</p>
+                <p className="text-slate-300">Lengkapi data produk makanan untuk deteksi alergen</p>
               </div>
 
               <div className="p-8">
@@ -266,7 +280,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       ) : (
                         <>
                           <Send className="h-6 w-6 mr-3" />
-                          Analisis Alergen
+                          Deteksi Alergen
                         </>
                       )}
                     </Button>
@@ -301,7 +315,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                     <div className="p-4 bg-green-600 rounded-full w-fit mx-auto mb-4">
                       <CheckCircle className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-green-900 mb-2">Hasil Analisis</h3>
+                    <h3 className="text-2xl font-bold text-green-900 mb-2">Hasil Deteksi</h3>
                     <p className="text-green-700">Produk: <span className="font-semibold">{result.product_name}</span></p>
                   </div>
 
@@ -344,9 +358,9 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       </div>
                     </div>
 
-                    {/* Confidence Score */}
+                    {/* Accuracy */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h4 className="font-bold text-slate-900 mb-3">Confidence Score</h4>
+                      <h4 className="font-bold text-slate-900 mb-3">Accuracy</h4>
                       <div className="flex items-center space-x-4">
                         <div className="flex-1 bg-slate-200 rounded-full h-3">
                           <div 
@@ -362,7 +376,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
 
                     {/* Additional Info */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h4 className="font-bold text-slate-900 mb-3">Detail Analisis</h4>
+                      <h4 className="font-bold text-slate-900 mb-3">Detail Deteksi</h4>
                       <div className="space-y-3 text-sm">
                         <div className="flex justify-between">
                           <span className="text-slate-600">Algoritma:</span>
@@ -391,18 +405,18 @@ function FormPage({ onNavigate, onDetectionResult }) {
                     </div>
                     <h3 className="text-xl font-bold text-blue-900 mb-3">Siap untuk Analisis</h3>
                     <p className="text-blue-700 mb-6">
-                      Lengkapi form di sebelah kiri untuk memulai analisis alergen dengan teknologi AI
+                      Lengkapi form di sebelah kiri untuk memulai deteksi alergen dengan teknologi AI
                     </p>
                     
                     {/* Features */}
                     <div className="space-y-3 text-left">
                       <div className="flex items-center text-blue-800">
                         <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />
-                        <span className="font-medium">Akurasi tinggi 93.7%</span>
+                        <span className="font-medium">Akurasi model dinamis</span>
                       </div>
                       <div className="flex items-center text-blue-800">
                         <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />
-                        <span className="font-medium">Deteksi 8+ jenis alergen</span>
+                        <span className="font-medium">Deteksi komprehensif alergen</span>
                       </div>
                       <div className="flex items-center text-blue-800">
                         <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />

@@ -149,6 +149,22 @@ class AllergenPredictor:
             # Pelatihan model pada seluruh data
             self.model.fit(self.X_encoded, self.y_encoded)
             
+            # Save model performance to database untuk statistik dinamis
+            try:
+                from ...database.allergen_database import database_manager
+                performance_data = {
+                    'model_type': 'SVM+AdaBoost',
+                    'accuracy': self.cv_accuracy,
+                    'cv_score': self.cv_accuracy,
+                    'train_samples': self.X_encoded.shape[0],
+                    'test_samples': 0,  # We use cross-validation
+                    'feature_count': self.X_encoded.shape[1]
+                }
+                database_manager.save_model_performance(performance_data)
+                api_logger.info(f"✅ Model performance saved to database: {self.cv_accuracy * 100:.2f}%")
+            except Exception as perf_error:
+                api_logger.warning(f"⚠️ Could not save model performance: {perf_error}")
+            
             self.is_loaded = True
             log_model_loaded()
             

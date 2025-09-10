@@ -5,19 +5,19 @@ import StatCard from './UI/StatCard'
 import { useStatistics } from '../hooks/useStatistics'
 
 function Dashboard({ onNavigate }) {
-  const { datasetCount, allergenTypes, accuracy, processingTime, loading } = useStatistics()
+  const { datasetCount, accuracy, processingTime, loading, refetch } = useStatistics()
   
   const features = [
     {
       icon: Target,
       title: 'Akurasi Tinggi',
-      description: 'Teknologi SVM + AdaBoost dengan akurasi 93.7% melalui validasi silang K=10',
+      description: 'Teknologi SVM + AdaBoost dengan akurasi dinamis melalui validasi silang K=10',
       color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Database,
       title: 'Dataset Lengkap',
-      description: 'Database produk makanan dengan 8+ kategori alergen utama',
+      description: 'Database produk makanan dengan kategori alergen yang terus berkembang',
       color: 'from-green-500 to-green-600'
     },
     {
@@ -30,8 +30,7 @@ function Dashboard({ onNavigate }) {
 
   // Statistik dinamis dari database real-time
   const stats = [
-    { label: 'Jenis Alergen', value: `${allergenTypes}+`, icon: Target },
-    { label: 'Dataset Training', value: datasetCount.toString(), icon: Database },
+    { label: 'Dataset', value: datasetCount.toString(), icon: Database },
     { label: 'Akurasi Model', value: accuracy, icon: Award },
     { label: 'Processing Time', value: processingTime, icon: TrendingUp }
   ]
@@ -72,7 +71,7 @@ function Dashboard({ onNavigate }) {
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-blue-500/25 transform hover:scale-105 transition-all duration-300"
               >
                 <Search className="h-6 w-6 mr-3" />
-                Mulai Analisis Alergen
+                Mulai Deteksi Alergen
               </Button>
               <Button 
                 variant="secondary"
@@ -146,7 +145,7 @@ function Dashboard({ onNavigate }) {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">Cara Kerja Sistem</h2>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              Proses analisis alergen dalam 3 langkah sederhana
+              Proses deteksi alergen dalam 3 langkah sederhana
             </p>
           </div>
           

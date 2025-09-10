@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
             <p className="text-slate-300 text-sm leading-relaxed max-w-md mb-6">
               Sistem deteksi alergen makanan berbasis AI menggunakan algoritma SVM + AdaBoost 
-              dengan akurasi 93.7% untuk menjaga keamanan dan kesehatan konsumen.
+              dengan akurasi dinamis untuk menjaga keamanan dan kesehatan konsumen.
             </p>
             
             {/* Logos Section - Using LogoSection Component */}
