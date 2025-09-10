@@ -317,8 +317,23 @@ class AllergenPredictor:
             predicted_label = hasil_target[0]
             
             # Menentukan apakah harus melaporkan deteksi berdasarkan adjusted confidence
-            if predicted_label == "Mengandung Alergen" and adjusted_confidence >= confidence_threshold:
-                if adjusted_confidence >= 0.6:  # Ambang batas lebih rendah untuk adjusted confidence
+            if predicted_label == "Mengandung Alergen":
+                # PERBAIKAN: Deteksi alergen spesifik bahkan dengan confidence rendah
+                specific_allergens = self._detect_specific_allergens(data_baru, adjusted_confidence)
+                
+                if specific_allergens:
+                    # Tambahkan alergen spesifik
+                    for allergen_name, allergen_confidence in specific_allergens.items():
+                        # Pastikan confidence minimal untuk deteksi
+                        final_confidence = max(allergen_confidence, 0.3)
+                        results.append(AllergenResult(
+                            allergen=allergen_name,
+                            confidence=float(final_confidence),
+                            detected=True,
+                            risk_level=""  # Akan dihitung otomatis oleh validator
+                        ))
+                elif adjusted_confidence >= confidence_threshold:
+                    # Fallback ke deteksi umum hanya jika confidence cukup tinggi
                     results.append(AllergenResult(
                         allergen="Mengandung Alergen",
                         confidence=float(adjusted_confidence),
@@ -355,6 +370,83 @@ class AllergenPredictor:
         except Exception as e:
             log_error(e, "Prediksi alergen")
             raise RuntimeError(f"Prediksi gagal: {str(e)}")
+
+    def _detect_specific_allergens(self, input_data: Dict[str, str], base_confidence: float) -> Dict[str, float]:
+        """
+        Deteksi alergen spesifik berdasarkan bahan-bahan input
+        
+        Args:
+            input_data: Data input yang berisi bahan-bahan
+            base_confidence: Confidence dasar dari model ML
+            
+        Returns:
+            Dictionary mapping nama alergen ke confidence score
+        """
+        detected_allergens = {}
+        
+        # Mapping alergen berdasarkan keyword dan pattern
+        allergen_patterns = {
+            'Kacang': ['kacang', 'almond', 'pinus', 'walnut', 'pecan', 'nut'],
+            'Produk Susu': ['susu', 'keju', 'mentega', 'butter', 'cream', 'dairy', 'yogurt', 'latte'],
+            'Gandum': ['tepung', 'wheat', 'flour', 'roti', 'bread', 'pasta', 'mie', 'noodle', 'terigu'],
+            'Telur': ['telur', 'egg'],
+            'Ikan': ['ikan', 'salmon', 'tuna', 'fish', 'teri', 'sarden'],
+            'Kerang-Kerangan': ['udang', 'kerang', 'lobster', 'crab', 'shrimp', 'kepiting'],
+            'Kedelai': ['kedelai', 'soy', 'tofu', 'tempe', 'soya'],
+            'Seledri': ['seledri', 'celery'],
+            'Wijen': ['wijen', 'sesame'],
+            'Kacang Tanah': ['kacang tanah', 'peanut']
+        }
+        
+        # Gabungkan semua input menjadi text untuk analisis
+        all_ingredients = ' '.join([
+            str(input_data.get('bahan_utama', '')),
+            str(input_data.get('pemanis', '')),
+            str(input_data.get('lemak_minyak', '')),
+            str(input_data.get('penyedap_rasa', ''))
+        ]).lower()
+        
+        # Deteksi berdasarkan pattern matching
+        for allergen, patterns in allergen_patterns.items():
+            allergen_confidence = 0.0
+            pattern_matches = 0
+            
+            for pattern in patterns:
+                if pattern in all_ingredients:
+                    pattern_matches += 1
+                    
+                    # Berikan confidence berbeda berdasarkan lokasi match
+                    if pattern in str(input_data.get('bahan_utama', '')).lower():
+                        allergen_confidence = max(allergen_confidence, base_confidence * 0.95)  # High confidence untuk bahan utama
+                    else:
+                        allergen_confidence = max(allergen_confidence, base_confidence * 0.8)   # Medium confidence untuk ingredient lain
+            
+            # Hanya tambahkan jika ada match dan confidence cukup tinggi
+            if pattern_matches > 0 and allergen_confidence >= 0.3:
+                detected_allergens[allergen] = allergen_confidence
+        
+        # Penyesuaian khusus berdasarkan kombinasi bahan
+        if 'susu' in all_ingredients or 'mentega' in all_ingredients or 'keju' in all_ingredients:
+            detected_allergens['Produk Susu'] = max(detected_allergens.get('Produk Susu', 0), base_confidence * 0.9)
+        
+        if 'tepung' in all_ingredients or 'terigu' in all_ingredients:
+            detected_allergens['Gandum'] = max(detected_allergens.get('Gandum', 0), base_confidence * 0.85)
+            
+        if any(keyword in all_ingredients for keyword in ['kacang tanah', 'peanut']):
+            detected_allergens['Kacang Tanah'] = base_confidence * 0.95
+            detected_allergens['Kacang'] = base_confidence * 0.9
+        
+        if 'telur' in all_ingredients:
+            detected_allergens['Telur'] = base_confidence * 0.9
+            
+        if any(keyword in all_ingredients for keyword in ['ikan', 'salmon', 'tuna']):
+            detected_allergens['Ikan'] = base_confidence * 0.9
+            
+        if 'udang' in all_ingredients:
+            detected_allergens['Kerang-Kerangan'] = base_confidence * 0.95
+        
+        api_logger.info(f"🎯 Alergen spesifik terdeteksi: {list(detected_allergens.keys())}")
+        return detected_allergens
 
     def predict(self, model_input: Dict[str, str]) -> Dict:
         """
