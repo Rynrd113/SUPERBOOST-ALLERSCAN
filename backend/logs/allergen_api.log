@@ -16295,3 +16295,186 @@
 2025-09-10 23:44:48 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
 2025-09-10 23:44:48 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
 2025-09-10 23:44:48 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-09-12 11:55:03 | ERROR    | app.database.allergen_database:_initialize_connection:93 | ❌ Database connection failed: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([Errno 61] Connection refused)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-09-12 11:55:03 | WARNING  | app.database.allergen_database:__init__:57 | ⚠️ Database tidak tersedia, menggunakan mode fallback: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'localhost' ([Errno 61] Connection refused)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-09-12 11:55:03 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-09-12 11:55:03 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-09-12 11:55:03 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-09-12 11:55:03 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-09-12 11:55:04 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-09-12 11:55:04 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-09-12 11:55:04 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-09-12 11:55:04 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-09-12 11:55:26 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-09-12 11:55:26 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-09-12 11:55:33 | ERROR    | app.database.allergen_database:save_model_performance:416 | ❌ Error saving model performance: 'NoneType' object has no attribute 'connect'
+2025-09-12 11:55:33 | WARNING  | app.models.inference.predictor:load_and_train_model:166 | ⚠️ Could not save model performance: 'NoneType' object has no attribute 'connect'
+2025-09-12 11:55:33 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-09-12 11:55:33 | INFO     | app.models.inference.predictor:load_and_train_model:171 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-09-12 11:55:33 | INFO     | app.models.inference.predictor:load_and_train_model:172 | 🔢 Jumlah fitur: 623
+2025-09-12 11:55:33 | INFO     | app.models.inference.predictor:load_and_train_model:173 | 📋 Jumlah sampel: 399
+2025-09-12 11:55:33 | INFO     | app.models.inference.predictor:load_and_train_model:174 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-09-12 11:55:33 | INFO     | app.main:lifespan:55 | 🛑 AllerScan API shutting down...
+2025-09-12 11:56:09 | INFO     | app.database.allergen_database:_initialize_connection:90 | ✅ Database connection established: localhost:3306/allerscan_db
+2025-09-12 11:56:09 | INFO     | app.database.allergen_database:_create_tables:165 | ✅ Database tables created/verified successfully
+2025-09-12 11:56:09 | INFO     | app.main:lifespan:29 | 🚀 AllerScan API starting up...
+2025-09-12 11:56:09 | INFO     | app.main:lifespan:34 | 📚 Melatih model dari dataset Excel sesuai notebook referensi...
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:71 | Memuat dataset dan melatih model SVM + AdaBoost...
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:92 | Memuat dataset dari: ../data/raw/Dataset Bahan Makanan & Alergen.xlsx
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:104 | Dataset berhasil dimuat: shape (399, 8), kolom: ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen', 'Prediksi', 'Keterangan']
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:126 | Kategori training disimpan untuk deteksi OOV: 6 kategori
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:133 | One-hot encoding selesai: 623 fitur
+2025-09-12 11:56:09 | INFO     | app.models.inference.predictor:load_and_train_model:134 | Label encoding selesai: 2 kelas: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-09-12 11:56:32 | INFO     | app.models.inference.predictor:load_and_train_model:146 | 📊 Akurasi Cross Validation (K=10): 93.74%
+2025-09-12 11:56:32 | INFO     | app.models.inference.predictor:load_and_train_model:147 | 📊 Detail skor CV: min=0.900, max=1.000, std=0.030
+2025-09-12 11:56:39 | INFO     | app.database.allergen_database:save_model_performance:412 | ✅ Model performance saved with ID: 15
+2025-09-12 11:56:39 | INFO     | app.models.inference.predictor:load_and_train_model:164 | ✅ Model performance saved to database: 93.74%
+2025-09-12 11:56:39 | INFO     | app.core.logger:log_model_loaded:81 | ✅ ML models loaded successfully
+2025-09-12 11:56:39 | INFO     | app.models.inference.predictor:load_and_train_model:171 | ✅ Model SVM + AdaBoost berhasil dilatih
+2025-09-12 11:56:39 | INFO     | app.models.inference.predictor:load_and_train_model:172 | 🔢 Jumlah fitur: 623
+2025-09-12 11:56:39 | INFO     | app.models.inference.predictor:load_and_train_model:173 | 📋 Jumlah sampel: 399
+2025-09-12 11:56:39 | INFO     | app.models.inference.predictor:load_and_train_model:174 | 🎯 Kelas target: ['Mengandung Alergen', 'Tidak Mengandung Alergen']
+2025-09-12 11:56:39 | INFO     | app.main:lifespan:38 | ✅ SVM + AdaBoost model loaded successfully from dataset
+2025-09-12 11:56:39 | INFO     | app.main:lifespan:40 | 📊 Model Info: SVM + AdaBoost
+2025-09-12 11:56:39 | INFO     | app.main:lifespan:41 | 🎯 Features: 623
+2025-09-12 11:56:39 | INFO     | app.main:lifespan:42 | 📋 Samples: 399
+2025-09-12 11:56:39 | INFO     | app.main:lifespan:43 | 🔍 CV Accuracy: 0.937371794871795
+2025-09-12 11:56:40 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:56:40 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:56:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:58:25 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:58:25 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:58:25 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:58:40 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:58:40 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:58:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:58:40 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:58:40 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:58:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:29 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:29 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:29 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:29 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:29 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:29 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:32 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:32 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:32 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:32 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:32 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:32 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:36 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:36 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:36 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:37 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:37 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:37 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:58 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:58 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:58 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 11:59:58 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 11:59:58 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 11:59:58 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:00:49 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:00:49 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:00:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:00:49 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:00:49 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:00:49 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:08 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:08 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:08 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:08 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:08 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:08 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:17 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:17 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:17 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:17 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:17 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:17 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:46 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:46 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:46 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:11:46 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:11:46 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:11:46 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:12:40 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:12:40 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:12:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:12:40 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:12:40 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:12:40 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:13:24 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:13:24 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:13:24 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:13:24 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:13:24 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:13:24 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:14:13 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:14:13 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:14:13 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:14:13 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:14:13 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:14:13 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:05 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:05 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:05 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:05 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:05 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:05 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:28 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:28 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:28 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:28 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:28 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:28 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:36 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:36 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:36 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:18:36 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:18:36 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:18:36 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:19:05 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:19:05 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:19:05 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:19:05 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:19:05 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:19:05 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:19:11 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:19:11 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:19:11 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:19:11 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:19:11 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:19:11 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:23:31 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:23:31 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:23:31 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:23:31 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:23:31 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:23:31 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:23:58 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:23:58 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:23:58 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 12:23:58 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 12:23:58 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 12:23:58 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 13:54:55 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 13:54:55 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 13:54:55 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 13:54:55 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 13:54:55 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 13:54:55 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 14:41:48 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 14:41:48 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 14:41:48 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served
+2025-09-12 14:41:48 | INFO     | app.database.allergen_database:get_statistics:383 | 📊 Statistics calculated successfully - Accuracy: 93.7%
+2025-09-12 14:41:48 | INFO     | app.database.allergen_database:get_prediction_history:301 | 📊 Retrieved 1/1 records (page 1/1)
+2025-09-12 14:41:48 | INFO     | app.api.v1.routes.dataset_clean:get_dataset_statistics:237 | 📈 Dataset statistics calculated and served

@@ -65,7 +65,7 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
           </div>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Akses sistem administrasi untuk mengelola 
-            <span className="font-semibold text-blue-600"> dataset dan konfigurasi AllerScan</span>
+            <span className="font-semibold text-blue-600"> aplikasi SuperBoost-Allerscan</span>
           </p>
         </div>
 
@@ -182,22 +182,7 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
                 </div>
               </form>
 
-              {/* Default Credentials Info */}
-              <div className="mt-8 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6">
-                <div className="text-center">
-                  <h3 className="text-blue-900 font-bold mb-3">Kredensial Default</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-slate-600 font-medium">Username:</p>
-                      <p className="text-slate-900 font-bold text-lg">admin</p>
-                    </div>
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-slate-600 font-medium">Password:</p>
-                      <p className="text-slate-900 font-bold text-lg">admin123</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* Default Credentials Info - Removed */}
             </div>
           </div>
         </div>
@@ -219,11 +204,10 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
             </div>
             <p className="text-slate-500 text-sm">
               Powered by <span className="font-semibold">Universitas Nasional Karangturi</span> • 
-              Supported by <span className="font-semibold">BIMA DIKTI</span> • 
-              <span className="font-semibold">DIKTISAINTEK BERDAMPAK</span>
+              Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM) - Kementrian Pendidikan Tinggi, Sains dan Teknologi, Direktorat Jendral Riset dan Pengembangan</span>
             </p>
             <p className="text-slate-400 text-xs mt-2">
-              © 2024 SuperBoost AllerScan • Sistem AI Deteksi Alergen
+              © 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning
             </p>
           </div>
         </div>

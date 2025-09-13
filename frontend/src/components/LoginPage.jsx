@@ -65,12 +65,12 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
             <h1 className="text-3xl font-bold text-white">Admin Login</h1>
           </div>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Akses dashboard administrator untuk mengelola sistem 
-            <span className="font-semibold text-allerscan-600"> AllerScan</span>
+            Akses dashboard administrator untuk mengelola aplikasi 
+            <span className="font-semibold text-allerscan-600"> SuperBoost-Allerscan</span>
           </p>
           <div className="mt-4 inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
             <Sparkles className="h-4 w-4 mr-2" />
-            Sistem AI • Universitas Nasional Karangturi
+            Data Mining - Machine Learning
           </div>
         </div>
 
@@ -178,28 +178,7 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
               </form>
             </div>
 
-            {/* Default Credentials Card */}
-            <div className="mx-8 mb-8">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl p-6">
-                <div className="text-center">
-                  <div className="p-2 bg-blue-600 rounded-full w-fit mx-auto mb-3">
-                    <User className="h-5 w-5 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-blue-900 mb-3">Kredensial Default</h3>
-                  <div className="space-y-2 text-blue-800">
-                    <div className="bg-white rounded-xl p-3 border border-blue-200">
-                      <p className="font-semibold text-sm">Username: <span className="font-mono bg-blue-50 px-2 py-1 rounded">admin</span></p>
-                    </div>
-                    <div className="bg-white rounded-xl p-3 border border-blue-200">
-                      <p className="font-semibold text-sm">Password: <span className="font-mono bg-blue-50 px-2 py-1 rounded">admin123</span></p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-blue-600 mt-3">
-                    Gunakan kredensial di atas untuk mengakses dashboard administrator
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Default Credentials Card - Removed */}
           </div>
         </div>
 
@@ -211,12 +190,14 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
               Powered by <span className="text-allerscan-600">Universitas Nasional Karangturi</span>
             </p>
             <div className="flex items-center justify-center space-x-4 text-sm">
-              <span>Supported by <span className="font-semibold">BIMA DIKTI</span></span>
+              <span>Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM)</span></span>
               <span>•</span>
-              <span><span className="font-semibold">DIKTISAINTEK BERDAMPAK</span></span>
+              <span><span className="font-semibold">Kementrian Pendidikan Tinggi, Sains dan Teknologi</span></span>
+              <span>•</span>
+              <span><span className="font-semibold">Direktorat Jendral Riset dan Pengembangan</span></span>
             </div>
             <p className="text-xs text-slate-400 mt-4">
-              © 2024 SuperBoost AllerScan • Sistem Deteksi Alergen Berbasis AI
+              © 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning
             </p>
           </div>
         </div>

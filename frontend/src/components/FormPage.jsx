@@ -435,11 +435,10 @@ function FormPage({ onNavigate, onDetectionResult }) {
           <div className="text-center">
             <p className="text-slate-500 text-sm">
               Powered by <span className="font-semibold">Universitas Nasional Karangturi</span> • 
-              Supported by <span className="font-semibold">BIMA DIKTI</span> • 
-              <span className="font-semibold">DIKTISAINTEK BERDAMPAK</span>
+              Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM) - Kementrian Pendidikan Tinggi, Sains dan Teknologi, Direktorat Jendral Riset dan Pengembangan</span>
             </p>
             <p className="text-slate-400 text-xs mt-2">
-              © 2024 SuperBoost AllerScan • Machine Learning Research Project
+              © 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning
             </p>
           </div>
         </div>

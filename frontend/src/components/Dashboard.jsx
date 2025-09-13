@@ -46,7 +46,7 @@ function Dashboard({ onNavigate }) {
           <div className="flex justify-center mb-8">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-full text-sm font-semibold border border-blue-300">
               <Sparkles className="h-4 w-4 mr-2" />
-              Sistem AI - Universitas Nasional Karangturi
+              Data Mining - Machine Learning
             </div>
           </div>
           

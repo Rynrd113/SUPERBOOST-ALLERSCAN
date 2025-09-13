@@ -25,8 +25,8 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-slate-300 text-sm leading-relaxed max-w-md mb-6">
-              Sistem deteksi alergen makanan berbasis AI menggunakan algoritma SVM + AdaBoost 
-              dengan akurasi dinamis untuk menjaga keamanan dan kesehatan konsumen.
+              Aplikasi deteksi alergen produk pangan berbasis data mining dan algoritma 
+              machine learning (SVM + AdaBoost) untuk membantu deteksi awal alergen pada produk pangan.
             </p>
             
             {/* Logos Section - Using LogoSection Component */}
@@ -75,8 +75,8 @@ const Footer = () => {
                 <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium">Email:</p>
-                  <a href="mailto:allerscan@kartur.ac.id" className="hover:text-white transition-colors">
-                    allerscan@kartur.ac.id
+                  <a href="mailto:siskanarulita84@gmail.com" className="hover:text-white transition-colors">
+                    siskanarulita84@gmail.com
                   </a>
                 </div>
               </li>
@@ -84,7 +84,7 @@ const Footer = () => {
                 <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium">Telepon:</p>
-                  <span>+62 (0)21-ALLERSCAN</span>
+                  <span>081228202122</span>
                 </div>
               </li>
               <li className="flex items-start space-x-2 text-slate-300">
