@@ -22,16 +22,21 @@ class Settings(BaseSettings):
     api_v1_prefix: str = "/api/v1"
     allowed_hosts: list = ["*"]
     
-    # CORS Settings
-    allow_origins: list = [
-        "http://localhost:3000",  # React dev server
-        "http://localhost:5173",  # Vite dev server
-        "http://localhost:5174",  # Vite dev server (alternative port)
-        "http://localhost:5175",  # Vite dev server (alternative port)
-        "https://yourdomain.vercel.app",  # Production frontend
-        "https://Rynrd113.github.io",  # GitHub Pages
-        "https://rynrd113.github.io",  # GitHub Pages (lowercase)
-    ]
+    # CORS Settings — set CORS_ORIGINS di .env untuk produksi
+    # Contoh: CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+    cors_origins_str: str = os.getenv("CORS_ORIGINS", "")
+
+    @property
+    def allow_origins(self) -> list:
+        if self.cors_origins_str:
+            return [o.strip() for o in self.cors_origins_str.split(",") if o.strip()]
+        return [
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "http://localhost:5175",
+            "*",  # fallback untuk development
+        ]
     allow_methods: list = ["GET", "POST", "PUT", "DELETE"]
     allow_headers: list = ["*"]
     

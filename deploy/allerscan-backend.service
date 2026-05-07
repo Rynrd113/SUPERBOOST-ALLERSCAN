@@ -1,0 +1,21 @@
+[Unit]
+Description=SuperBoost AllerScan FastAPI Backend
+After=network.target mysql.service
+
+[Service]
+Type=exec
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/superboost-allerscan/backend
+EnvironmentFile=/var/www/superboost-allerscan/backend/.env
+ExecStart=/var/www/superboost-allerscan/backend/venv/bin/gunicorn app.main:app \
+    --workers 2 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 127.0.0.1:8000 \
+    --timeout 300 \
+    --log-level info
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

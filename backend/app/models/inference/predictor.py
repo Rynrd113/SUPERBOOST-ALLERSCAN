@@ -14,7 +14,10 @@ Fitur utama:
 
 import pandas as pd
 import numpy as np
+import joblib
+import json
 from pathlib import Path
+from datetime import datetime
 from typing import List, Dict, Tuple, Optional
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.svm import SVC
@@ -49,7 +52,8 @@ class AllergenPredictor:
         self.label_encoder = None
         self.cv_accuracy = None
         self.is_loaded = False
-        
+        self._n_samples = 0
+
         # Simpan kategori training untuk deteksi OOV
         self.training_categories = {
             'nama_produk_makanan': set(),
@@ -60,6 +64,56 @@ class AllergenPredictor:
             'alergen': set()
         }
     
+    def save_model(self) -> None:
+        """Simpan model terlatih ke disk agar restart server tidak perlu retrain."""
+        try:
+            save_dir = Path(settings.model_dir)
+            save_dir.mkdir(parents=True, exist_ok=True)
+
+            joblib.dump(self.model,                 save_dir / 'svm_adaboost_model.pkl')
+            joblib.dump(self.label_encoder,         save_dir / 'label_encoder.pkl')
+            joblib.dump(list(self.X_encoded.columns), save_dir / 'feature_names.pkl')
+            joblib.dump(self.training_categories,   save_dir / 'training_categories.pkl')
+
+            metadata = {
+                'cv_accuracy': float(self.cv_accuracy) if self.cv_accuracy else None,
+                'n_samples': int(self.X_encoded.shape[0]),
+                'n_features': int(self.X_encoded.shape[1]),
+                'training_date': datetime.now().isoformat()
+            }
+            with open(save_dir / 'model_metadata.json', 'w') as f:
+                json.dump(metadata, f, indent=2)
+
+            api_logger.info(f"✅ Model disimpan ke {save_dir}")
+        except Exception as e:
+            api_logger.warning(f"⚠️ Tidak bisa menyimpan model: {e}")
+
+    def load_saved_model(self) -> bool:
+        """Muat model dari disk. Return True jika berhasil, False jika belum ada."""
+        try:
+            save_dir = Path(settings.model_dir)
+            if not (save_dir / 'svm_adaboost_model.pkl').exists():
+                api_logger.info("Model tersimpan tidak ditemukan, akan dilatih dari awal.")
+                return False
+
+            self.model             = joblib.load(save_dir / 'svm_adaboost_model.pkl')
+            self.label_encoder     = joblib.load(save_dir / 'label_encoder.pkl')
+            feature_names          = joblib.load(save_dir / 'feature_names.pkl')
+            self.training_categories = joblib.load(save_dir / 'training_categories.pkl')
+            self.X_encoded         = pd.DataFrame(columns=feature_names)
+
+            with open(save_dir / 'model_metadata.json') as f:
+                meta = json.load(f)
+            self.cv_accuracy = meta.get('cv_accuracy')
+            self._n_samples  = meta.get('n_samples', 0)
+
+            self.is_loaded = True
+            api_logger.info(f"✅ Model dimuat dari disk — akurasi={self.cv_accuracy:.4f}, fitur={len(feature_names)}, sampel={self._n_samples}")
+            return True
+        except Exception as e:
+            api_logger.warning(f"⚠️ Gagal muat model dari disk: {e}")
+            return False
+
     def load_and_train_model(self) -> bool:
         """
         Memuat dataset dan melatih model SVM + AdaBoost
@@ -166,8 +220,12 @@ class AllergenPredictor:
                 api_logger.warning(f"⚠️ Could not save model performance: {perf_error}")
             
             self.is_loaded = True
+            self._n_samples = self.X_encoded.shape[0]
             log_model_loaded()
-            
+
+            # Simpan ke disk supaya restart server tidak perlu retrain
+            self.save_model()
+
             api_logger.info("✅ Model SVM + AdaBoost berhasil dilatih")
             api_logger.info(f"🔢 Jumlah fitur: {self.X_encoded.shape[1]}")
             api_logger.info(f"📋 Jumlah sampel: {self.X_encoded.shape[0]}")
@@ -511,6 +569,9 @@ class AllergenPredictor:
             except Exception as e:
                 api_logger.warning(f"⚠️ Could not save retrain performance: {e}")
 
+            self._n_samples = self.X_encoded.shape[0]
+            self.save_model()
+
             result = {
                 'cv_accuracy': round(float(self.cv_accuracy), 4),
                 'accuracy_pct': f"{self.cv_accuracy * 100:.1f}%",
@@ -571,7 +632,7 @@ class AllergenPredictor:
             "model_type": "SVM + AdaBoost",
             "encoding_method": "One-Hot Encoding (pd.get_dummies) + OOV Handling",
             "n_features": self.X_encoded.shape[1] if self.X_encoded is not None else "Tidak diketahui",
-            "n_samples": self.X_encoded.shape[0] if self.X_encoded is not None else "Tidak diketahui",
+            "n_samples": self._n_samples or (self.X_encoded.shape[0] if self.X_encoded is not None else "Tidak diketahui"),
             "cv_accuracy_mean": self.cv_accuracy if self.cv_accuracy else "Tidak diketahui",
             "cross_validation_k": 10,
             "training_date": "Pelatihan real-time dari dataset",

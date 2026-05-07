@@ -25,6 +25,10 @@ build/
 *.db
 *.sqlite
 
+# Trained model files (generated at runtime, not committed)
+backend/app/models/saved_models/*.pkl
+backend/app/models/saved_models/*.json
+
 # IDE
 .vscode/
 .idea/

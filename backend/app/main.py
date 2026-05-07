@@ -31,19 +31,22 @@ async def lifespan(app: FastAPI):
         # Always load from dataset Excel sesuai script dosen
         from .models.inference.predictor import predictor
         
-        api_logger.info("📚 Melatih model dari dataset Excel sesuai notebook referensi...")
-        success = predictor.load_and_train_model()
-        
+        # Coba muat model dari disk dulu (startup instan)
+        # Kalau belum ada (pertama kali atau setelah reset), latih dari awal
+        success = predictor.load_saved_model()
+        if not success:
+            api_logger.info("📚 Model belum ada di disk — melatih dari dataset Excel...")
+            success = predictor.load_and_train_model()
+
         if success:
-            api_logger.info("✅ SVM + AdaBoost model loaded successfully from dataset")
+            api_logger.info("✅ SVM + AdaBoost model siap digunakan")
             info = predictor.get_model_info()
             api_logger.info(f"📊 Model Info: {info['model_type']}")
             api_logger.info(f"🎯 Features: {info['n_features']}")
             api_logger.info(f"📋 Samples: {info['n_samples']}")
             api_logger.info(f"🔍 CV Accuracy: {info['cv_accuracy_mean']}")
         else:
-            api_logger.error("❌ Failed to load SVM + AdaBoost model from dataset")
-            api_logger.error("⚠️ API will start but predictions will be unavailable")
+            api_logger.error("❌ Gagal memuat model — prediksi tidak tersedia")
     
     except Exception as e:
         api_logger.error(f"❌ Error during model loading: {e}")
