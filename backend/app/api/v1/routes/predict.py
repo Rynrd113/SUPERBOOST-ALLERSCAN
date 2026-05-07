@@ -290,5 +290,41 @@ async def get_dataset_results(limit: int = 100):
 # This functionality is properly handled in dataset.py with admin authentication
 # Following DRY principle - no duplication of dataset management endpoints
         
+@router.post(
+    "/retrain",
+    summary="Retrain model with original + new DB data",
+    description="Combines the 399 original training records with all saved predictions, then retrains SVM+AdaBoost.",
+    response_model=dict
+)
+async def retrain_model():
+    """
+    Retrain the SVM+AdaBoost model using original training data
+    combined with all prediction records stored in the database.
+    """
+    try:
+        api_logger.info("🔄 Retrain request received")
+
+        # Get all prediction records from DB to use as additional training data
+        all_records_result = database_manager.get_prediction_history(limit=10000)
+        all_records = all_records_result.get('records', [])
+
+        api_logger.info(f"📊 Found {len(all_records)} DB records for retraining")
+
+        result = predictor.retrain_with_additional_data(all_records)
+
+        return {
+            "success": True,
+            "message": f"Model berhasil diretrain dengan {result['total_samples']} data",
+            "data": result
+        }
+
+    except Exception as e:
+        log_error(e, "retrain endpoint")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Retrain gagal: {str(e)}"
+        )
+
+
 # Export
 __all__ = ["router"]

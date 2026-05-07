@@ -3,7 +3,7 @@
 """
 
 from pydantic import BaseModel, Field, validator
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime
 
 class PredictionRequest(BaseModel):
@@ -46,11 +46,10 @@ class PredictionRequest(BaseModel):
         example="MSG"
     )
     
-    alergen: str = Field(
-        ...,
-        min_length=1,
-        max_length=100,
-        description="Known allergen information (required)",
+    alergen: Optional[str] = Field(
+        "",
+        max_length=200,
+        description="Known allergen information (optional free text)",
         example="Telur"
     )
     
@@ -82,11 +81,12 @@ class PredictionRequest(BaseModel):
 
 class AllergenResult(BaseModel):
     """Individual allergen detection result"""
-    
+
     allergen: str = Field(..., description="Name of the allergen")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score (0-1)")
     risk_level: str = Field(..., description="Risk level: low, medium, high")
     detected: bool = Field(..., description="Whether allergen was detected")
+    sources: Optional[List[str]] = Field(None, description="Input fields where allergen keywords were found")
     
     @validator('risk_level', pre=True, always=True)
     def determine_risk_level(cls, v, values):

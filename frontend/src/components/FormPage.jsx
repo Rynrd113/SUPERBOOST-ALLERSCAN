@@ -184,6 +184,24 @@ function FormPage({ onNavigate, onDetectionResult }) {
                     />
                   </div>
 
+                  {/* Alergen yang Diketahui */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-bold text-slate-700 uppercase tracking-wide">
+                      Alergen yang Diketahui
+                    </label>
+                    <input
+                      type="text"
+                      name="alergen"
+                      value={formData.alergen}
+                      onChange={handleChange}
+                      placeholder="Contoh: susu, telur, kacang (kosongkan jika tidak tahu)"
+                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                    />
+                    <p className="text-sm text-slate-500">
+                      Opsional — mengisi field ini meningkatkan akurasi deteksi
+                    </p>
+                  </div>
+
                   {/* Submit Button */}
                   <div className="flex justify-center pt-6">
                     <Button
@@ -265,12 +283,19 @@ function FormPage({ onNavigate, onDetectionResult }) {
                         </div>
                         {result.total_allergens_detected > 0 && result.detected_allergens && (
                           <div className="text-center">
-                            <p className="text-sm font-semibold mb-2">Alergen yang Terdeteksi:</p>
-                            <div className="flex flex-wrap justify-center gap-2">
+                            <p className="text-sm font-semibold mb-3">Alergen yang Terdeteksi:</p>
+                            <div className="space-y-2">
                               {result.detected_allergens.map((a, idx) => (
-                                <span key={idx} className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                  {a.allergen}
-                                </span>
+                                <div key={idx} className="text-left">
+                                  <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    {a.allergen}
+                                  </span>
+                                  {a.sources && a.sources.length > 0 && (
+                                    <p className="text-xs text-red-700 mt-1 ml-1">
+                                      Ditemukan di: {a.sources.join(', ')}
+                                    </p>
+                                  )}
+                                </div>
                               ))}
                             </div>
                           </div>

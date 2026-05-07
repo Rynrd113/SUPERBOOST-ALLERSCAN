@@ -109,7 +109,19 @@ export const exportToExcel = async (limit = 1000) => {
 // Auth functions
 export const login = async (credentials) => {
   try {
-    const response = await api.post('/auth/login', credentials)
+    const response = await api.post('/api/v1/auth/login', credentials)
+    return response.data
+  } catch (error) {
+    handleApiError(error)
+  }
+}
+
+// Retrain model with DB data
+export const retrainModel = async () => {
+  try {
+    const response = await api.post('/api/v1/predict/retrain', {}, {
+      timeout: 300000  // 5 minutes — retraining can be slow
+    })
     return response.data
   } catch (error) {
     handleApiError(error)

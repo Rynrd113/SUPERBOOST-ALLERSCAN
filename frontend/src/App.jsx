@@ -16,17 +16,28 @@ function App() {
     setCurrentPage(page)
   }
 
-  const handleLogin = (credentials) => {
-    // Simple authentication logic
-    if (credentials.username === 'admin' && credentials.password === 'admin123') {
-      setIsAuthenticated(true)
-      setCurrentPage('dashboard')
-      return true
+  const handleLogin = async (credentials) => {
+    try {
+      const response = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      })
+      if (response.ok) {
+        const data = await response.json()
+        localStorage.setItem('admin_token', data.access_token)
+        setIsAuthenticated(true)
+        setCurrentPage('dashboard')
+        return true
+      }
+      return false
+    } catch {
+      return false
     }
-    return false
   }
 
   const handleLogout = () => {
+    localStorage.removeItem('admin_token')
     setIsAuthenticated(false)
     setCurrentPage('dashboard')
   }

@@ -324,14 +324,14 @@ class AllergenPredictor:
                 
                 if specific_allergens:
                     # Tambahkan alergen spesifik
-                    for allergen_name, allergen_confidence in specific_allergens.items():
-                        # Pastikan confidence minimal untuk deteksi
+                    for allergen_name, (allergen_confidence, source_fields) in specific_allergens.items():
                         final_confidence = max(allergen_confidence, 0.3)
                         results.append(AllergenResult(
                             allergen=allergen_name,
                             confidence=float(final_confidence),
                             detected=True,
-                            risk_level=""  # Akan dihitung otomatis oleh validator
+                            risk_level="",
+                            sources=source_fields
                         ))
                 elif adjusted_confidence >= confidence_threshold:
                     # Fallback ke deteksi umum hanya jika confidence cukup tinggi
@@ -372,19 +372,16 @@ class AllergenPredictor:
             log_error(e, "Prediksi alergen")
             raise RuntimeError(f"Prediksi gagal: {str(e)}")
 
-    def _detect_specific_allergens(self, input_data: Dict[str, str], base_confidence: float) -> Dict[str, float]:
+    def _detect_specific_allergens(
+        self, input_data: Dict[str, str], base_confidence: float
+    ) -> Dict[str, Tuple[float, List[str]]]:
         """
         Deteksi alergen spesifik berdasarkan keyword matching pada bahan-bahan input.
-        Menggunakan confidence tetap (tidak bergantung pada OOV-adjusted ML confidence).
-
-        Args:
-            input_data: Data input dengan key kapital sesuai to_model_input()
-            base_confidence: Confidence dasar dari model ML (tidak dipakai untuk nilai akhir)
 
         Returns:
-            Dictionary mapping nama alergen ke confidence score
+            Dict mapping allergen name → (confidence, [source_field_names])
         """
-        detected_allergens = {}
+        detected_allergens: Dict[str, Tuple[float, List[str]]] = {}
 
         allergen_patterns = {
             'Kacang': ['kacang', 'almond', 'pinus', 'walnut', 'pecan', 'nut'],
@@ -399,35 +396,135 @@ class AllergenPredictor:
             'Kacang Tanah': ['kacang tanah', 'peanut']
         }
 
-        # Gabungkan SEMUA field termasuk nama produk dan alergen yang dipilih user
-        all_ingredients = ' '.join([
-            str(input_data.get('Nama Produk Makanan', '')),
-            str(input_data.get('Bahan Utama', '')),
-            str(input_data.get('Pemanis', '')),
-            str(input_data.get('Lemak/Minyak', '')),
-            str(input_data.get('Penyedap Rasa', '')),
-            str(input_data.get('Alergen', ''))
-        ]).lower()
+        # Named field map for readable source attribution
+        field_map = {
+            'Nama Produk Makanan': str(input_data.get('Nama Produk Makanan', '')).lower(),
+            'Bahan Utama': str(input_data.get('Bahan Utama', '')).lower(),
+            'Pemanis': str(input_data.get('Pemanis', '')).lower(),
+            'Lemak/Minyak': str(input_data.get('Lemak/Minyak', '')).lower(),
+            'Penyedap Rasa': str(input_data.get('Penyedap Rasa', '')).lower(),
+            'Alergen': str(input_data.get('Alergen', '')).lower(),
+        }
 
-        bahan_utama_text = str(input_data.get('Bahan Utama', '')).lower()
+        all_ingredients = ' '.join(field_map.values())
+        bahan_utama_text = field_map['Bahan Utama']
 
         for allergen, patterns in allergen_patterns.items():
-            pattern_matches = 0
             in_main_ingredient = False
+            source_fields: List[str] = []
 
             for pattern in patterns:
                 if pattern in all_ingredients:
-                    pattern_matches += 1
+                    for field_name, field_text in field_map.items():
+                        if pattern in field_text and field_name not in source_fields:
+                            source_fields.append(field_name)
                     if pattern in bahan_utama_text:
                         in_main_ingredient = True
 
-            if pattern_matches > 0:
-                # Confidence tetap berdasarkan lokasi match — tidak bergantung pada ML OOV confidence
+            if source_fields:
                 allergen_confidence = 0.85 if in_main_ingredient else 0.70
-                detected_allergens[allergen] = allergen_confidence
+                detected_allergens[allergen] = (allergen_confidence, source_fields)
 
         api_logger.info(f"🎯 Alergen spesifik terdeteksi: {list(detected_allergens.keys())}")
         return detected_allergens
+
+    def retrain_with_additional_data(self, additional_records: List[Dict]) -> Dict:
+        """
+        Retrain model dengan data training asli (399 records) + records baru dari database.
+
+        Args:
+            additional_records: List of prediction records from the database
+
+        Returns:
+            Dict with new accuracy and sample counts
+        """
+        try:
+            # Locate training dataset
+            possible_paths = [
+                Path("data/raw/Dataset Bahan Makanan & Alergen.xlsx"),
+                Path("../data/raw/Dataset Bahan Makanan & Alergen.xlsx"),
+                Path("../../data/raw/Dataset Bahan Makanan & Alergen.xlsx"),
+            ]
+            dataset_path = next((p for p in possible_paths if p.exists()), None)
+            if not dataset_path:
+                raise FileNotFoundError("Dataset training tidak ditemukan")
+
+            df_original = pd.read_excel(dataset_path)
+            api_logger.info(f"📂 Dataset asli dimuat: {len(df_original)} records")
+
+            # Convert DB records to training format
+            new_rows = []
+            for record in additional_records:
+                allergens_text = record.get('predicted_allergens', '') or ''
+                prediksi = 'Mengandung Alergen' if record.get('allergen_count', 0) > 0 else 'Tidak Mengandung Alergen'
+                new_rows.append({
+                    'Nama Produk Makanan': record.get('product_name', ''),
+                    'Bahan Utama': record.get('bahan_utama', ''),
+                    'Pemanis': record.get('pemanis', ''),
+                    'Lemak/Minyak': record.get('lemak_minyak', ''),
+                    'Penyedap Rasa': record.get('penyedap_rasa', ''),
+                    'Alergen': allergens_text,
+                    'Prediksi': prediksi
+                })
+
+            if new_rows:
+                df_new = pd.DataFrame(new_rows)
+                df_combined = pd.concat([df_original, df_new], ignore_index=True)
+                api_logger.info(f"➕ Menambahkan {len(new_rows)} records baru ke training data")
+            else:
+                df_combined = df_original
+
+            # Retrain on combined data
+            fitur = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen']
+            X = df_combined[fitur]
+            y = df_combined['Prediksi']
+
+            # Update training categories for OOV detection
+            for col in fitur:
+                self.training_categories[col.lower().replace('/', '_').replace(' ', '_')] = set(df_combined[col].unique())
+
+            self.X_encoded = pd.get_dummies(X)
+            self.label_encoder = LabelEncoder()
+            self.y_encoded = self.label_encoder.fit_transform(y)
+
+            svm_base = SVC(kernel='linear', probability=True, random_state=42)
+            self.model = AdaBoostClassifier(estimator=svm_base, n_estimators=50, random_state=42)
+
+            k = 10
+            cv = StratifiedKFold(n_splits=k, shuffle=True, random_state=42)
+            cv_scores = cross_val_score(self.model, self.X_encoded, self.y_encoded, cv=cv, scoring='accuracy')
+            self.cv_accuracy = cv_scores.mean()
+
+            self.model.fit(self.X_encoded, self.y_encoded)
+
+            # Persist new accuracy to database
+            try:
+                from ...database.allergen_database import database_manager
+                database_manager.save_model_performance({
+                    'model_type': 'SVM+AdaBoost',
+                    'accuracy': self.cv_accuracy,
+                    'cv_score': self.cv_accuracy,
+                    'train_samples': self.X_encoded.shape[0],
+                    'test_samples': 0,
+                    'feature_count': self.X_encoded.shape[1]
+                })
+            except Exception as e:
+                api_logger.warning(f"⚠️ Could not save retrain performance: {e}")
+
+            result = {
+                'cv_accuracy': round(float(self.cv_accuracy), 4),
+                'accuracy_pct': f"{self.cv_accuracy * 100:.1f}%",
+                'total_samples': len(df_combined),
+                'original_samples': len(df_original),
+                'new_samples': len(new_rows),
+                'total_features': self.X_encoded.shape[1]
+            }
+            api_logger.info(f"✅ Retrain selesai: akurasi={result['accuracy_pct']}, total={result['total_samples']} records")
+            return result
+
+        except Exception as e:
+            log_error(e, "Retrain model")
+            raise RuntimeError(f"Retrain gagal: {str(e)}")
 
     def predict(self, model_input: Dict[str, str]) -> Dict:
         """

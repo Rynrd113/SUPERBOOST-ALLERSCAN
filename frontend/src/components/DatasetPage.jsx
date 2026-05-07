@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { 
-  Database, 
-  Search, 
-  Table, 
-  BarChart3, 
-  AlertCircle, 
+import {
+  Database,
+  Search,
+  Table,
+  BarChart3,
+  AlertCircle,
   Loader as LoaderIcon,
   Trash2,
   RefreshCw,
   Download,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Cpu
 } from 'lucide-react'
 
-import api, { deletePrediction, exportToExcel } from '../services/api'
+import api, { deletePrediction, exportToExcel, retrainModel } from '../services/api'
 import { DoughnutChart, PieChart } from './UI/Charts'
 import ResponsiveTable from './ResponsiveTable'
 import Button from './UI/Button'
@@ -50,6 +51,8 @@ const DatasetPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [statistics, setStatistics] = useState(null)
   const [isExporting, setIsExporting] = useState(false)
+  const [isRetraining, setIsRetraining] = useState(false)
+  const [retrainResult, setRetrainResult] = useState(null)
 
   // Data loading function
   const loadData = useCallback(async (page = 1, pageSize = 20) => {
@@ -150,13 +153,36 @@ const DatasetPage = () => {
   const handleExport = async () => {
     try {
       setIsExporting(true)
-      await exportToExcel()
-      alert('Data berhasil diekspor ke Excel')
+      const blob = await exportToExcel()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `superboost_allerscan_dataset_${new Date().toISOString().slice(0,10)}.xlsx`
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Error exporting data:', error)
       alert('Gagal mengekspor data')
     } finally {
       setIsExporting(false)
+    }
+  }
+
+  const handleRetrain = async () => {
+    if (!window.confirm('Retrain model dengan semua data tersedia? Proses ini membutuhkan beberapa menit.')) return
+    try {
+      setIsRetraining(true)
+      setRetrainResult(null)
+      const result = await retrainModel()
+      setRetrainResult(result?.data)
+      await loadStatistics()
+    } catch (error) {
+      console.error('Error retraining:', error)
+      alert('Gagal melakukan retrain model')
+    } finally {
+      setIsRetraining(false)
     }
   }
 
@@ -357,6 +383,15 @@ const DatasetPage = () => {
               </Button>
               
               <Button
+                onClick={handleRetrain}
+                disabled={isRetraining}
+                className="bg-purple-600 hover:bg-purple-700"
+              >
+                <Cpu className={`w-4 h-4 mr-2 ${isRetraining ? 'animate-spin' : ''}`} />
+                {isRetraining ? 'Retraining...' : 'Retrain Model'}
+              </Button>
+
+              <Button
                 onClick={handleExport}
                 disabled={isExporting || data.length === 0}
                 className="bg-green-600 hover:bg-green-700"
@@ -367,6 +402,23 @@ const DatasetPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Retrain Result Banner */}
+        {retrainResult && (
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Cpu className="w-5 h-5 text-purple-600" />
+              <div>
+                <p className="font-semibold text-purple-900">Model berhasil diretrain!</p>
+                <p className="text-sm text-purple-700">
+                  Akurasi baru: <strong>{retrainResult.accuracy_pct}</strong> •
+                  Total data: <strong>{retrainResult.total_samples}</strong> ({retrainResult.original_samples} training + {retrainResult.new_samples} baru)
+                </p>
+              </div>
+            </div>
+            <button onClick={() => setRetrainResult(null)} className="text-purple-400 hover:text-purple-600 text-xl leading-none">×</button>
+          </div>
+        )}
 
         {/* Statistics Cards */}
         {renderStatistics()}
