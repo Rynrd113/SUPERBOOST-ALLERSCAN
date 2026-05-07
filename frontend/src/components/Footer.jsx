@@ -109,10 +109,7 @@ const Footer = () => {
               <span>Made with love for food safety awareness</span>
             </div>
             <div className="text-slate-400 text-sm text-center md:text-right">
-              <p>© 2025 SuperBoost AllerScan Project</p>
-              <p className="text-xs mt-1">
-                Program Hibah Penelitian Kemendikbudristek 2025
-              </p>
+              <p>© 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning</p>
             </div>
           </div>
         </div>

@@ -79,32 +79,30 @@ async def predict_allergens(request: PredictionRequest, client_request: Request)
         # Create ingredients string for display
         ingredients_text = f"{request.bahan_utama}, {request.pemanis}, {request.lemak_minyak}, {request.penyedap_rasa}".strip(", ")
         
-        # 🔧 FIX: Initialize confidence and risk variables early
-        overall_confidence = 0.5  # Default fallback value
-        calculated_risk_level = 'none'  # Default risk level
-        
-        # Calculate confidence using CORRECTED logic for OOV cases
-        # Problem: Model dosen always predicts "Mengandung Alergen" with 60.56% for unknown input
-        # Solution: Check if this is likely an OOV (Out-of-Vocabulary) case
+        overall_confidence = 0.5
+        calculated_risk_level = 'none'
+
         has_allergens = len(detected_allergens) > 0
-        
-        # Check OOV indicators from metadata
+
+        # Deteksi spesifik = hasil keyword matching (bukan label generik "Mengandung Alergen")
+        has_specific_allergens = has_allergens and any(
+            a.allergen != "Mengandung Alergen" for a in detected_allergens
+        )
+
+        # OOV check — hanya untuk mengoreksi deteksi GENERIK dari ML model
         is_likely_oov = False
         if 'oov_analysis' in metadata:
             oov_rate = metadata['oov_analysis'].get('oov_rate', 0)
-            encoding_rate = metadata['oov_analysis'].get('encoding_recognition_rate', 0)
             base_confidence = metadata['oov_analysis'].get('base_confidence', 0)
-            
-            # If high OOV and model gives the "default" 60.56% confidence, it's likely wrong
             if oov_rate >= 90 and abs(base_confidence - 0.6056) < 0.001:
                 is_likely_oov = True
-                api_logger.warning(f"⚠️ Detected OOV case: {oov_rate}% OOV, base_confidence={base_confidence:.4f}")
-        
-        if has_allergens and not is_likely_oov:
-            # Real allergen detection with good confidence
+                api_logger.warning(f"⚠️ OOV terdeteksi ({oov_rate:.0f}%), base_confidence={base_confidence:.4f}")
+
+        if has_specific_allergens or (has_allergens and not is_likely_oov):
+            # Specific keyword detections selalu dipercaya
+            # Generic ML detection hanya dipercaya jika bukan OOV
             overall_confidence = sum([a.confidence for a in detected_allergens]) / len(detected_allergens)
-            
-            # Calculate risk level same as frontend logic
+
             max_confidence = max([a.confidence for a in detected_allergens])
             if max_confidence > 0.8 or len(detected_allergens) > 2:
                 calculated_risk_level = 'high'
@@ -113,23 +111,15 @@ async def predict_allergens(request: PredictionRequest, client_request: Request)
             else:
                 calculated_risk_level = 'low'
         else:
-            # No allergens detected OR likely OOV false positive
+            # Tidak ada alergen spesifik terdeteksi
             if is_likely_oov:
-                api_logger.info(f"✅ Corrected OOV false positive to 'no allergens'")
-                # Override the detected allergens for OOV cases
+                api_logger.info("✅ OOV generic detection diabaikan — tidak ada keyword match")
                 detected_allergens = []
-                # Use more realistic confidence for OOV correction (not 95%)
-                overall_confidence = 0.78  # Realistic confidence for OOV cases
+                overall_confidence = 0.78
             else:
-                # If model genuinely found no allergens, use actual model confidence
-                if metadata and 'oov_analysis' in metadata:
-                    # Use adjusted confidence from OOV analysis
-                    overall_confidence = metadata['oov_analysis'].get('adjusted_confidence', 0.82)
-                else:
-                    # Use reasonable default for genuine no-allergen cases
-                    overall_confidence = 0.85
-            
-            calculated_risk_level = 'none'  # No allergens = no risk
+                overall_confidence = metadata['oov_analysis'].get('adjusted_confidence', 0.82) \
+                    if metadata and 'oov_analysis' in metadata else 0.85
+            calculated_risk_level = 'none'
         
         # Update allergen display after potential override
         allergen_display = "tidak terdeteksi" if len(detected_allergens) == 0 else ", ".join([a.allergen for a in detected_allergens])

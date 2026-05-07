@@ -25,6 +25,9 @@ from pydantic import BaseModel
 import pandas as pd
 from io import BytesIO
 from datetime import datetime
+from pathlib import Path
+
+TRAINING_DATA_PATH = Path(__file__).parents[5] / 'data' / 'raw' / 'Dataset Bahan Makanan & Alergen.xlsx'
 
 from ....database.allergen_database import database_manager
 from ....core.logger import api_logger
@@ -319,30 +322,37 @@ async def export_dataset_excel(
         # Create Excel file in memory with optimization for better performance
         try:
             excel_buffer = BytesIO()
-            
+
             # Use openpyxl for better performance with large datasets
             with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
                 # Main data sheet - Format sesuai Dataset Dosen
                 df.to_excel(writer, sheet_name='Dataset Prediksi Alergen', index=False)
-                
+
+                # Training data sheet - 399 records dari dataset asli
+                if TRAINING_DATA_PATH.exists():
+                    try:
+                        training_df = pd.read_excel(TRAINING_DATA_PATH)
+                        training_df.to_excel(writer, sheet_name='Dataset Training (399 Data)', index=False)
+                        api_logger.info(f"✅ Training data ({len(training_df)} records) included in export")
+                    except Exception as te:
+                        api_logger.warning(f"⚠️ Could not load training data: {te}")
+
                 # Summary statistics sheet (optional, can be skipped for large exports)
                 if len(records) < 2000:  # Only add summary for smaller datasets
                     stats = database_manager.get_statistics()
                     summary_df = pd.DataFrame([
                         ['Total Prediksi', stats['total_predictions']],
-                        ['Alergen Terdeteksi', stats['detected_count']], 
+                        ['Alergen Terdeteksi', stats['detected_count']],
                         ['Tidak Terdeteksi', stats['not_detected_count']],
                         ['Tingkat Deteksi (%)', stats['detection_rate']],
                         ['Kepercayaan Rata-rata (%)', stats['average_confidence']],
                         ['Algoritma Model', stats['model_info']['algorithm']],
-                        ['Format Export', 'Gabungan Permintaan Dosen + Info Teknis Penting'],
-                        ['Catatan', 'Input Bahan = bahan yang diinput user, Hasil Deteksi = prediksi alergen'],
                         ['Jumlah Records Exported', len(records)],
                         ['Tanggal Export', datetime.now().strftime('%Y-%m-%d %H:%M:%S')]
                     ], columns=['Metrik', 'Nilai'])
-                    
+
                     summary_df.to_excel(writer, sheet_name='Ringkasan Statistik', index=False)
-            
+
             excel_buffer.seek(0)
             
         except Exception as excel_error:
@@ -351,7 +361,7 @@ async def export_dataset_excel(
         
         # Generate filename with timestamp - menggunakan nama yang jelas
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"dataset_prediksi_alergen_format_dosen_{timestamp}.xlsx"
+        filename = f"superboost_allerscan_dataset_{timestamp}.xlsx"
         
         # Calculate processing time
         processing_time = (datetime.now() - start_time).total_seconds()

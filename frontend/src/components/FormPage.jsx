@@ -5,57 +5,19 @@ import Button from './UI/Button'
 import { LoadingSpinner } from './UI/Loading'
 import { predictAllergen } from '../services/api'
 import { statisticsService } from '../services/statisticsService'
-
-// Helper function to calculate confidence from API response
-const calculateConfidence = (result) => {
-  if (!result) return 0.0
-  
-  // 🔧 FIX: Always use backend's calculated confidence score first
-  // This ensures consistency between frontend display and database
-  if (result.confidence_score) return result.confidence_score * 100
-  if (result.overall_confidence) return result.overall_confidence * 100
-  
-  // Fallback: Use detected allergens confidence if available
-  if (result.detected_allergens && result.detected_allergens.length > 0) {
-    const totalConfidence = result.detected_allergens.reduce((sum, allergen) => sum + (allergen.confidence || 0), 0)
-    return (totalConfidence / result.detected_allergens.length) * 100
-  }
-  
-  // Last resort default (should rarely be used)
-  return 50.0
-}
-
-// Helper function to format confidence display
-const formatConfidence = (result) => {
-  const confidence = calculateConfidence(result)
-  return confidence.toFixed(1) + '%'
-}
+import { useStatistics } from '../hooks/useStatistics'
 
 function FormPage({ onNavigate, onDetectionResult }) {
+  const { accuracy } = useStatistics()
+
   const [formData, setFormData] = useState({
     nama_produk_makanan: '',
     bahan_utama: '',
     pemanis: '',
-    lemak_minyak: '', 
+    lemak_minyak: '',
     penyedap_rasa: '',
     alergen: ''
   })
-  
-  // Opsi dropdown untuk alergen - sesuai dengan algoritma machine learning
-  const allergenOptions = [
-    { value: '', label: 'Pilih alergen yang akan dideteksi (wajib)' },
-    { value: 'Tidak Ada', label: 'Tidak Ada Alergen' },
-    { value: 'gandum', label: 'Gandum/Gluten' },
-    { value: 'susu', label: 'Susu/Dairy' },
-    { value: 'telur', label: 'Telur' },
-    { value: 'kacang tanah', label: 'Kacang Tanah' },
-    { value: 'kedelai', label: 'Kedelai/Soy' },
-    { value: 'ikan', label: 'Ikan' },
-    { value: 'udang', label: 'Udang/Shellfish' },
-    { value: 'kepiting', label: 'Kepiting' },
-    { value: 'wijen', label: 'Wijen' },
-    { value: 'almond', label: 'Almond/Tree Nuts' }
-  ]
   
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -74,34 +36,22 @@ function FormPage({ onNavigate, onDetectionResult }) {
     setLoading(true)
     setError('')
     
-    // Validasi form - alergen wajib dipilih
-    if (!formData.alergen || formData.alergen === '') {
-      setError('Silakan pilih jenis alergen yang akan dideteksi')
-      setLoading(false)
-      return
-    }
-    
     try {
-      const startTime = Date.now()
+      const frontendStart = Date.now()
       const response = await predictAllergen(formData)
-      const processingTime = Date.now() - startTime
+      const processingTime = Date.now() - frontendStart
       
       setResult(response)
-      
-      // Update statistik secara real-time
+
+      // Ambil dataset count terbaru dan akurasi model dari API
       await statisticsService.incrementDatasetCount()
-      
-      // Update processing time jika ada data
-      if (processingTime) {
-        await statisticsService.updateProcessingTime(processingTime)
+
+      // Update processing time dengan waktu deteksi aktual (backend atau frontend)
+      const detectionTime = response?.processing_time_ms ?? processingTime
+      if (detectionTime) {
+        await statisticsService.updateProcessingTime(detectionTime)
       }
-      
-      // Update model accuracy jika ada confidence score
-      if (response?.confidence_score || response?.overall_confidence) {
-        const accuracy = (response.confidence_score || response.overall_confidence) * 100
-        await statisticsService.updateModelAccuracy(accuracy)
-      }
-      
+
       if (onDetectionResult) {
         onDetectionResult(response)
       }
@@ -124,7 +74,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
             className="bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 shadow-sm rounded-2xl"
           >
             <ArrowLeft className="h-5 w-5 mr-3" />
-            Kembali ke Home
+            Kembali ke Halaman Utama
           </Button>
         </div>
 
@@ -135,8 +85,8 @@ function FormPage({ onNavigate, onDetectionResult }) {
             <h1 className="text-3xl font-bold text-white">Deteksi Alergen Makanan</h1>
           </div>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Masukan kandungan produk pangan untuk mendeteksi alergen menggunakan  
-            <span className="font-semibold text-blue-600"> algoritma SVM + AdaBoost</span>
+            Masukkan kandungan produk pangan untuk mendeteksi alergen menggunakan kombinasi algoritma
+            <span className="font-semibold text-blue-600"> SVM + AdaBoost</span>
           </p>
         </div>
 
@@ -146,7 +96,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
             <Card className="bg-white shadow-2xl border-0 rounded-3xl overflow-hidden">
               {/* Form Header */}
               <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-8 py-6">
-                <h2 className="text-2xl font-bold text-white mb-2">Form Analisis Produk</h2>
+                <h2 className="text-2xl font-bold text-white mb-2">Form Deteksi Produk</h2>
                 <p className="text-slate-300">Lengkapi data produk makanan untuk deteksi alergen</p>
               </div>
 
@@ -234,36 +184,6 @@ function FormPage({ onNavigate, onDetectionResult }) {
                     />
                   </div>
 
-                  {/* Dropdown Alergen - Full Width */}
-                  <div className="space-y-3">
-                    <label className="block text-sm font-bold text-slate-700 uppercase tracking-wide">
-                      Alergen yang Diketahui (Wajib Dipilih) <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <select
-                        name="alergen"
-                        value={formData.alergen}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white appearance-none cursor-pointer"
-                      >
-                        {allergenOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                        <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                    <p className="text-sm text-slate-500">
-                      Wajib pilih jenis alergen yang mungkin terkandung dalam produk ini untuk deteksi yang akurat
-                    </p>
-                  </div>
-
                   {/* Submit Button */}
                   <div className="flex justify-center pt-6">
                     <Button
@@ -275,7 +195,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       {loading ? (
                         <>
                           <LoadingSpinner size="md" className="mr-3" />
-                          Menganalisis...
+                          Mendeteksi...
                         </>
                       ) : (
                         <>
@@ -316,7 +236,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       <CheckCircle className="h-8 w-8 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold text-green-900 mb-2">Hasil Deteksi</h3>
-                    <p className="text-green-700">Produk: <span className="font-semibold">{result.product_name}</span></p>
+                    <p className="text-green-700">Produk: <span className="font-semibold">{formData.nama_produk_makanan}</span></p>
                   </div>
 
                   <div className="space-y-6">
@@ -360,16 +280,16 @@ function FormPage({ onNavigate, onDetectionResult }) {
 
                     {/* Accuracy */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h4 className="font-bold text-slate-900 mb-3">Accuracy</h4>
+                      <h4 className="font-bold text-slate-900 mb-3">Akurasi Model</h4>
                       <div className="flex items-center space-x-4">
                         <div className="flex-1 bg-slate-200 rounded-full h-3">
-                          <div 
+                          <div
                             className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-1000"
-                            style={{ width: `${calculateConfidence(result)}%` }}
+                            style={{ width: accuracy }}
                           />
                         </div>
                         <span className="text-2xl font-bold text-blue-600">
-                          {formatConfidence(result)}
+                          {accuracy}
                         </span>
                       </div>
                     </div>
@@ -434,8 +354,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
         <div className="mt-16 pt-8 border-t border-slate-200">
           <div className="text-center">
             <p className="text-slate-500 text-sm">
-              Powered by <span className="font-semibold">Universitas Nasional Karangturi</span> • 
-              Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM) - Kementrian Pendidikan Tinggi, Sains dan Teknologi, Direktorat Jendral Riset dan Pengembangan</span>
+              Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM) - Kementerian Pendidikan Tinggi, Sains, dan Teknologi, Direktorat Jenderal Riset dan Pengembangan</span>
             </p>
             <p className="text-slate-400 text-xs mt-2">
               © 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning

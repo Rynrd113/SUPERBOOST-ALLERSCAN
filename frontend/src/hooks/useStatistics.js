@@ -6,10 +6,11 @@ import { statisticsService } from '../services/statisticsService'
  * Mengikuti prinsip separation of concerns dan auto-update
  */
 export const useStatistics = () => {
+  const cached = statisticsService.getCachedStats()
   const [stats, setStats] = useState({
-    datasetCount: 0,
-    accuracy: '93.7%',
-    processingTime: '<500ms',
+    datasetCount: cached?.datasetCount || 0,
+    accuracy: cached?.accuracy || '93.7%',
+    processingTime: cached?.processingTime || '<500ms',
     loading: true,
     error: null
   })
@@ -17,39 +18,39 @@ export const useStatistics = () => {
   const fetchStatistics = async () => {
     try {
       setStats(prev => ({ ...prev, loading: true, error: null }))
-      
-      // Ambil statistik dari API
+
       const response = await fetch('/api/v1/dataset/statistics')
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
-      
+
       const result = await response.json()
-      const data = result.data // API response format: { success: true, data: {...} }
-      
-      // Update state dengan data dinamis dari API
+      const data = result.data
+
+      // Gunakan lastDetectionTime dari service jika tersedia (waktu deteksi terakhir)
+      const displayProcessingTime = statisticsService.lastDetectionTime
+        || data.performance_metrics?.average_processing_time
+        || '<500ms'
+
       const newStats = {
         datasetCount: data.overview?.total_predictions || 0,
         accuracy: data.model_info?.accuracy || '93.7%',
-        processingTime: data.performance_metrics?.average_processing_time || '<500ms',
+        processingTime: displayProcessingTime,
         loading: false,
         error: null
       }
-      
+
       setStats(newStats)
-      
-      // Notify service untuk cache
       statisticsService.notifyListeners(newStats)
-      
+
     } catch (error) {
       console.error('Error fetching statistics:', error)
-      
-      // Fallback ke data default jika API tidak tersedia
+
       setStats({
-        datasetCount: 191, // Berdasarkan dokumentasi backup
-        accuracy: '93.7%',
-        processingTime: '<500ms',
+        datasetCount: statisticsService.getCachedStats()?.datasetCount || 191,
+        accuracy: statisticsService.getCachedStats()?.accuracy || '93.7%',
+        processingTime: statisticsService.lastDetectionTime || '<500ms',
         loading: false,
         error: error.message
       })

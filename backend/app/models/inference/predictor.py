@@ -183,20 +183,21 @@ class AllergenPredictor:
     def _detect_oov_rate(self, input_data: Dict[str, str]) -> Tuple[float, Dict[str, bool]]:
         """
         Mendeteksi tingkat Out-of-Vocabulary pada data input
-        
+
         Args:
             input_data: Dictionary berisi data input pengguna
-            
+
         Returns:
             Tuple[float, Dict]: (tingkat_oov, status_pengenalan_field)
         """
+        # Key harus sesuai dengan format yang dihasilkan to_model_input() (kapital)
         field_mapping = {
-            'nama_produk_makanan': 'nama_produk_makanan',
-            'bahan_utama': 'bahan_utama', 
-            'pemanis': 'pemanis',
-            'lemak_minyak': 'lemak_minyak',
-            'penyedap_rasa': 'penyedap_rasa',
-            'alergen': 'alergen'
+            'Nama Produk Makanan': 'nama_produk_makanan',
+            'Bahan Utama': 'bahan_utama',
+            'Pemanis': 'pemanis',
+            'Lemak/Minyak': 'lemak_minyak',
+            'Penyedap Rasa': 'penyedap_rasa',
+            'Alergen': 'alergen'
         }
         
         recognized_fields = {}
@@ -373,78 +374,58 @@ class AllergenPredictor:
 
     def _detect_specific_allergens(self, input_data: Dict[str, str], base_confidence: float) -> Dict[str, float]:
         """
-        Deteksi alergen spesifik berdasarkan bahan-bahan input
-        
+        Deteksi alergen spesifik berdasarkan keyword matching pada bahan-bahan input.
+        Menggunakan confidence tetap (tidak bergantung pada OOV-adjusted ML confidence).
+
         Args:
-            input_data: Data input yang berisi bahan-bahan
-            base_confidence: Confidence dasar dari model ML
-            
+            input_data: Data input dengan key kapital sesuai to_model_input()
+            base_confidence: Confidence dasar dari model ML (tidak dipakai untuk nilai akhir)
+
         Returns:
             Dictionary mapping nama alergen ke confidence score
         """
         detected_allergens = {}
-        
-        # Mapping alergen berdasarkan keyword dan pattern
+
         allergen_patterns = {
             'Kacang': ['kacang', 'almond', 'pinus', 'walnut', 'pecan', 'nut'],
             'Produk Susu': ['susu', 'keju', 'mentega', 'butter', 'cream', 'dairy', 'yogurt', 'latte'],
-            'Gandum': ['tepung', 'wheat', 'flour', 'roti', 'bread', 'pasta', 'mie', 'noodle', 'terigu'],
+            'Gandum': ['tepung', 'wheat', 'flour', 'roti', 'bread', 'pasta', 'mie', 'noodle', 'terigu', 'gandum', 'gluten'],
             'Telur': ['telur', 'egg'],
             'Ikan': ['ikan', 'salmon', 'tuna', 'fish', 'teri', 'sarden'],
             'Kerang-Kerangan': ['udang', 'kerang', 'lobster', 'crab', 'shrimp', 'kepiting'],
-            'Kedelai': ['kedelai', 'soy', 'tofu', 'tempe', 'soya'],
+            'Kedelai': ['kedelai', 'soy', 'tofu', 'tempe', 'soya', 'tahu'],
             'Seledri': ['seledri', 'celery'],
             'Wijen': ['wijen', 'sesame'],
             'Kacang Tanah': ['kacang tanah', 'peanut']
         }
-        
-        # Gabungkan semua input menjadi text untuk analisis
+
+        # Gabungkan SEMUA field termasuk nama produk dan alergen yang dipilih user
         all_ingredients = ' '.join([
-            str(input_data.get('bahan_utama', '')),
-            str(input_data.get('pemanis', '')),
-            str(input_data.get('lemak_minyak', '')),
-            str(input_data.get('penyedap_rasa', ''))
+            str(input_data.get('Nama Produk Makanan', '')),
+            str(input_data.get('Bahan Utama', '')),
+            str(input_data.get('Pemanis', '')),
+            str(input_data.get('Lemak/Minyak', '')),
+            str(input_data.get('Penyedap Rasa', '')),
+            str(input_data.get('Alergen', ''))
         ]).lower()
-        
-        # Deteksi berdasarkan pattern matching
+
+        bahan_utama_text = str(input_data.get('Bahan Utama', '')).lower()
+
         for allergen, patterns in allergen_patterns.items():
-            allergen_confidence = 0.0
             pattern_matches = 0
-            
+            in_main_ingredient = False
+
             for pattern in patterns:
                 if pattern in all_ingredients:
                     pattern_matches += 1
-                    
-                    # Berikan confidence berbeda berdasarkan lokasi match
-                    if pattern in str(input_data.get('bahan_utama', '')).lower():
-                        allergen_confidence = max(allergen_confidence, base_confidence * 0.95)  # High confidence untuk bahan utama
-                    else:
-                        allergen_confidence = max(allergen_confidence, base_confidence * 0.8)   # Medium confidence untuk ingredient lain
-            
-            # Hanya tambahkan jika ada match dan confidence cukup tinggi
-            if pattern_matches > 0 and allergen_confidence >= 0.3:
+                    if pattern in bahan_utama_text:
+                        in_main_ingredient = True
+
+            if pattern_matches > 0:
+                # Confidence tetap berdasarkan lokasi match — tidak bergantung pada ML OOV confidence
+                allergen_confidence = 0.85 if in_main_ingredient else 0.70
                 detected_allergens[allergen] = allergen_confidence
-        
-        # Penyesuaian khusus berdasarkan kombinasi bahan
-        if 'susu' in all_ingredients or 'mentega' in all_ingredients or 'keju' in all_ingredients:
-            detected_allergens['Produk Susu'] = max(detected_allergens.get('Produk Susu', 0), base_confidence * 0.9)
-        
-        if 'tepung' in all_ingredients or 'terigu' in all_ingredients:
-            detected_allergens['Gandum'] = max(detected_allergens.get('Gandum', 0), base_confidence * 0.85)
-            
-        if any(keyword in all_ingredients for keyword in ['kacang tanah', 'peanut']):
-            detected_allergens['Kacang Tanah'] = base_confidence * 0.95
-            detected_allergens['Kacang'] = base_confidence * 0.9
-        
-        if 'telur' in all_ingredients:
-            detected_allergens['Telur'] = base_confidence * 0.9
-            
-        if any(keyword in all_ingredients for keyword in ['ikan', 'salmon', 'tuna']):
-            detected_allergens['Ikan'] = base_confidence * 0.9
-            
-        if 'udang' in all_ingredients:
-            detected_allergens['Kerang-Kerangan'] = base_confidence * 0.95
-        
+
         api_logger.info(f"🎯 Alergen spesifik terdeteksi: {list(detected_allergens.keys())}")
         return detected_allergens
 

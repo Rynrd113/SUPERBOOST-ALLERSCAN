@@ -20,19 +20,6 @@ import Button from './UI/Button'
 import DatasetStatCard from './UI/DatasetStatCard'
 
 // Helper functions
-const formatConfidence = (confidence) => {
-  if (!confidence) return '0.0%'
-  
-  const numericValue = typeof confidence === 'string' ? 
-    parseFloat(confidence) : confidence
-  
-  if (numericValue <= 1) {
-    return `${(numericValue * 100).toFixed(1)}%`
-  } else {
-    return `${numericValue.toFixed(1)}%`
-  }
-}
-
 const formatAllergens = (allergens) => {
   if (!allergens || allergens === 'tidak terdeteksi') return 'Tidak terdeteksi'
   if (typeof allergens === 'string') {
@@ -69,21 +56,23 @@ const DatasetPage = () => {
     try {
       setLoading(true)
       setError(null)
-      
+
       const params = {
         page,
-        page_size: pageSize
+        limit: pageSize,        // fix: was page_size
+        include_stats: false
       }
-      
+
       if (searchTerm.trim()) {
         params.search = searchTerm.trim()
       }
-      
-      const response = await api.get('/api/v1/dataset/', { params })
-      
-      if (response.data && response.data.data) {
-        setData(response.data.data)
-        setTotalItems(response.data.pagination?.total || response.data.data.length)
+
+      const response = await api.get('/api/v1/dataset/predictions', { params })  // fix: correct endpoint
+
+      const responseData = response.data?.data
+      if (responseData) {
+        setData(responseData.predictions || [])                          // fix: extract predictions array
+        setTotalItems(responseData.pagination?.total_items || 0)        // fix: correct field name
         setCurrentPage(page)
       } else {
         setData([])
@@ -103,7 +92,7 @@ const DatasetPage = () => {
   const loadStatistics = useCallback(async () => {
     try {
       const response = await api.get('/api/v1/dataset/statistics')
-      setStatistics(response.data.statistics || null)
+      setStatistics(response.data.data || null)   // fix: was response.data.statistics (tidak ada)
     } catch (error) {
       console.error('Error loading statistics:', error)
       setStatistics(null)
@@ -186,49 +175,59 @@ const DatasetPage = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <DatasetStatCard
-          icon={Database}
+          icon={<Database className="w-8 h-8" />}
           title="Total Data"
-          value={statistics.total_records || 0}
-          color="blue"
+          value={statistics.overview?.total_predictions || 0}
+          bgColor="bg-blue-50"
+          textColor="text-blue-700"
         />
         <DatasetStatCard
-          icon={AlertCircle}
+          icon={<AlertCircle className="w-8 h-8" />}
           title="Terdeteksi Alergen"
-          value={statistics.allergen_detected || 0}
-          color="red"
+          value={statistics.detection_breakdown?.detected_count || 0}
+          bgColor="bg-red-50"
+          textColor="text-red-700"
         />
         <DatasetStatCard
-          icon={BarChart3}
-          title="Rata-rata Confidence"
-          value={statistics.avg_confidence ? `${(statistics.avg_confidence * 100).toFixed(1)}%` : '0.0%'}
-          color="green"
+          icon={<BarChart3 className="w-8 h-8" />}
+          title="Akurasi Model"
+          value={statistics.model_info?.accuracy || '0%'}
+          bgColor="bg-green-50"
+          textColor="text-green-700"
         />
         <DatasetStatCard
-          icon={Table}
-          title="Unique Alergen"
-          value={statistics.unique_allergens || 0}
-          color="purple"
+          icon={<Table className="w-8 h-8" />}
+          title="Alergen Terdeteksi"
+          value={statistics.chart_data?.allergens_distribution?.length || 0}
+          bgColor="bg-purple-50"
+          textColor="text-purple-700"
         />
       </div>
     )
   }
 
   const renderCharts = () => {
-    if (!statistics?.allergen_distribution || !statistics?.confidence_distribution) {
+    const allergenDist = statistics?.chart_data?.allergens_distribution
+    const detectionPie = statistics?.chart_data?.detection_pie
+
+    if (!allergenDist?.length && !detectionPie?.length) {
       return null
     }
 
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">Distribusi Alergen</h3>
-          <DoughnutChart data={statistics.allergen_distribution} />
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">Distribusi Confidence</h3>
-          <PieChart data={statistics.confidence_distribution} />
-        </div>
+        {allergenDist?.length > 0 && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Distribusi Alergen</h3>
+            <DoughnutChart data={allergenDist} />
+          </div>
+        )}
+        {detectionPie?.length > 0 && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Hasil Deteksi</h3>
+            <PieChart data={detectionPie} />
+          </div>
+        )}
       </div>
     )
   }
@@ -264,44 +263,64 @@ const DatasetPage = () => {
     )
   }
 
+  const riskLabel = { high: 'Tinggi', medium: 'Sedang', low: 'Rendah', none: 'Aman' }
+  const riskColor = {
+    high: 'bg-red-100 text-red-800',
+    medium: 'bg-yellow-100 text-yellow-800',
+    low: 'bg-blue-100 text-blue-800',
+    none: 'bg-green-100 text-green-800'
+  }
+
   const columns = [
     {
-      header: 'ID',
-      accessor: 'id',
+      header: 'No',
+      render: (row) => <span className="text-gray-500">{row.id}</span>,
       className: 'text-center'
     },
     {
-      header: 'Bahan Makanan',
-      accessor: 'food_ingredient',
-      className: 'font-medium'
-    },
-    {
-      header: 'Alergen',
-      accessor: 'allergens',
-      render: (value) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          value === 'Tidak terdeteksi' || value === 'tidak terdeteksi'
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-red-100 text-red-800'
-        }`}>
-          {formatAllergens(value)}
-        </span>
+      header: 'Nama Produk',
+      render: (row) => (
+        <span className="font-medium text-gray-900">{row.product_name || '-'}</span>
       )
     },
     {
-      header: 'Confidence',
-      accessor: 'confidence',
-      render: (value) => (
-        <span className="font-mono text-sm">
-          {formatConfidence(value)}
+      header: 'Hasil Deteksi',
+      render: (row) => {
+        const allergens = row.predicted_allergens || row.detected_allergens
+        const isDetected = (row.allergen_count || 0) > 0
+        return (
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+            isDetected ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+          }`}>
+            {isDetected ? formatAllergens(allergens) : 'Tidak Terdeteksi'}
+          </span>
+        )
+      }
+    },
+    {
+      header: 'Accuracy',
+      render: () => (
+        <span className="font-mono text-sm font-semibold text-blue-600">
+          {statistics?.model_info?.accuracy || '—'}
         </span>
       ),
       className: 'text-center'
     },
     {
+      header: 'Risiko',
+      render: (row) => {
+        const risk = row.risk_level || 'none'
+        return (
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${riskColor[risk] || riskColor.none}`}>
+            {riskLabel[risk] || 'Aman'}
+          </span>
+        )
+      },
+      className: 'text-center'
+    },
+    {
       header: 'Aksi',
-      accessor: 'actions',
-      render: (_, row) => (
+      render: (row) => (
         <Button
           onClick={() => handleDelete(row.id)}
           variant="outline"

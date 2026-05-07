@@ -7,6 +7,7 @@ class StatisticsService {
   constructor() {
     this.listeners = []
     this.lastStats = null
+    this.lastDetectionTime = null
   }
 
   /**
@@ -67,17 +68,18 @@ class StatisticsService {
    * Update processing time berdasarkan deteksi terbaru
    */
   async updateProcessingTime(processingTimeMs) {
-    if (this.lastStats) {
-      const timeDisplay = processingTimeMs < 1000 
-        ? `<${Math.ceil(processingTimeMs)}ms`
-        : `${(processingTimeMs/1000).toFixed(1)}s`
-      
-      const updatedStats = {
-        ...this.lastStats,
-        processingTime: timeDisplay
-      }
-      this.notifyListeners(updatedStats)
+    const timeDisplay = processingTimeMs < 1000
+      ? `${Math.ceil(processingTimeMs)}ms`
+      : `${(processingTimeMs/1000).toFixed(1)}s`
+
+    this.lastDetectionTime = timeDisplay
+
+    const updatedStats = {
+      ...(this.lastStats || {}),
+      processingTime: timeDisplay
     }
+    this.lastStats = updatedStats
+    this.notifyListeners(updatedStats)
   }
 
   /**

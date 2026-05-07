@@ -190,11 +190,7 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
               Powered by <span className="text-allerscan-600">Universitas Nasional Karangturi</span>
             </p>
             <div className="flex items-center justify-center space-x-4 text-sm">
-              <span>Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM)</span></span>
-              <span>•</span>
-              <span><span className="font-semibold">Kementrian Pendidikan Tinggi, Sains dan Teknologi</span></span>
-              <span>•</span>
-              <span><span className="font-semibold">Direktorat Jendral Riset dan Pengembangan</span></span>
+              <span>Supported by <span className="font-semibold">Direktorat Penelitian dan Pengabdian kepada Masyarakat (DPPM) - Kementerian Pendidikan Tinggi, Sains, dan Teknologi, Direktorat Jenderal Riset dan Pengembangan</span></span>
             </div>
             <p className="text-xs text-slate-400 mt-4">
               © 2025 SuperBoost-AllerScan Aplikasi Deteksi Alergen Berbasis Data Mining & Machine Learning

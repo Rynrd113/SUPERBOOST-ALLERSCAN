@@ -11,13 +11,13 @@ function Dashboard({ onNavigate }) {
     {
       icon: Target,
       title: 'Akurasi Tinggi',
-      description: 'Teknologi SVM + AdaBoost dengan akurasi dinamis melalui validasi silang K=10',
+      description: 'Model kombinasi algoritma SVM + AdaBoost dengan cross validation (K = 10), menghasilkan nilai rata-rata akurasi 93,7%.',
       color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Database,
       title: 'Dataset Lengkap',
-      description: 'Database produk makanan dengan kategori alergen yang terus berkembang',
+      description: 'Dataset terupdate.',
       color: 'from-green-500 to-green-600'
     },
     {
@@ -186,7 +186,7 @@ function Dashboard({ onNavigate }) {
             <Shield className="h-12 w-12 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-slate-900 mb-4">
-            Siap Menganalisis Produk Makanan Anda?
+            Siap Mendeteksi Produk Makanan Anda?
           </h2>
           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
             Mulai deteksi alergen sekarang untuk memastikan keamanan konsumen dengan teknologi AI terdepan
@@ -197,7 +197,7 @@ function Dashboard({ onNavigate }) {
             className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300"
           >
             <Target className="h-6 w-6 mr-3" />
-            Mulai Analisis Sekarang
+            Mulai Deteksi Sekarang
             <ArrowRight className="h-6 w-6 ml-3" />
           </Button>
         </Card>

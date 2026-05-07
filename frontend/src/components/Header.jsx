@@ -4,7 +4,7 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Shield, requiresAuth: false },
     { id: 'form', label: 'Deteksi Alergen', icon: Search, requiresAuth: false },
-    { id: 'dataset', label: 'Dataset', icon: Database, requiresAuth: true },
+    { id: 'dataset', label: 'Dataset', icon: Database, requiresAuth: false },
   ]
 
   return (
@@ -28,7 +28,7 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
                 SUPERBOOST ALLERSCAN
               </h1>
               <p className="text-xs text-blue-100">
-                Sistem Deteksi Alergen
+                Data Mining - Machine Learning
               </p>
             </div>
           </div>

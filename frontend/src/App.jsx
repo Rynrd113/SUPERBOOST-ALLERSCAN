@@ -13,11 +13,6 @@ function App() {
   const [detectionHistory, setDetectionHistory] = useState([])
 
   const handleNavigation = (page) => {
-    // Protect dataset page with authentication
-    if (page === 'dataset' && !isAuthenticated) {
-      alert('Access denied. Admin login required to view dataset.')
-      return
-    }
     setCurrentPage(page)
   }
 
@@ -57,19 +52,7 @@ function App() {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigation} />
       case 'dataset':
-        return isAuthenticated ? (
-          <DatasetPage onNavigate={handleNavigation} detectionHistory={detectionHistory} />
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-gray-600 mb-4">Access denied. Admin login required.</p>
-            <button 
-              onClick={() => setCurrentPage('login')}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Login as Admin
-            </button>
-          </div>
-        )
+        return <DatasetPage onNavigate={handleNavigation} detectionHistory={detectionHistory} />
       case 'form':
         return <FormPage onNavigate={handleNavigation} onDetectionResult={handleDetectionResult} />
       default:
