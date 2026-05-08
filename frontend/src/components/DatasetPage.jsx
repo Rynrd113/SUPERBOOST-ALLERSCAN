@@ -270,59 +270,61 @@ const DatasetPage = () => {
     )
   }
 
-  const riskLabel = { high: 'Tinggi', medium: 'Sedang', low: 'Rendah', none: 'Aman' }
-  const riskColor = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-blue-100 text-blue-800',
-    none: 'bg-green-100 text-green-800'
-  }
-
   const columns = [
     {
       header: 'No',
-      render: (row) => <span className="text-slate-500">{row.id}</span>,
-      className: 'text-center'
+      render: (row) => <span className="text-slate-500">{row.display_id || row.id}</span>,
+      className: 'text-center w-12'
     },
     {
       header: 'Nama Produk',
       render: (row) => (
-        <span className="font-medium text-slate-900">{row.product_name || '-'}</span>
+        <span className="font-medium text-slate-900">{row.product_name || row.nama_produk || '-'}</span>
       )
     },
     {
-      header: 'Hasil Deteksi',
+      header: 'Bahan Utama',
+      render: (row) => <span className="text-slate-700">{row.bahan_utama || '-'}</span>,
+      responsive: 'md'
+    },
+    {
+      header: 'Pemanis',
+      render: (row) => <span className="text-slate-700">{row.pemanis || '-'}</span>,
+      responsive: 'lg'
+    },
+    {
+      header: 'Lemak/Minyak',
+      render: (row) => <span className="text-slate-700">{row.lemak_minyak || '-'}</span>,
+      responsive: 'lg'
+    },
+    {
+      header: 'Penyedap Rasa',
+      render: (row) => <span className="text-slate-700">{row.penyedap_rasa || '-'}</span>,
+      responsive: 'xl'
+    },
+    {
+      header: 'Alergen',
       render: (row) => {
-        const allergens = row.predicted_allergens || row.detected_allergens
+        const allergens = row.detected_allergens || row.predicted_allergens
+        const isDetected = (row.allergen_count || 0) > 0
+        if (!isDetected) return <span className="text-slate-400">—</span>
+        return <span className="text-red-700 text-xs font-medium">{formatAllergens(allergens)}</span>
+      },
+      responsive: 'sm'
+    },
+    {
+      header: 'Prediksi',
+      render: (row) => {
         const isDetected = (row.allergen_count || 0) > 0
         return (
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
             isDetected ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
           }`}>
-            {isDetected ? formatAllergens(allergens) : 'Tidak Terdeteksi'}
-          </span>
-        )
-      }
-    },
-    {
-      header: 'Accuracy',
-      render: () => (
-        <span className="font-mono text-sm font-semibold text-allerscan-600">
-          {statistics?.model_info?.accuracy || '—'}
-        </span>
-      ),
-      className: 'text-center'
-    },
-    {
-      header: 'Risiko',
-      render: (row) => {
-        const risk = row.risk_level || 'none'
-        return (
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${riskColor[risk] || riskColor.none}`}>
-            {riskLabel[risk] || 'Aman'}
+            {isDetected ? 'Mengandung Alergen' : 'Tidak Mengandung Alergen'}
           </span>
         )
       },
+      responsive: 'sm',
       className: 'text-center'
     },
     {

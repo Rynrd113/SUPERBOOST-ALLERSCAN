@@ -69,7 +69,7 @@ const ResponsiveTable = ({
     <div className={`overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg ${className}`}>
       {/* Scroll indicator for better UX - only show on mobile when columns are hidden */}
       {hasHiddenColumns && (
-        <div className="block sm:hidden bg-gradient-to-r from-blue-50 to-transparent p-3 text-xs text-blue-700 border-b border-blue-100">
+        <div className="block sm:hidden bg-gradient-to-r from-allerscan-50 to-transparent p-3 text-xs text-allerscan-700 border-b border-allerscan-100">
           <div className="flex items-center">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
