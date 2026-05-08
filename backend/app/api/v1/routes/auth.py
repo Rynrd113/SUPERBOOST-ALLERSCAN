@@ -2,6 +2,7 @@
 🔐 Authentication routes for admin access
 """
 
+import os
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
@@ -20,15 +21,18 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 security = HTTPBearer()
 
 # JWT configuration
-SECRET_KEY = "allerscan_secret_key_2024_svm_adaboost"
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "allerscan_secret_key_2024_svm_adaboost")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
-# Admin credentials (hashed passwords)
+# Admin credentials from environment variables
+_admin_username = os.getenv("ADMIN_USERNAME", "admin")
+_admin_password_hash = os.getenv("ADMIN_PASSWORD_HASH", "$2b$12$6sQ1qEIfpV6ZVrXtFSyZK.ucVxgHjHClSj.9yZ69209By4GavObN.")
+
 ADMIN_CREDENTIALS = {
-    "admin": {
-        "username": "admin",
-        "password_hash": "$2b$12$6sQ1qEIfpV6ZVrXtFSyZK.ucVxgHjHClSj.9yZ69209By4GavObN.",  # admin123
+    _admin_username: {
+        "username": _admin_username,
+        "password_hash": _admin_password_hash,
         "role": "admin",
         "permissions": ["view_dataset", "download_data", "manage_system"]
     }

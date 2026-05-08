@@ -18,7 +18,7 @@ Architecture:
 @updated 2025-08-09
 """
 
-from fastapi import APIRouter, HTTPException, status, Query
+from fastapi import APIRouter, HTTPException, status, Query, Depends
 from fastapi.responses import StreamingResponse
 from typing import List, Dict, Optional
 from pydantic import BaseModel
@@ -32,6 +32,7 @@ TRAINING_DATA_PATH = Path(__file__).parents[5] / 'data' / 'raw' / 'Dataset Bahan
 from ....database.allergen_database import database_manager
 from ....core.logger import api_logger
 from ....schemas.request_schemas import ErrorResponse
+from .auth import require_admin
 
 # Router configuration
 router = APIRouter(prefix="/dataset", tags=["Dataset Management"])
@@ -249,7 +250,8 @@ async def get_dataset_statistics():
     description="Export prediction history as Excel file for analysis (optimized for large datasets)"
 )
 async def export_dataset_excel(
-    limit: int = Query(1000, ge=1, le=10000, description="Maximum records to export")
+    limit: int = Query(1000, ge=1, le=10000, description="Maximum records to export"),
+    _admin: dict = Depends(require_admin)
 ):
     """
     Export prediction dataset as Excel file with performance optimization
@@ -397,7 +399,7 @@ async def export_dataset_excel(
     summary="Delete a specific prediction record",
     description="Remove a prediction record from the dataset (admin only)"
 )
-async def delete_prediction(prediction_id: int):
+async def delete_prediction(prediction_id: int, _admin: dict = Depends(require_admin)):
     """
     Delete a specific prediction record
     
@@ -437,7 +439,8 @@ async def delete_prediction(prediction_id: int):
     description="Delete multiple prediction records by IDs (admin only)"
 )
 async def bulk_delete_predictions(
-    prediction_ids: List[int]
+    prediction_ids: List[int],
+    _admin: dict = Depends(require_admin)
 ):
     """
     Delete multiple prediction records

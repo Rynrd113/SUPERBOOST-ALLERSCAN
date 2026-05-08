@@ -39,7 +39,7 @@ const formatAllergens = (allergens) => {
 }
 
 // Main component
-const DatasetPage = ({ isAuthenticated = false }) => {
+const DatasetPage = () => {
   // State management
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -327,7 +327,7 @@ const DatasetPage = ({ isAuthenticated = false }) => {
     },
     {
       header: 'Aksi',
-      render: (row) => isAuthenticated ? (
+      render: (row) => (
         <Button
           onClick={() => handleDelete(row.id)}
           variant="outline"
@@ -336,8 +336,6 @@ const DatasetPage = ({ isAuthenticated = false }) => {
         >
           <Trash2 className="w-4 h-4" />
         </Button>
-      ) : (
-        <span className="text-xs text-slate-400">—</span>
       ),
       className: 'text-center'
     }
@@ -365,27 +363,17 @@ const DatasetPage = ({ isAuthenticated = false }) => {
                 Refresh
               </Button>
 
-              {isAuthenticated && (
-                <Button
-                  onClick={handleExport}
-                  disabled={isExporting || data.length === 0}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <Download className={`w-4 h-4 mr-2 ${isExporting ? 'animate-spin' : ''}`} />
-                  {isExporting ? 'Exporting...' : 'Export Excel'}
-                </Button>
-              )}
+              <Button
+                onClick={handleExport}
+                disabled={isExporting || data.length === 0}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <Download className={`w-4 h-4 mr-2 ${isExporting ? 'animate-spin' : ''}`} />
+                {isExporting ? 'Exporting...' : 'Export Excel'}
+              </Button>
             </div>
           </div>
 
-          {!isAuthenticated && (
-            <div className="mt-4 flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
-              <span>
-                Anda melihat data sebagai <strong>tamu</strong>. Login sebagai Admin untuk mengakses fitur hapus data &amp; export Excel.
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Statistics Cards */}

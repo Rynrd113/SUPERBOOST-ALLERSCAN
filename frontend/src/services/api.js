@@ -12,6 +12,25 @@ const api = axios.create({
   }
 })
 
+// Attach token to every request
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('admin_token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+// Auto-logout on 401 (token expired or invalid)
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('admin_token')
+      window.dispatchEvent(new Event('auth:expired'))
+    }
+    return Promise.reject(error)
+  }
+)
+
 // Simple error handler
 const handleApiError = (error) => {
   if (error.code === 'ECONNABORTED') {
