@@ -435,48 +435,55 @@ class AllergenPredictor:
     ) -> Dict[str, Tuple[float, List[str]]]:
         """
         Deteksi alergen spesifik berdasarkan keyword matching pada bahan-bahan input.
+        Menggunakan regex word-boundary agar tidak ada false positive dari substring
+        (contoh: 'teri' tidak boleh cocok dengan 'terigu').
 
         Returns:
             Dict mapping allergen name → (confidence, [source_field_names])
         """
+        import re
+
         detected_allergens: Dict[str, Tuple[float, List[str]]] = {}
 
         allergen_patterns = {
-            'Kacang': ['kacang', 'almond', 'pinus', 'walnut', 'pecan', 'nut'],
-            'Produk Susu': ['susu', 'keju', 'mentega', 'butter', 'cream', 'dairy', 'yogurt', 'latte'],
-            'Gandum': ['tepung', 'wheat', 'flour', 'roti', 'bread', 'pasta', 'mie', 'noodle', 'terigu', 'gandum', 'gluten'],
-            'Telur': ['telur', 'egg'],
-            'Ikan': ['ikan', 'salmon', 'tuna', 'fish', 'teri', 'sarden'],
-            'Kerang-Kerangan': ['udang', 'kerang', 'lobster', 'crab', 'shrimp', 'kepiting'],
-            'Kedelai': ['kedelai', 'soy', 'tofu', 'tempe', 'soya', 'tahu'],
-            'Seledri': ['seledri', 'celery'],
-            'Wijen': ['wijen', 'sesame'],
-            'Kacang Tanah': ['kacang tanah', 'peanut']
+            'Kacang':         ['kacang', 'almond', 'pinus', 'walnut', 'pecan', 'nut'],
+            'Produk Susu':    ['susu', 'keju', 'mentega', 'butter', 'cream', 'dairy', 'yogurt', 'latte'],
+            'Gandum':         ['terigu', 'gandum', 'gluten', 'wheat', 'flour', 'roti', 'bread', 'pasta', 'mie', 'noodle'],
+            'Telur':          ['telur', 'egg'],
+            'Ikan':           ['ikan', 'salmon', 'tuna', 'sarden', 'ikan teri', 'cakalang', 'tongkol'],
+            'Kerang-Kerangan':['udang', 'kerang', 'lobster', 'crab', 'shrimp', 'kepiting', 'cumi'],
+            'Kedelai':        ['kedelai', 'soy', 'tofu', 'tempe', 'soya', 'tahu'],
+            'Seledri':        ['seledri', 'celery'],
+            'Wijen':          ['wijen', 'sesame'],
+            'Kacang Tanah':   ['kacang tanah', 'peanut'],
         }
 
-        # Named field map for readable source attribution
         field_map = {
             'Nama Produk Makanan': str(input_data.get('Nama Produk Makanan', '')).lower(),
-            'Bahan Utama': str(input_data.get('Bahan Utama', '')).lower(),
-            'Pemanis': str(input_data.get('Pemanis', '')).lower(),
-            'Lemak/Minyak': str(input_data.get('Lemak/Minyak', '')).lower(),
-            'Penyedap Rasa': str(input_data.get('Penyedap Rasa', '')).lower(),
-            'Alergen': str(input_data.get('Alergen', '')).lower(),
+            'Bahan Utama':         str(input_data.get('Bahan Utama', '')).lower(),
+            'Pemanis':             str(input_data.get('Pemanis', '')).lower(),
+            'Lemak/Minyak':        str(input_data.get('Lemak/Minyak', '')).lower(),
+            'Penyedap Rasa':       str(input_data.get('Penyedap Rasa', '')).lower(),
+            'Alergen':             str(input_data.get('Alergen', '')).lower(),
         }
 
         all_ingredients = ' '.join(field_map.values())
         bahan_utama_text = field_map['Bahan Utama']
+
+        def matches(pattern: str, text: str) -> bool:
+            """Cocokkan pattern sebagai kata utuh (word boundary) untuk cegah false positive."""
+            return bool(re.search(r'\b' + re.escape(pattern) + r'\b', text))
 
         for allergen, patterns in allergen_patterns.items():
             in_main_ingredient = False
             source_fields: List[str] = []
 
             for pattern in patterns:
-                if pattern in all_ingredients:
+                if matches(pattern, all_ingredients):
                     for field_name, field_text in field_map.items():
-                        if pattern in field_text and field_name not in source_fields:
+                        if matches(pattern, field_text) and field_name not in source_fields:
                             source_fields.append(field_name)
-                    if pattern in bahan_utama_text:
+                    if matches(pattern, bahan_utama_text):
                         in_main_ingredient = True
 
             if source_fields:
