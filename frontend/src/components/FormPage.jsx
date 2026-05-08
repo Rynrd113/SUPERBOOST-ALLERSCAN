@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Send, AlertCircle, CheckCircle, ArrowLeft, Sparkles, Target } from 'lucide-react'
+import { Send, AlertCircle, CheckCircle, ArrowLeft, Sparkles, Target, Clock, ChevronDown, ChevronUp } from 'lucide-react'
 import Card from './UI/Card'
 import Button from './UI/Button'
 import { LoadingSpinner } from './UI/Loading'
@@ -22,6 +22,8 @@ function FormPage({ onNavigate, onDetectionResult }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
+  const [history, setHistory] = useState([])
+  const [historyOpen, setHistoryOpen] = useState(true)
 
   const handleChange = (e) => {
     setFormData({
@@ -42,6 +44,12 @@ function FormPage({ onNavigate, onDetectionResult }) {
       const processingTime = Date.now() - frontendStart
       
       setResult(response)
+      setHistory(prev => [{
+        product: formData.nama_produk_makanan,
+        detected: response.total_allergens_detected > 0,
+        allergens: response.detected_allergens?.map(a => a.allergen).join(', ') || '—',
+        time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+      }, ...prev].slice(0, 10))
 
       // Ambil dataset count terbaru dan akurasi model dari API
       await statisticsService.incrementDatasetCount()
@@ -374,6 +382,59 @@ function FormPage({ onNavigate, onDetectionResult }) {
             </div>
           </div>
         </div>
+
+        {/* Riwayat Deteksi Sesi Ini */}
+        {history.length > 0 && (
+          <div className="mt-10 bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+            <button
+              onClick={() => setHistoryOpen(o => !o)}
+              className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-slate-50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <Clock className="w-5 h-5 text-allerscan-600" />
+                <span className="font-semibold text-slate-900">Riwayat Deteksi Sesi Ini</span>
+                <span className="text-xs bg-allerscan-100 text-allerscan-700 px-2 py-0.5 rounded-full font-medium">
+                  {history.length}
+                </span>
+              </div>
+              {historyOpen
+                ? <ChevronUp className="w-4 h-4 text-slate-400" />
+                : <ChevronDown className="w-4 h-4 text-slate-400" />}
+            </button>
+
+            {historyOpen && (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-slate-100">
+                  <thead className="bg-slate-50">
+                    <tr>
+                      {['Waktu', 'Nama Produk', 'Alergen', 'Prediksi'].map(h => (
+                        <th key={h} className="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {history.map((item, i) => (
+                      <tr key={i} className={i === 0 ? 'bg-allerscan-50/40' : 'hover:bg-slate-50'}>
+                        <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">{item.time}</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900">{item.product}</td>
+                        <td className="px-4 py-3 text-xs text-slate-700">{item.allergens}</td>
+                        <td className="px-4 py-3">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                            item.detected ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                          }`}>
+                            {item.detected ? 'Mengandung Alergen' : 'Tidak Mengandung Alergen'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Institutional Footer */}
         <div className="mt-16 pt-8 border-t border-slate-200">

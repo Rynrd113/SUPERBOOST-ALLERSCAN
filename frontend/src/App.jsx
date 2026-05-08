@@ -11,7 +11,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoginLoading, setIsLoginLoading] = useState(false)
-  const [detectionHistory, setDetectionHistory] = useState([])
 
   // Verify existing token on first load
   useEffect(() => {
@@ -74,9 +73,6 @@ function App() {
     setCurrentPage('dashboard')
   }
 
-  const handleDetectionResult = (result) => {
-    setDetectionHistory(prev => [result, ...prev])
-  }
 
   if (currentPage === 'login') {
     return (
@@ -97,7 +93,7 @@ function App() {
       case 'dataset':
         return <DatasetPage onNavigate={handleNavigation} />
       case 'form':
-        return <FormPage onNavigate={handleNavigation} onDetectionResult={handleDetectionResult} />
+        return <FormPage onNavigate={handleNavigation} />
       default:
         return <Dashboard onNavigate={handleNavigation} />
     }

@@ -18,6 +18,8 @@ import { DoughnutChart, PieChart } from './UI/Charts'
 import ResponsiveTable from './ResponsiveTable'
 import Button from './UI/Button'
 import DatasetStatCard from './UI/DatasetStatCard'
+import { ToastContainer, useToast } from './UI/Toast'
+import ConfirmModal from './UI/ConfirmModal'
 
 // Helper functions
 const formatAllergens = (allergens) => {
@@ -50,6 +52,8 @@ const DatasetPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [statistics, setStatistics] = useState(null)
   const [isExporting, setIsExporting] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(null)
+  const { toasts, show: showToast, remove: removeToast } = useToast()
 
   // Data loading function
   const loadData = useCallback(async (page = 1, pageSize = 20) => {
@@ -131,19 +135,21 @@ const DatasetPage = () => {
     loadStatistics()
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      return
-    }
-    
+  const handleDelete = (id) => {
+    setConfirmDelete(id)
+  }
+
+  const confirmDeleteAction = async () => {
+    const id = confirmDelete
+    setConfirmDelete(null)
     try {
       await deletePrediction(id)
       await loadData(currentPage, itemsPerPage)
       await loadStatistics()
-      alert('Data berhasil dihapus')
+      showToast('Data berhasil dihapus', 'success')
     } catch (error) {
       console.error('Error deleting data:', error)
-      alert('Gagal menghapus data')
+      showToast('Gagal menghapus data', 'error')
     }
   }
 
@@ -161,7 +167,7 @@ const DatasetPage = () => {
       window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Error exporting data:', error)
-      alert('Gagal mengekspor data')
+      showToast('Gagal mengekspor data', 'error')
     } finally {
       setIsExporting(false)
     }
@@ -243,29 +249,39 @@ const DatasetPage = () => {
     const totalPages = Math.ceil(totalItems / itemsPerPage)
     if (totalPages <= 1) return null
 
+    const from = (currentPage - 1) * itemsPerPage + 1
+    const to = Math.min(currentPage * itemsPerPage, totalItems)
+
     return (
-      <div className="flex justify-center items-center mt-6 space-x-2">
-        <Button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage <= 1}
-          variant="outline"
-          size="sm"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-        
-        <span className="text-sm text-slate-600">
-          Halaman {currentPage} dari {totalPages}
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3">
+        <span className="text-sm text-slate-500">
+          Menampilkan <span className="font-semibold text-slate-700">{from}–{to}</span> dari{' '}
+          <span className="font-semibold text-slate-700">{totalItems}</span> data
         </span>
-        
-        <Button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage >= totalPages}
-          variant="outline"
-          size="sm"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
+
+        <div className="flex items-center space-x-2">
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage <= 1}
+            variant="outline"
+            size="sm"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+
+          <span className="text-sm text-slate-600 px-2">
+            {currentPage} / {totalPages}
+          </span>
+
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+            variant="outline"
+            size="sm"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
     )
   }
@@ -328,6 +344,23 @@ const DatasetPage = () => {
       className: 'text-center'
     },
     {
+      header: 'Tanggal',
+      render: (row) => {
+        if (!row.created_at) return <span className="text-slate-400">—</span>
+        const d = new Date(row.created_at)
+        const date = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
+        const time = d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+        return (
+          <div className="text-xs text-slate-600">
+            <div className="font-medium">{date}</div>
+            <div className="text-slate-400">{time}</div>
+          </div>
+        )
+      },
+      responsive: 'md',
+      className: 'text-center'
+    },
+    {
       header: 'Aksi',
       render: (row) => (
         <Button
@@ -346,6 +379,14 @@ const DatasetPage = () => {
   // Main render
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 py-8 px-4">
+      {confirmDelete && (
+        <ConfirmModal
+          message="Data ini akan dihapus permanen dan tidak bisa dikembalikan."
+          onConfirm={confirmDeleteAction}
+          onCancel={() => setConfirmDelete(null)}
+        />
+      )}
+      <ToastContainer toasts={toasts} onClose={removeToast} />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-slate-100">
