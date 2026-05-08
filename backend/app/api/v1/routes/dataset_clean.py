@@ -288,38 +288,44 @@ async def export_dataset_excel(
             api_logger.error(f"❌ Error creating DataFrame: {df_error}")
             raise DatasetResponseBuilder.error_response("Error processing data for export", 500)
         
-        # Format OPTIMAL: Menggabungkan permintaan dosen dengan kebutuhan teknis
-        # Menggunakan terminologi yang konsisten dengan dataset asli dosen
+        # Rename kolom agar sesuai format dataset dosen
         df = df.rename(columns={
-            'product_name': 'Nama Produk Makanan',  # Konsisten dengan dataset asli
-            'bahan_utama': 'Bahan Utama',           # Konsisten dengan dataset asli
+            'product_name': 'Nama Produk Makanan',
+            'bahan_utama': 'Bahan Utama',
             'pemanis': 'Pemanis',
             'lemak_minyak': 'Lemak/Minyak',
-            'penyedap_rasa': 'Penyedap Rasa',       # Konsisten dengan dataset asli
-            'ingredients_input': 'Input Bahan',      # Jelas ini adalah input user
-            'predicted_allergens': 'Hasil Deteksi'  # Hasil prediksi alergen
-        })
-        
-        # Kolom sesuai format dataset asli dosen + informasi penting untuk evaluasi
-        base_columns = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Input Bahan', 'Hasil Deteksi']
-        
-        # Informasi teknis yang SANGAT PENTING untuk evaluasi model dan tracking
-        technical_columns = {
+            'penyedap_rasa': 'Penyedap Rasa',
+            'keterangan': 'Keterangan',
             'confidence_score': 'Tingkat Kepercayaan (%)',
             'created_at': 'Tanggal Prediksi',
-            'risk_level': 'Tingkat Risiko'
-        }
-        
-        # Apply technical column renaming
-        df = df.rename(columns=technical_columns)
-        
-        # Select final columns (dosen format + technical info)
-        available_columns = [col for col in base_columns + list(technical_columns.values()) if col in df.columns]
-        df = df[available_columns]
-        
-        # Convert confidence to percentage
+        })
+
+        # Kolom Alergen: daftar alergen terdeteksi, atau "Tidak Ada"
+        def format_allergens(val):
+            if not val or str(val).strip().lower() in ('', 'nan', 'none', 'tidak terdeteksi'):
+                return 'Tidak Ada'
+            return str(val)
+
+        alergen_source = 'detected_allergens' if 'detected_allergens' in df.columns else 'predicted_allergens'
+        df['Alergen'] = df[alergen_source].apply(format_allergens) if alergen_source in df.columns else 'Tidak Ada'
+
+        # Kolom Prediksi: label sesuai CSV dosen
+        df['Prediksi'] = df.get('allergen_count', 0).apply(
+            lambda x: 'Mengandung Alergen' if (x or 0) > 0 else 'Tidak Mengandung Alergen'
+        )
+
+        # Konversi confidence ke persen
         if 'Tingkat Kepercayaan (%)' in df.columns:
             df['Tingkat Kepercayaan (%)'] = (df['Tingkat Kepercayaan (%)'] * 100).round(2)
+
+        # Urutan kolom: format dosen dulu, lalu info teknis
+        ordered_columns = [
+            'Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa',
+            'Alergen', 'Prediksi', 'Keterangan',
+            'Tingkat Kepercayaan (%)', 'Tanggal Prediksi',
+        ]
+        available_columns = [col for col in ordered_columns if col in df.columns]
+        df = df[available_columns]
         
         # Create Excel file in memory with optimization for better performance
         try:
