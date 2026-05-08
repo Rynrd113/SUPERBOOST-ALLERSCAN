@@ -64,6 +64,11 @@ class Settings(BaseSettings):
         """Generate MySQL database URL"""
         return f"mysql+pymysql://{self.mysql_user}:{self.mysql_password}@{self.mysql_host}:{self.mysql_port}/{self.mysql_database}"
     
+    # Authentication
+    jwt_secret_key: str = "allerscan_secret_key_2024_svm_adaboost"
+    admin_username: str = "admin"
+    admin_password_hash: str = "$2b$12$6sQ1qEIfpV6ZVrXtFSyZK.ucVxgHjHClSj.9yZ69209By4GavObN."
+
     # Performance Settings
     database_pool_size: int = 5
     database_max_overflow: int = 10
