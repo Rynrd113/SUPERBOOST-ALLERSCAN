@@ -80,13 +80,13 @@ function FormPage({ onNavigate, onDetectionResult }) {
 
         {/* Modern Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-3xl shadow-xl mb-6">
+          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-r from-allerscan-600 to-allerscan-700 rounded-3xl shadow-xl mb-6">
             <Target className="h-8 w-8 text-white mr-3" />
             <h1 className="text-3xl font-bold text-white">Deteksi Alergen Makanan</h1>
           </div>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Masukkan kandungan produk pangan untuk mendeteksi alergen menggunakan kombinasi algoritma
-            <span className="font-semibold text-blue-600"> SVM + AdaBoost</span>
+            <span className="font-semibold text-allerscan-600"> SVM + AdaBoost</span>
           </p>
         </div>
 
@@ -115,7 +115,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       onChange={handleChange}
                       required
                       placeholder="Contoh: Roti Tawar, Keju Mozzarella, Biskuit Coklat"
-                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
                     />
                   </div>
 
@@ -131,7 +131,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       required
                       rows={4}
                       placeholder="Contoh: Tepung terigu, telur, susu segar, mentega, gula pasir, garam"
-                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white resize-none"
+                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white resize-none"
                     />
                     <p className="text-sm text-slate-500">
                       Tuliskan semua bahan utama yang digunakan, pisahkan dengan koma
@@ -150,7 +150,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                         value={formData.pemanis}
                         onChange={handleChange}
                         placeholder="Contoh: Gula pasir, madu, sirup jagung"
-                        className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                        className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
                       />
                     </div>
 
@@ -164,7 +164,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                         value={formData.lemak_minyak}
                         onChange={handleChange}
                         placeholder="Contoh: Mentega, minyak kelapa sawit"
-                        className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                        className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
                       />
                     </div>
                   </div>
@@ -180,7 +180,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       value={formData.penyedap_rasa}
                       onChange={handleChange}
                       placeholder="Contoh: Garam, MSG, vanilla, kayu manis"
-                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
                     />
                   </div>
 
@@ -195,7 +195,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       value={formData.alergen}
                       onChange={handleChange}
                       placeholder="Contoh: susu, telur, kacang (kosongkan jika tidak tahu)"
-                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
+                      className="w-full px-4 py-4 text-lg border-2 border-slate-200 rounded-2xl focus:border-allerscan-500 focus:ring-4 focus:ring-allerscan-500/20 transition-all duration-300 bg-slate-50 focus:bg-white"
                     />
                     <p className="text-sm text-slate-500">
                       Opsional — mengisi field ini meningkatkan akurasi deteksi
@@ -208,7 +208,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       type="submit"
                       size="lg"
                       disabled={loading}
-                      className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-12 py-4 text-lg font-bold rounded-2xl shadow-2xl hover:shadow-blue-500/25 transform hover:scale-105 transition-all duration-300"
+                      className="bg-gradient-to-r from-allerscan-600 to-allerscan-700 hover:from-allerscan-700 hover:to-allerscan-800 text-white px-12 py-4 text-lg font-bold rounded-2xl shadow-2xl hover:shadow-allerscan/25 transform hover:scale-105 transition-all duration-300"
                     >
                       {loading ? (
                         <>
@@ -261,7 +261,7 @@ function FormPage({ onNavigate, onDetectionResult }) {
                     {/* Prediction Result */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h4 className="font-bold text-slate-900 mb-3 flex items-center">
-                        <Target className="h-5 w-5 mr-2 text-blue-600" />
+                        <Target className="h-5 w-5 mr-2 text-allerscan-600" />
                         Status Alergen
                       </h4>
                       <div className={`p-6 rounded-xl border-2 ${
@@ -309,11 +309,11 @@ function FormPage({ onNavigate, onDetectionResult }) {
                       <div className="flex items-center space-x-4">
                         <div className="flex-1 bg-slate-200 rounded-full h-3">
                           <div
-                            className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-1000"
+                            className="bg-gradient-to-r from-allerscan-500 to-allerscan-600 h-3 rounded-full transition-all duration-1000"
                             style={{ width: accuracy }}
                           />
                         </div>
-                        <span className="text-2xl font-bold text-blue-600">
+                        <span className="text-2xl font-bold text-allerscan-600">
                           {accuracy}
                         </span>
                       </div>
@@ -343,28 +343,28 @@ function FormPage({ onNavigate, onDetectionResult }) {
 
               {/* Info Panel - Show when no result */}
               {!result && !loading && (
-                <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 p-8 rounded-3xl">
+                <Card className="bg-gradient-to-br from-allerscan-50 to-allerscan-100 border-allerscan-200 p-8 rounded-3xl">
                   <div className="text-center">
-                    <div className="p-4 bg-blue-600 rounded-full w-fit mx-auto mb-4">
+                    <div className="p-4 bg-allerscan-600 rounded-full w-fit mx-auto mb-4">
                       <Sparkles className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-blue-900 mb-3">Siap untuk Analisis</h3>
-                    <p className="text-blue-700 mb-6">
+                    <h3 className="text-xl font-bold text-allerscan-900 mb-3">Siap untuk Analisis</h3>
+                    <p className="text-allerscan-700 mb-6">
                       Lengkapi form di sebelah kiri untuk memulai deteksi alergen dengan teknologi AI
                     </p>
                     
                     {/* Features */}
                     <div className="space-y-3 text-left">
-                      <div className="flex items-center text-blue-800">
-                        <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />
+                      <div className="flex items-center text-allerscan-800">
+                        <CheckCircle className="h-5 w-5 mr-3 text-allerscan-600" />
                         <span className="font-medium">Akurasi model dinamis</span>
                       </div>
-                      <div className="flex items-center text-blue-800">
-                        <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />
+                      <div className="flex items-center text-allerscan-800">
+                        <CheckCircle className="h-5 w-5 mr-3 text-allerscan-600" />
                         <span className="font-medium">Deteksi komprehensif alergen</span>
                       </div>
-                      <div className="flex items-center text-blue-800">
-                        <CheckCircle className="h-5 w-5 mr-3 text-blue-600" />
+                      <div className="flex items-center text-allerscan-800">
+                        <CheckCircle className="h-5 w-5 mr-3 text-allerscan-600" />
                         <span className="font-medium">Hasil instan dalam detik</span>
                       </div>
                     </div>

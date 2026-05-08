@@ -44,7 +44,7 @@ function Dashboard({ onNavigate }) {
           
           {/* Badge */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-full text-sm font-semibold border border-blue-300">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-allerscan-100 to-allerscan-200 text-allerscan-800 rounded-full text-sm font-semibold border border-allerscan-300">
               <Sparkles className="h-4 w-4 mr-2" />
               Data Mining - Machine Learning
             </div>
@@ -54,21 +54,21 @@ function Dashboard({ onNavigate }) {
           <div className="text-center mb-12">
             <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight">
               SUPERBOOST
-              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-allerscan-600 via-purple-600 to-allerscan-700 bg-clip-text text-transparent">
                 ALLERSCAN
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8">
               Sistem Deteksi Alergen pada Produk Pangan Berbasis 
-              <span className="font-semibold text-blue-600"> Machine Learning SVM + AdaBoost</span>
+              <span className="font-semibold text-allerscan-600"> Machine Learning SVM + AdaBoost</span>
             </p>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Button 
+              <Button
                 size="lg"
                 onClick={() => onNavigate('form')}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-blue-500/25 transform hover:scale-105 transition-all duration-300"
+                className="bg-gradient-to-r from-allerscan-600 to-allerscan-700 hover:from-allerscan-700 hover:to-allerscan-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl hover:shadow-allerscan/25 transform hover:scale-105 transition-all duration-300"
               >
                 <Search className="h-6 w-6 mr-3" />
                 Mulai Deteksi Alergen
@@ -101,7 +101,7 @@ function Dashboard({ onNavigate }) {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {stats.map((stat, index) => (
             <StatCard
               key={index}
@@ -168,7 +168,7 @@ function Dashboard({ onNavigate }) {
               }
             ].map((item, index) => (
               <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-2xl font-bold text-white mx-auto mb-6">
+                <div className="w-20 h-20 bg-gradient-to-r from-allerscan-500 to-allerscan-600 rounded-2xl flex items-center justify-center text-2xl font-bold text-white mx-auto mb-6">
                   {item.step}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
@@ -181,8 +181,8 @@ function Dashboard({ onNavigate }) {
 
       {/* CTA Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <Card className="p-12 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 rounded-3xl text-center">
-          <div className="p-4 bg-blue-600 rounded-2xl w-fit mx-auto mb-6">
+        <Card className="p-12 bg-gradient-to-r from-allerscan-50 to-allerscan-100 border-allerscan-200 rounded-3xl text-center">
+          <div className="p-4 bg-allerscan-600 rounded-2xl w-fit mx-auto mb-6">
             <Shield className="h-12 w-12 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-slate-900 mb-4">
@@ -191,10 +191,10 @@ function Dashboard({ onNavigate }) {
           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
             Mulai deteksi alergen sekarang untuk memastikan keamanan konsumen dengan teknologi AI terdepan
           </p>
-          <Button 
+          <Button
             size="lg"
             onClick={() => onNavigate('form')}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-allerscan-600 to-allerscan-700 hover:from-allerscan-700 hover:to-allerscan-800 text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300"
           >
             <Target className="h-6 w-6 mr-3" />
             Mulai Deteksi Sekarang

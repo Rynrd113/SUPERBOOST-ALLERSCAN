@@ -1,4 +1,4 @@
-import { Shield, User, LogIn, LogOut, Database, Search } from 'lucide-react'
+import { Shield, User, LogIn, LogOut, Database, Search, Lock } from 'lucide-react'
 
 const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin }) => {
   const navItems = [
@@ -8,7 +8,7 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
   ]
 
   return (
-    <header className="bg-gradient-to-r from-blue-700 to-blue-800 shadow-lg sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-allerscan-700 to-allerscan-800 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
@@ -27,7 +27,7 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
               <h1 className="text-xl font-bold text-white">
                 SUPERBOOST ALLERSCAN
               </h1>
-              <p className="text-xs text-blue-100">
+              <p className="text-xs text-allerscan-100">
                 Data Mining - Machine Learning
               </p>
             </div>
@@ -46,18 +46,18 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
                   onClick={() => !isDisabled && onNavigate(item.id)}
                   className={`
                     flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200
-                    ${isActive 
-                      ? 'bg-white text-blue-700 shadow-sm' 
+                    ${isActive
+                      ? 'bg-white text-allerscan-700 shadow-sm'
                       : isDisabled
-                        ? 'text-blue-300 cursor-not-allowed'
-                        : 'text-blue-100 hover:text-white hover:bg-white/10'
+                        ? 'text-allerscan-300 cursor-not-allowed'
+                        : 'text-allerscan-100 hover:text-white hover:bg-white/10'
                     }
                   `}
                   disabled={isDisabled}
                 >
                   <Icon className="w-4 h-4 mr-2" />
                   {item.label}
-                  {isDisabled && <span className="ml-1">🔒</span>}
+                  {isDisabled && <Lock className="ml-1 w-3 h-3" />}
                 </button>
               )
             })}
@@ -93,7 +93,7 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden border-t border-blue-600 py-2">
+        <div className="md:hidden border-t border-allerscan-600 py-2">
           <div className="flex items-center justify-around">
             {navItems.map((item) => {
               const Icon = item.icon
@@ -106,18 +106,18 @@ const Header = ({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin })
                   onClick={() => !isDisabled && onNavigate(item.id)}
                   className={`
                     flex flex-col items-center px-2 py-1 rounded-lg text-xs transition-all duration-200
-                    ${isActive 
-                      ? 'text-white' 
+                    ${isActive
+                      ? 'text-white'
                       : isDisabled
-                        ? 'text-blue-400'
-                        : 'text-blue-200 hover:text-white'
+                        ? 'text-allerscan-300'
+                        : 'text-allerscan-200 hover:text-white'
                     }
                   `}
                   disabled={isDisabled}
                 >
                   <Icon className="w-5 h-5 mb-1" />
                   <span>{item.label}</span>
-                  {isDisabled && <span>🔒</span>}
+                  {isDisabled && <Lock className="w-3 h-3 mt-0.5" />}
                 </button>
               )
             })}

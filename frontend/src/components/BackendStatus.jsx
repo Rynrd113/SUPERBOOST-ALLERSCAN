@@ -91,7 +91,7 @@ const BackendStatus = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-3">
+      <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-3">
         <div className="flex items-center space-x-2">
           <div className={config.color}>
             {config.icon}
@@ -107,7 +107,7 @@ const BackendStatus = () => {
           </Button>
         </div>
         {lastChecked && (
-          <div className="text-xs text-gray-500 mt-1">
+          <div className="text-xs text-slate-500 mt-1">
             Last checked: {lastChecked.toLocaleTimeString()}
           </div>
         )}

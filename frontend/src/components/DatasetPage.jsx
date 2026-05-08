@@ -243,14 +243,14 @@ const DatasetPage = () => {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {allergenDist?.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">Distribusi Alergen</h3>
+          <div className="bg-white rounded-2xl shadow-lg p-6 border border-slate-100">
+            <h3 className="text-lg font-semibold mb-4 text-slate-900">Distribusi Alergen</h3>
             <DoughnutChart data={allergenDist} />
           </div>
         )}
         {detectionPie?.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">Hasil Deteksi</h3>
+          <div className="bg-white rounded-2xl shadow-lg p-6 border border-slate-100">
+            <h3 className="text-lg font-semibold mb-4 text-slate-900">Hasil Deteksi</h3>
             <PieChart data={detectionPie} />
           </div>
         )}
@@ -273,7 +273,7 @@ const DatasetPage = () => {
           <ChevronLeft className="w-4 h-4" />
         </Button>
         
-        <span className="text-sm text-gray-600">
+        <span className="text-sm text-slate-600">
           Halaman {currentPage} dari {totalPages}
         </span>
         
@@ -300,13 +300,13 @@ const DatasetPage = () => {
   const columns = [
     {
       header: 'No',
-      render: (row) => <span className="text-gray-500">{row.id}</span>,
+      render: (row) => <span className="text-slate-500">{row.id}</span>,
       className: 'text-center'
     },
     {
       header: 'Nama Produk',
       render: (row) => (
-        <span className="font-medium text-gray-900">{row.product_name || '-'}</span>
+        <span className="font-medium text-slate-900">{row.product_name || '-'}</span>
       )
     },
     {
@@ -326,7 +326,7 @@ const DatasetPage = () => {
     {
       header: 'Accuracy',
       render: () => (
-        <span className="font-mono text-sm font-semibold text-blue-600">
+        <span className="font-mono text-sm font-semibold text-allerscan-600">
           {statistics?.model_info?.accuracy || '—'}
         </span>
       ),
@@ -362,14 +362,14 @@ const DatasetPage = () => {
 
   // Main render
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-slate-100">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Dataset Management</h1>
-              <p className="text-gray-600 mt-1">Kelola data hasil prediksi alergen</p>
+              <h1 className="text-2xl font-bold text-slate-900">Dataset Management</h1>
+              <p className="text-slate-600 mt-1">Kelola data hasil prediksi alergen</p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3">
@@ -427,19 +427,19 @@ const DatasetPage = () => {
         {renderCharts()}
 
         {/* Search and Table */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-slate-100">
           {/* Search Bar */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Cari bahan makanan..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-allerscan-500/20 focus:border-allerscan-500 transition-all duration-200"
                 />
               </div>
             </div>
@@ -451,7 +451,7 @@ const DatasetPage = () => {
 
           {/* Error State */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
               <div className="flex items-center">
                 <AlertCircle className="w-5 h-5 text-red-500 mr-2" />
                 <span className="text-red-700">{error}</span>
@@ -462,8 +462,8 @@ const DatasetPage = () => {
           {/* Loading State */}
           {loading && (
             <div className="flex justify-center items-center py-8">
-              <LoaderIcon className="w-8 h-8 animate-spin text-blue-500" />
-              <span className="ml-2 text-gray-600">Memuat data...</span>
+              <LoaderIcon className="w-8 h-8 animate-spin text-allerscan-500" />
+              <span className="ml-2 text-slate-600">Memuat data...</span>
             </div>
           )}
 

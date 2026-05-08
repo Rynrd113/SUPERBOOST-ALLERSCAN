@@ -54,7 +54,7 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
             className="bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-slate-300 shadow-sm rounded-2xl"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Kembali ke Home
+            Kembali ke Halaman Utama
           </Button>
         </div>
 
@@ -178,7 +178,6 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
               </form>
             </div>
 
-            {/* Default Credentials Card - Removed */}
           </div>
         </div>
 
