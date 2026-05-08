@@ -27,17 +27,19 @@ const LoginPage = ({ onLogin, onBack, isLoading }) => {
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.username.trim() || !formData.password.trim()) {
       setLoginError('Username dan password wajib diisi');
       return;
     }
-    
+
     try {
-      await onLogin(formData);
+      const success = await onLogin(formData);
+      if (!success) {
+        setLoginError('Username atau password salah. Silakan coba lagi.');
+      }
     } catch (err) {
-      const errorMessage = err.message || 'Login gagal. Periksa username dan password Anda.';
-      setLoginError(errorMessage);
+      setLoginError(err.message || 'Login gagal. Periksa username dan password Anda.');
     }
   };
 

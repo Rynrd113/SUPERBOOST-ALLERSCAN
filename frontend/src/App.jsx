@@ -63,7 +63,7 @@ function App() {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigation} />
       case 'dataset':
-        return <DatasetPage onNavigate={handleNavigation} detectionHistory={detectionHistory} />
+        return <DatasetPage onNavigate={handleNavigation} isAuthenticated={isAuthenticated} />
       case 'form':
         return <FormPage onNavigate={handleNavigation} onDetectionResult={handleDetectionResult} />
       default:
