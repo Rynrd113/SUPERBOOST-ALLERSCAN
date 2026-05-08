@@ -168,10 +168,17 @@ class AllergenPredictor:
             
             fitur = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen']
             target = 'Prediksi'
-            
+
+            # Hapus duplikat persis sebelum training agar akurasi CV tidak inflate
+            n_before = len(df)
+            df = df.drop_duplicates(subset=fitur + [target])
+            n_after = len(df)
+            if n_before != n_after:
+                api_logger.info(f"🧹 Deduplikasi: {n_before} → {n_after} baris ({n_before - n_after} duplikat dihapus)")
+
             X = df[fitur]
             y = df[target]
-            
+
             # Menyimpan kategori training untuk deteksi OOV
             for col in fitur:
                 if col in df.columns:
@@ -541,6 +548,12 @@ class AllergenPredictor:
 
             # Retrain on combined data
             fitur = ['Nama Produk Makanan', 'Bahan Utama', 'Pemanis', 'Lemak/Minyak', 'Penyedap Rasa', 'Alergen']
+
+            # Deduplikasi agar akurasi CV tidak inflate
+            n_before = len(df_combined)
+            df_combined = df_combined.drop_duplicates(subset=fitur + ['Prediksi'])
+            api_logger.info(f"🧹 Deduplikasi retrain: {n_before} → {len(df_combined)} baris")
+
             X = df_combined[fitur]
             y = df_combined['Prediksi']
 
