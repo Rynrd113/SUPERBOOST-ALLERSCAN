@@ -22,21 +22,15 @@ class Settings(BaseSettings):
     api_v1_prefix: str = "/api/v1"
     allowed_hosts: list = ["*"]
     
-    # CORS Settings — set CORS_ORIGINS di .env untuk produksi
-    # Contoh: CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
-    cors_origins_str: str = os.getenv("CORS_ORIGINS", "")
-
-    @property
-    def allow_origins(self) -> list:
-        if self.cors_origins_str:
-            return [o.strip() for o in self.cors_origins_str.split(",") if o.strip()]
-        return [
-            "http://localhost:3000",
-            "http://localhost:5173",
-            "http://localhost:5174",
-            "http://localhost:5175",
-            "*",  # fallback untuk development
-        ]
+    # CORS Settings — untuk produksi, set ALLOW_ORIGINS di .env sebagai JSON array
+    # Contoh: ALLOW_ORIGINS=["https://yourdomain.com","https://www.yourdomain.com"]
+    allow_origins: list = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "*",
+    ]
     allow_methods: list = ["GET", "POST", "PUT", "DELETE"]
     allow_headers: list = ["*"]
     
@@ -78,9 +72,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-    
-    class Config:
-        env_file = ".env"
         case_sensitive = False
 
 # Create settings instance
